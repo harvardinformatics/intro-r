@@ -14,9 +14,11 @@ First of all, before class, it is important that you have R and RStudio installe
 
 ### Installing R
 
-Please follow the instructions on [this page to install R](https://cloud.r-project.org/).
+Click on the button below to go the R project website to download and install R:
 
-To begin, click the link for your operating system to bring up a list of files to download.
+[Download R :octicons-link-external-24:](https://cloud.r-project.org/){ .md-button .md-button--primary .centered }
+
+Briefly, once on the R site, click the link for your operating system to bring up a list of files to download.
 
 For **Windows** you will want to download the **base** install files.
 
@@ -31,9 +33,11 @@ After you have downloaded the file appropriate for your operating system, naviga
 
 ### Installing RStudio
 
-Please follow the instructions on [this page to install RStudio](https://posit.co/download/rstudio-desktop/).
+Click on the button below to go to the RStudio website to download and install RStudio:
 
-On the Rstudio install page, scroll down and select the file appropriate for your operating system and click to download.
+[Download RStudio :octicons-link-external-24:](https://posit.co/download/rstudio-desktop/){ .md-button .md-button--primary .centered }
+
+Once there, scroll down and select the file appropriate for your operating system and click to download.
 
 After you have downloaded the file appropriate for your operating system, navigate to them and install the program as you would any other program on your computer.
 
@@ -65,15 +69,15 @@ Part 1 (day 1):
 
 Part 2 (days 2 & 3):
 
-* `[tidyverse](https://www.tidyverse.org/)`
+* [`tidyverse`](https://www.tidyverse.org/)
 
 Part 3 (days 3 & 4):
 
-* `[tidyverse](https://www.tidyverse.org/)`
-* `[cowplot](https://wilkelab.org/cowplot/articles/introduction.html)`
-* `[viridis](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)`
+* [`tidyverse`](https://www.tidyverse.org/)
+* [`cowplot`](https://wilkelab.org/cowplot/articles/introduction.html)
+* [`viridis`](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)
 
-#### Packag installation - Common problems
+#### Package installation - Common problems
 
  Installing packages can be fraught with problems because everyone has different versions of things on their own computer. We are happy to help troubleshoot with you on the day of the workshop. If you experience problems installing packages before class, try to come a few minutes early for help. Otherwise, we will help you as best we can during the workshop.
 
@@ -98,7 +102,7 @@ Wednesday October 18th, 9:30 am - 12:30 pm, Location: [Biolabs](https://goo.gl/m
 * Writing and running R scripts
 * R objects and data types
 
-[Download R Markdown file](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part1-student.Rmd){ .md-button } - [View instructor version](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part1.html){ .md-button }
+[Download R Markdown file :octicons-download-24:](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part1-student.Rmd){ .md-button } - [View completed version :material-arrow-right:](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part1.html){ .md-button }
 
 ### Day 2: Introduction to data manipulation with the tidyverse
 
@@ -109,7 +113,7 @@ Friday October 20th, 9:30 am - 12:30 pm, Location: [Biolabs](https://goo.gl/maps
 * Filtering and manipulating data tables (tibbles)
 * Piping
 
-[Download R Markdown file](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part2-student.Rmd){ .md-button } - [View instructor version](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part2.html){ .md-button }
+[Download R Markdown file :octicons-download-24:](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part2-student.Rmd){ .md-button } - [View completed version :material-arrow-right:](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part2.html){ .md-button }
 
 ### Day 3: More tidyverse and introduction to data visualization with ggplot
 
@@ -120,7 +124,7 @@ Wednesday October 25th, 9:30 am - 12:30 pm, Location: [Jefferson Building](https
 * Aesthetics and layers in ggplot
 * Various plot types
 
-[Download R Markdown file](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part3-student.Rmd){ .md-button } - [View instructor version](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part3.html){ .md-button }
+[Download R Markdown file :octicons-download-24:](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part3-student.Rmd){ .md-button } - [View completed version :material-arrow-right:](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part3.html){ .md-button }
 
 ### Day 4: More on ggplot
 
@@ -130,7 +134,7 @@ Friday October 27th, 9:30 am - 12:30 pm, Location: [CGIS South](https://goo.gl/m
 * Colors and grouping data
 * Multi-panel figures
 
-[Download R Markdown file](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part4-student.Rmd){ .md-button } - [View instructor version](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part4.html){ .md-button }
+[Download R Markdown file :octicons-download-24:](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part4-student.Rmd){ .md-button } - [View completed version :material-arrow-right:](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part4.html){ .md-button }
 
 
 
