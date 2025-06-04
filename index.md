@@ -2,7 +2,7 @@
 title: Introduction to R
 ---
 
-This workshop aims to introduce first-time users to the [R programming language :octicons-link-external-24:](https://www.r-project.org/) and the [RStudio :octicons-link-external-24:](https://posit.co/download/rstudio-desktop/) development environment. We will provide a basic introduction to coding in R and then shift to data manipulation using the [tidyverse :octicons-link-external-24:](https://www.tidyverse.org/), a set of R libraries designed to handle data tables in a consistent and easy way. Then, we'll learn how to generate some basic plots to explore our data using [ggplot :octicons-link-external-24:](https://ggplot2.tidyverse.org/). You do not need any prior programming experience to take this workshop. But also note that this workshop is not a comprehensive programming class nor a comprehensive statistics class. The main goal of this workshop is to get you familiar with reading your data into R and performing basic operations and generating figures.
+This workshop aims to introduce first-time users to the [R programming language :octicons-link-external-24:](https://www.r-project.org/){:target="_blank"} and the [RStudio :octicons-link-external-24:](https://posit.co/download/rstudio-desktop/){:target="_blank"} development environment. We will provide a basic introduction to coding in R and then shift to data manipulation using the [tidyverse :octicons-link-external-24:](https://www.tidyverse.org/){:target="_blank"}, a set of R libraries designed to handle data tables in a consistent and easy way. Then, we'll learn how to generate some basic plots to explore our data using [ggplot :octicons-link-external-24:](https://ggplot2.tidyverse.org/){:target="_blank"}. You do not need any prior programming experience to take this workshop. But also note that this workshop is not a comprehensive programming class nor a comprehensive statistics class. The main goal of this workshop is to get you familiar with reading your data into R and performing basic operations and generating figures.
 
 ## Before Class
 
@@ -16,7 +16,7 @@ First of all, before class, it is important that you have R and RStudio installe
 
 Click on the button below to go the R project website to download and install R:
 
-[Download R :octicons-link-external-24:](https://cloud.r-project.org/){ .md-button .md-button--primary .centered }
+[Download R :octicons-link-external-24:](https://cloud.r-project.org/){:target="_blank" .md-button .md-button--primary .centered }
 
 Briefly, once on the R site, click the link for your operating system to bring up a list of files to download.
 
@@ -35,7 +35,7 @@ After you have downloaded the file appropriate for your operating system, naviga
 
 Click on the button below to go to the RStudio website to download and install RStudio:
 
-[Download RStudio :octicons-link-external-24:](https://posit.co/download/rstudio-desktop/){ .md-button .md-button--primary .centered }
+[Download RStudio :octicons-link-external-24:](https://posit.co/download/rstudio-desktop/){:target="_blank" .md-button .md-button--primary .centered }
 
 Once there, scroll down and select the file appropriate for your operating system and click to download.
 
@@ -69,13 +69,13 @@ Part 1 (day 1):
 
 Part 2 (days 2 & 3):
 
-* [`tidyverse` :octicons-link-external-24:](https://www.tidyverse.org/)
+* [`tidyverse` :octicons-link-external-24:](https://www.tidyverse.org/){:target="_blank"}
 
 Part 3 (days 3 & 4):
 
-* [`tidyverse` :octicons-link-external-24:](https://www.tidyverse.org/)
-* [`cowplot` :octicons-link-external-24:](https://wilkelab.org/cowplot/articles/introduction.html)
-* [`viridis` :octicons-link-external-24:](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html)
+* [`tidyverse` :octicons-link-external-24:](https://www.tidyverse.org/){:target="_blank"}
+* [`cowplot` :octicons-link-external-24:](https://wilkelab.org/cowplot/articles/introduction.html){:target="_blank"}
+* [`viridis` :octicons-link-external-24:](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html){:target="_blank"}
 
 #### Package installation - Common problems
 
@@ -95,7 +95,7 @@ Workshop content is available below. Download the R Markdown (.Rmd) files for ea
 
 ### Day 1: Introduction to R
 
-Wednesday October 18th, 9:30 am - 12:30 pm, Location: [Biolabs :octicons-link-external-24:](https://goo.gl/maps/7ngpNbkWEM5uZuap8) room 2062/2064 
+Wednesday October 18th, 9:30 am - 12:30 pm, Location: [Biolabs :octicons-link-external-24:](https://goo.gl/maps/7ngpNbkWEM5uZuap8){:target="_blank"} room 2062/2064 
 
 * Opening RStudio and learning about its interface
 * Executing R commands in the console
@@ -106,7 +106,7 @@ Wednesday October 18th, 9:30 am - 12:30 pm, Location: [Biolabs :octicons-link-ex
 
 ### Day 2: Introduction to data manipulation with the tidyverse
 
-Friday October 20th, 9:30 am - 12:30 pm, Location: [Biolabs :octicons-link-external-24:](https://goo.gl/maps/7ngpNbkWEM5uZuap8) room 2062/2064 
+Friday October 20th, 9:30 am - 12:30 pm, Location: [Biolabs :octicons-link-external-24:](https://goo.gl/maps/7ngpNbkWEM5uZuap8){:target="_blank"} room 2062/2064 
 
 * Installing and loading the tidyverse package
 * Tibbles
@@ -117,7 +117,7 @@ Friday October 20th, 9:30 am - 12:30 pm, Location: [Biolabs :octicons-link-exter
 
 ### Day 3: More tidyverse and introduction to data visualization with ggplot
 
-Wednesday October 25th, 9:30 am - 12:30 pm, Location: [Jefferson Building :octicons-link-external-24:](https://maps.app.goo.gl/2orhqJRo3djPfkCy6) room 453 
+Wednesday October 25th, 9:30 am - 12:30 pm, Location: [Jefferson Building :octicons-link-external-24:](https://maps.app.goo.gl/2orhqJRo3djPfkCy6){:target="_blank"} room 453 
 
 * Grouping and summarizing data
 * Generating basic plots with ggplot
@@ -128,7 +128,7 @@ Wednesday October 25th, 9:30 am - 12:30 pm, Location: [Jefferson Building :octic
 
 ### Day 4: More on ggplot
 
-Friday October 27th, 9:30 am - 12:30 pm, Location: [CGIS South :octicons-link-external-24:](https://goo.gl/maps/n2FAUngGYj8vKVCo9), S050 
+Friday October 27th, 9:30 am - 12:30 pm, Location: [CGIS South :octicons-link-external-24:](https://goo.gl/maps/n2FAUngGYj8vKVCo9){:target="_blank"}, S050 
 
 * More plot types
 * Colors and grouping data
