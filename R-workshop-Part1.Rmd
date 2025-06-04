@@ -1,34 +1,37 @@
 ---
-title: "Harvard Informatics R Workshop"
-subtitle: "Part 1: R Basics"
+title: "Introduction to R Part 1: R Basics"
 date: "October 18, 2023"
 author: "Adam Freedman, Gregg Thomas, and Lei Ma"
-output: html_document
+output: 
+  md_document:
+    pandoc_args: ["--wrap=preserve"]
+    md_extensions: -smart
+    preserve_yaml: TRUE    
 ---
 
-Welcome to the first part of the [FAS Informatics](https://informatics.fas.harvard.edu/) [Intro to R workshop](https://harvardinformatics.github.io/workshops/2023-fall/r/)! 
+Welcome to the first part of the [FAS Informatics :material-arrow-top-right:](https://informatics.fas.harvard.edu/){:target="_blank"} Intro to R workshop! 
 
-This is the workshop file that should be opened in RStudio. This is an RMarkdown file, meaning that both formatted text and code blocks can be added to it, and the code blocks can be executed from the RStudio interface. Today we will be going through this document and executing the code blocks within it to demonstrate some basic R programming concepts.
+If you're viewing this file on the website, you are viewing the final, formatted version of the workshop. The workshop itself will take place in the RStudio program and you will *edit and execute the code in this file*. Please download the raw file [here  :octicons-download-24:](R-workshop-Part1-student.Rmd)
 
-# What is R?
+## What is R?
 
 R is a functional programming language, which means that most of what one does is apply functions to objects. Functions perform various operations on the objects, with particular functions constructed to work with particular kinds of objects. For example, the *sum()* function works with numeric data. 
 
-# Using R within RStudio
+## Using R within RStudio
 
-#### R is not RStudio and vice versa.
+##### R is not RStudio and vice versa.
 
 Though you cannot have RStudio without R. So what the heck is RStudio?
 
 First, a little motivation.
 
-## Plain text data tables and text editors
+### Plain text data tables and text editors
 
 A central task in data science is the need to interact with and analyze *plain text formatted data tables*. Sometimes these tables will be nice, but often times they will be incomplete or mis-formatted in some way, so we need to be able to edit them on the spot. Oftentimes these tables, in plain text, indicate rows of data by lines and columns of data with some designated separator character, commonly comma (`,`) with files that have `.csv` **extensions** or a tab (encoded as `\t` but literally `   `) with files that have `.tsv` or `.tab` **extensions**. Though note that the **extension** does not necessarily define how the data is formatted -- the agreement between the file's extension and its format is not enforced by the machine and is only meant to be descriptive. You may sometimes find a tab delimited file with the `.txt` extension, or even with `.csv`! Best practices dictate that the extension match the formatting, but best practices are not always followed.
 
 So, since tables are how we store our data, we need some way to load them into memory to view, manipulate, and analyze them. That's where R comes in handy. However, the default R interface leaves much to be desired. A **text editor** is the main way to interact with data and code, and there are many of them out there. For other data analysis software or programming languages, there is no general consensus on which text editor to use to view files. However, for R, RStudio's utility is unparalleled.
 
-## RStudio is an IDE
+### RStudio is an IDE
 
 RStudio is actually more than a text editor. It is an integrated development environment (IDE), that integrates the R programming language and allows one to simultaneously execute R commands, view the objects available for processing with R commands, build and execute R scripts (sets of commands), view plots generated from data, and has additional features that can increase one's productivity when using R and generally make life easier. 
 
@@ -79,17 +82,17 @@ If you are not exactly sure of the function name, you can perform a search with 
 ??mean
 ```
 
-# A note on terminology
+## A note on terminology
 
-So in the section above and throughout this workshop we use a lot of context dependent terms. For instance, you probably know what the word "command" means in general usage, but in the context of programming it has a specific meaning that may not be obvious. This brings up an important point I try to remember when teaching. When learning a new skill or set of skills there's usually a whole new vocabulary to learn that goes along with it. What makes it difficult is that those teaching the new skill will use this vocabulary, and since they are so familiar with it they oftentimes won't even realize people don't know what the words they're using mean in the context of the new skill set. 
+So in the section above and throughout this workshop we use a lot of context dependent terms. For instance, you probably know what the word "command" means in general usage, but in the context of programming it has a specific meaning that may not be obvious. This brings up an important point I try to remember when teaching. When learning a new skill or set of skills there's usually a whole new vocabulary to learn that goes along with it. What makes it difficult is that those teaching the new skill will use this vocabulary, and since they are so familiar with it they oftentimes won't even realize people don't know what the words they're using mean in the context of the new skillset. 
 
 In an attempt to offset this unintentional language barrier we provide tables with some contextual definitions of terms we may use throughout the workshop at the following link: 
 
-https://harvardinformatics.github.io/workshops/2023-fall/r/terms.html
+[R Terminology :material-arrow-top-right:](/resources/glossary/#r-terms){:target="_blank" .md-button .md-button--primary .centered }
 
 If you see hear any terms you think should be added to these tables, please let us know.
 
-# R is a **functional** programming language
+## R is a **functional** programming language
 
 Great. So what is a function?
 
@@ -113,7 +116,7 @@ While some functions may require the input value to be **assigned** to a specifi
 my_function(argument1=value1, argument2=value2)
 ```
 
-# Functions take **objects** as input arguments
+## Functions take **objects** as input arguments
 
 In programming, we often store pieces of information in our program as **variables** that can be manipulated later in the program. R calls these pieces of information **objects**. 
 
@@ -139,7 +142,7 @@ my_function(argument1=object1, argument2=object2)
 
 Here we've simply replaced the word "value" with "object" to give a clearer example of what R functions are working with.
 
-# Functions also **return** objects
+## Functions also **return** objects
 
 Given some input objects, a function will perform some operations on them and this oftentimes results in a **return** value. That is, the function has manipulated the input information which results in a **new object** containing the new information.
 
@@ -168,7 +171,7 @@ Ok, well what if we want to display it now? If you're working in the **Console**
 print(cur_dir)
 ```
 
-# Data Types
+## Data Types
 
 **One of the most important things I can tell you when programming is to always remember what data types your objects are!**
 
@@ -176,7 +179,7 @@ Why is this important? Because the **functions** you use will depend on **the da
 
 In R, to begin with, we really only need to learn about two data types: **numeric** and **character**.
 
-## Numeric types
+### Numeric types
 
 - Numeric data types are numbers and are defined simply by typing the number.
 
@@ -192,7 +195,7 @@ x + 10
 
 Other basic algebraic operators include `-` for subtraction, `*` for multiplication, and `/` for division.
 
-## Character types
+### Character types
 
 - Character data types are any *string of alphanumeric characters*. Characters are defined by typing the characters within `"double"` or `'single'` quotes. 
 
@@ -210,7 +213,7 @@ my_char + 10
 
 What happened? Why?
 
-## Ascertaining types with the `class()` function
+### Ascertaining types with the `class()` function
 
 Like we learned about above, an R object has a **type**, depending upon the contents of the object. For example, we can determine what **type** x is by using the `class()` function. 
 
@@ -222,7 +225,7 @@ class(x)
 
 In this case, `x` is numeric.
 
-## Manipulating objects and storing the result
+### Manipulating objects and storing the result
 
 Again, we can manipulate objects as well with operations depending on their **type**. 
 
@@ -247,13 +250,13 @@ x <- x+5
 x
 ```
 
-# Data structures
+## Data structures
 
 Oftentimes, especially when working with large datasets, it is inefficient to refer to and perform operations on a single piece of data as a single object at a time. In other words, we want to organize our data such that multiple pieces of information can be manipulated at once. To do this we use **data structures**, which are simply methods for organizing multiple pieces of information.
 
 In R, **data structures are also objects** and we can assign them to variables as we would with a single piece of information with the `<-` operator.
 
-# Vectors
+## Vectors
 
 The most basic data structure we'll learn about is the **vector**. A vector is just a one dimensional compilation of information **of the same type**.
 
@@ -293,13 +296,13 @@ new_vec <- c(1, 2, "hello")
 
 > What **type** are the individual elements we input to the vector? What **type** is this vector? Why?
 
-### Vectors have **length**
+#### Vectors have **length**
 
 Importantly, vectors have a **length** attribute, which is simply the number of individual pieces of data contained in them. The **length** of a vector can be ascertained by the `length()` function.
 
 > What does the `length()` function return when our vector `v1` is given as an argument?
 
-# Running R commands in scripts
+## Running R commands in scripts
 
 Thus far we've executed our R commands interactively through the **R Console** in the panel of RStudio below the text editor. Using the **Console** is a great way to quickly manipulate or view data or objects, but it isn't conducive to executing a lot of commands, or executing commands more than once (though you can cycle through your command history with the up arrow).
 
@@ -344,11 +347,11 @@ The behavior now should be slightly different. The only output we see is from th
 
 Congratulations on writing your first R script (of this workshop, at least)!
 
-# RMarkdown and code blocks
+## RMarkdown and code blocks
 
 The above file is a pure R script. It will only take R commands and execute them all at once.
 
-This file, and the other files we'll be using in this workshop, are **R Markdown** files. You'll notice several things about this file that differ from the R script we just made. First, the file extension is **.Rmd** rather than **.r**. You'll also see that this text has some different formatting and coloring that the R script. This is because an **R Markdown** file is capable of formatting plain text for viewing and writing and executing code. This makes it a great file format for keeping a lab notebook for reproducible science or even for teaching a workshop! **R Markdown** files can also be **knit**, meaning the text will be formatted and the code will be run and output displayed and formatted and everything will be compiled into a single file, either HTML, PDF, or LaTeX. Conceivably, one could write a whole paper or book with **RMarkdown**. Check out more about R Markdown formatting [here](https://r02pro.github.io/rmd-text-formating.html).
+This file, and the other files we'll be using in this workshop, are **R Markdown** files. You'll notice several things about this file that differ from the R script we just made. First, the file extension is **.Rmd** rather than **.r**. You'll also see that this text has some different formatting and coloring that the R script. This is because an **R Markdown** file is capable of formatting plain text for viewing and writing and executing code. This makes it a great file format for keeping a lab notebook for reproducible science or even for teaching a workshop! **R Markdown** files can also be **knit**, meaning the text will be formatted and the code will be run and output displayed and formatted and everything will be compiled into a single file, either HTML, PDF, or LaTeX. Conceivably, one could write a whole paper or book with **RMarkdown**. Check out more about R Markdown formatting [here :octicons-link-external-24:](https://r02pro.github.io/rmd-text-formating.html){:target="_blank"}.
 
 Code is written and executed in R Markdown with **code blocks**, which are delineated by the backtick character (\`). Each code block can have a language specified (in our case we will exclusively use `r`) as well as options specific to that block. Here is an example of an R code block in this R Markdown file:
 
@@ -387,7 +390,7 @@ There are also many options for running code blocks under the **Run** button in 
 
 **From now on in these workshops, we'll be executing our code in *R Markdown code blocks* like this, so if you have any questions please let us know now.**
 
-# REMINDER: Objects have types
+## REMINDER: Objects have types
 
 When constructing objects, it is important to remember, as we have demonstrated above that all objects have a **type**. Object types are a complex topic and we are only going to scratch the surface today. To slightly simplify, all data objects in R are either atomic vectors (contain only a single type of data), or data structures that combine atomic vectors in various ways. It is also important to note that there are restrictions as to what R functions can be applied to which types. For example, we cannot perform mathematical operations on **mixed numeric and character types**.
 
@@ -411,7 +414,7 @@ a + b
 
 There are in fact R functions for "pasting" together characters, for example if you wanted to take two variables in a data set representing different experimental treatment types, and combine them into a composite variable. But more about that later...
 
-# Mathematical operations with vectors
+## Mathematical operations with vectors
 
 One of the main advantages of R is its ability to perform operations and run functions **on data structures like vectors** (without needing to write a loop). 
 
@@ -452,11 +455,11 @@ Notice what happens when performing operations with objects of different **lengt
 
 > In the code block below, create a new vector, `q`, such that the result of the operation `q * w` will be `c(-1, 2, -3, 4)`:
 
-```{r, eval=F}
+```{r}
 
-## Create a new vector with c()
-
-## Create a new vector with c()  
+### Create a new vector with c()
+q <- c(-1,1)
+### Create a new vector with c()  
   
 q * w
 
@@ -483,20 +486,20 @@ When the vectors are of the same length, element-wise operations are **performed
 
 > 2. Then add `w` and `w2` together.
 
-```{r, eval=F}
+```{r}
 
-## 1. Create a new vector with c()
+### 1. Create a new vector with c()
+w2 <- c(1,1,1,1)
+### 1. Create a new vector with c()
 
-## 1. Create a new vector with c()  
-  
 
-## 2. Add the w and w2 vectors together
-
-## 2. Add the w and w2 vectors together
+### 2. Add the w and w2 vectors together  
+w + w2
+### 2. Add the w and w2 vectors together
 
 ```
 
-# Character vectors
+## Character vectors
 
 We can also produce vectors of **characters**.
 
@@ -514,7 +517,7 @@ With this last variable, we had to use double quotes, `""`, to specify that we w
 
 ```{r, eval=FALSE}
 
-not_some_letters <- c(a,b,c,d)
+some_letters <- c(a,b,c,d)
 
 ```
 
@@ -530,7 +533,7 @@ class(some_letters)
 
 While it is technically possible to create a vector that mixes numeric and character elements, we typically don't work with these, **because R performs different operations on different object types**. If in the data sheet for an experiment we observe mixed types, it is typically either a typo, a non-data entry, or some custom notation for missing data, e.g. `?` or `NA` (we will discuss the handling of missing values in a little bit)
 
-# Other helpful vector functions
+## Other helpful vector functions
 
 > 1. In the code block below, create a new vector, called `nums` that contains any 5 numbers you like.
 
@@ -540,21 +543,21 @@ There are a number of functions that operate on vectors, including `length()`, `
 
 ```{r}
 
-## 1. create a new vector, called `nums` that contains any 5 numbers you like
-
-## 1. create a new vector, called `nums` that contains any 5 numbers you like
-
-
-## 2. Pass the nums object to the length, min, max, and mean functions
+### 1. create a new vector, called `nums` that contains any 5 numbers you like
+nums <- c(33, 22, 41, 54, 91)
+### 1. create a new vector, called `nums` that contains any 5 numbers you like
 
 
-
-
-## 2. Pass the nums object to the length, min, max, and mean functions
+### 2. Pass the nums object to the length, min, max, and mean functions
+length(nums)
+min(nums)
+max(nums)
+mean(nums)
+### 2. Pass the nums object to the length, min, max, and mean functions
 
 ```
 
-# The logical (TRUE/FALSE) data type
+## The logical (TRUE/FALSE) data type
 
 **Numeric** and **character** data types are two of the most common we'll encounter, and are just what they sound like. Another useful type is **logical** data, as in *TRUE* or *FALSE*. We can create a logical vector directly like so. The words `TRUE` and `FALSE` (typed in all capital letters) are understood by R to be their own **values** of this data type. Note that you can still have strings of these words, as long as you use quotes around them, e.g. `"TRUE"` and `"FALSE"`. With quotes, R treats these as character strings for those words rather than the logical values.
 
@@ -608,18 +611,18 @@ Here is a brief summary of the logical operators in R:
 <=           |less than or equal to |
 !=           |not equal to          |
 
-> 1. In the code block below, construct a logical vector with the same number of elements as the vector nums `nums <- c(33, 22, 41, 54, 91)` that is TRUE if the corresponding element in the nums vector is GREATER THAN the mean of the nums vector, and FALSE otherwise. Call this vector `big_nums`:
+> 1. In the code block below, construct a logical vector with the same number of elements as the vector nums `nums <- c(33, 22, 41, 54, 91)` that is TRUE if the corresponding element in the nums vector is GREATER THAN the mean of the nums vector, and FALSE otherwise. Call this vector big_nums
 
 ```{r}
 
-## 1. Create logical vector
-
-## 1. Create logical vector
+### 1. Create logical vector
+big_nums <- nums > mean(nums)
+### 1. Create logical vector
 
 ```
 
 
-# Subsetting and Logical Vectors
+## Subsetting and Logical Vectors
 
 Recall that vectors are a gathering of multiple different individual pieces of information. We learned that the vector itself has a **length** attribute that can be found with the `length()` function. Well the  pieces of information within the vector can also be accessed individually.
 
@@ -627,7 +630,7 @@ We can extract portions of vectors that we've created using the square brackets,
 
 > Run the following code block to see different ways to extract elements by **index**:
 
-```{r, eval=F}
+```{r}
 
 nums[1]
 nums[1:5]
@@ -639,10 +642,10 @@ nums[c(1,4,5)]
 
 ```{r}
 
-## 2. Subtract 10 from nums and print the last element of a vector
-
-
-## 2. Subtract 10 from nums and print the last element of a vector
+### 2. Subtract 10 from nums and print the last element of a vector
+new_nums = nums - 10
+new_nums[length(new_nums)]
+### 2. Subtract 10 from nums and print the last element of a vector
 
 ```
 
@@ -654,7 +657,7 @@ Let's take a look at both of these vectors again.
 
 > Run the following code block to view the previously created vectors, `nums` and `big_nums`:
 
-```{r, eval=F}
+```{r}
 
 nums
 big_nums
@@ -665,7 +668,7 @@ Let's say we actually want to extract all of the numbers that are bigger than th
 
 > Run the following code block to extract values from a vector based on a logical vector of the same length:
 
-```{r, eval=F}
+```{r}
 
 nums[big_nums]
 
@@ -675,13 +678,13 @@ We don't necessarily have to define this vector ahead of time, but can put the r
 
 > Run the following code block to extract values from a vector based on a logical test statement:
 
-```{r, eval=F} 
+```{r} 
 
 nums[nums > mean(nums)]
 
 ```
 
-# Data Frames
+## Data Frames
 
 So far we've been talking about atomic **vectors**, which only contain a single data type (every element is **logical**, or **character**, or **numeric**). However, data sets will usually have multiple different data types: numeric for continuous data, character for categorical data and sample labels. Depending on how underlying types are combined, we can have four different "higher-level" data structures in R:
 
@@ -751,7 +754,7 @@ summary(df1)
 
 ```
 
-## Accessing elements of a data frame
+### Accessing elements of a data frame
 
 Much like elements in a vector can be accessed using square brackets `[]` and indices, we can also access elements of a **data frame** with `[]`, but this time the indices are two dimensional, with one coordinate for the row and one for the column position, e.g. `[1,2]`.
 
@@ -800,17 +803,17 @@ df1$data
 
 ```{r}
 
-## 1. Create new vector based on column in a data frame
-
-## 1. Create new vector based on column in a data frame
+### 1. Create new vector based on column in a data frame
+my_product <-df1$data*10
+### 1. Create new vector based on column in a data frame
 
 ```
 
-# Reading files into R
+## Reading files into R
 
 So far we have been working with small objects we created by hand. A more common way to create **data frames** is by **reading tables from a file**. There are a few functions to do this in R. The old school way of doing this it by using the `read.table()` and `read.csv()` functions, with the latter being a generic file loader for which you can specify what delimits the columns: comma, space, tab, or some other character.
 
-For this workshop, we are going to read the [and_vertebrates](https://lter.github.io/lterdatasampler/reference/and_vertebrates.html) data set from LTER, which stands for Long Term Ecological Research network. This data set is comprised of sampling data for cutthroat trout and two salamander species in different habitats, for different years, with weight and body size measurements, as well as unique individual identifiers. It is a rather large data set, consisting of over 32,209 rows and 16 columns.
+For this workshop, we are going to read the [and_vertebrates :octicons-link-external-24:](https://lter.github.io/lterdatasampler/reference/and_vertebrates.html){:target="_blank"} data set from LTER, which stands for Long Term Ecological Research network. This data set is comprised of sampling data for cutthroat trout and two salamander species in different habitats, for different years, with weight and body size measurements, as well as unique individual identifiers. It is a rather large data set, consisting of over 32,209 rows and 16 columns.
 
 Today, we will load files into **data frames** in the standard, older way. In tomorrow's workshop, we will introduce you to *tidyverse* and teach you how loading files as **tibbles** can offer a number of advantages. For now, let's try the standard way:
 
@@ -818,7 +821,7 @@ Today, we will load files into **data frames** in the standard, older way. In to
 
 ```{r}
 
-vertebrates <- read.csv(file="https://harvardinformatics.github.io/workshops/2023-spring/r/data/LTER_andvertebrates.csv", sep=",", header=TRUE)
+vertebrates <- read.csv(file="https://harvardinformatics.github.io/workshops/2023-fall/r/data/LTER_andvertebrates.csv", sep=",", header=TRUE)
 
 ```
 
@@ -858,9 +861,9 @@ A word of caution with `View()`: be careful `View`ing large datasets, since they
 
 ```{r}
 
-## 1. View last 10 lines of the data frame with tail()
-
-## 1. View last 10 lines of the data frame with tail()
+### 1. View last 10 lines of the data frame with tail()
+tail(vertebrates, n=10)
+### 1. View last 10 lines of the data frame with tail()
 
 ```
 
@@ -870,12 +873,13 @@ Another useful function is `summary()` which provides basic summary statistics o
 
 ```{r}
 
-## 2. Use any method to get the average weight of the animals
-
-## 2. Use any method to get the average weight of the animals
+### 2. Use any method to get the average weight of the animals
+summary(vertebrates$weight_g)
+mean(vertebrates$weight_g, na.rm=T)
+### 2. Use any method to get the average weight of the animals
 
 ```
 
-# End of Part 1
+## End of Part 1
 
-In tomorrow's workshop, we will teach you how to load data in the [tidyverse](https://www.tidyverse.org/) way, how to select and filter a data set using certain criteria, how to construct new variables, and how to write the resulting outputs to new files.
+In tomorrow's workshop, we will teach you how to load data in the [tidyverse :octicons-link-external-24:](https://www.tidyverse.org/){:target="_blank"} way, how to select and filter a data set using certain criteria, how to construct new variables, and how to write the resulting outputs to new files.

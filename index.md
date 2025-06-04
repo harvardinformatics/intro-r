@@ -2,6 +2,34 @@
 title: Introduction to R
 ---
 
+<style>
+    table thead { display: none; }
+    .md-typeset table, 
+    .md-typeset th, 
+    .md-typeset td {
+        border: none !important;
+    }
+    /* Remove borders from table, th, and td */
+
+    .md-typeset__table tr:nth-child(even):hover,
+    .md-typeset__table tbody tr:nth-child(even):hover {
+        background-color: #f6f8fa !important;
+    }
+    .md-typeset__table tr:nth-child(odd):hover,
+    .md-typeset__table tbody tr:nth-child(odd):hover {
+        background-color: #ffffff !important;
+    }
+    /* Disable hover effect on table rows */
+
+    .md-button {
+        text-align: center !important;
+        justify-content: center !important;
+        align-items: center !important;
+        display: inline-flex !important;
+    }
+    /* Center the text in the button */
+</style>
+
 This workshop aims to introduce first-time users to the [R programming language :octicons-link-external-24:](https://www.r-project.org/){:target="_blank"} and the [RStudio :octicons-link-external-24:](https://posit.co/download/rstudio-desktop/){:target="_blank"} development environment. We will provide a basic introduction to coding in R and then shift to data manipulation using the [tidyverse :octicons-link-external-24:](https://www.tidyverse.org/){:target="_blank"}, a set of R libraries designed to handle data tables in a consistent and easy way. Then, we'll learn how to generate some basic plots to explore our data using [ggplot :octicons-link-external-24:](https://ggplot2.tidyverse.org/){:target="_blank"}. You do not need any prior programming experience to take this workshop. But also note that this workshop is not a comprehensive programming class nor a comprehensive statistics class. The main goal of this workshop is to get you familiar with reading your data into R and performing basic operations and generating figures.
 
 ## Before Class
@@ -93,7 +121,7 @@ Some common problems you may encounter:
 
 Workshop content is available below. Download the R Markdown (.Rmd) files for each day to do the excercises. After each day, we will make available the instructor version of the R Markdown file with the solutions to the exercises.
 
-### Day 1: Introduction to R
+### Day 1: Introduction to R (Part 1)
 
 Wednesday October 18th, 9:30 am - 12:30 pm, Location: [Biolabs :octicons-link-external-24:](https://goo.gl/maps/7ngpNbkWEM5uZuap8){:target="_blank"} room 2062/2064 
 
@@ -102,9 +130,7 @@ Wednesday October 18th, 9:30 am - 12:30 pm, Location: [Biolabs :octicons-link-ex
 * Writing and running R scripts
 * R objects and data types
 
-[Download R Markdown file :octicons-download-24:](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part1-student.Rmd){ .md-button } - [View completed version :material-arrow-right:](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part1.html){ .md-button }
-
-### Day 2: Introduction to data manipulation with the tidyverse
+### Day 2: Introduction to data manipulation with the tidyverse (Part 2)
 
 Friday October 20th, 9:30 am - 12:30 pm, Location: [Biolabs :octicons-link-external-24:](https://goo.gl/maps/7ngpNbkWEM5uZuap8){:target="_blank"} room 2062/2064 
 
@@ -113,9 +139,7 @@ Friday October 20th, 9:30 am - 12:30 pm, Location: [Biolabs :octicons-link-exter
 * Filtering and manipulating data tables (tibbles)
 * Piping
 
-[Download R Markdown file :octicons-download-24:](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part2-student.Rmd){ .md-button } - [View completed version :material-arrow-right:](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part2.html){ .md-button }
-
-### Day 3: More tidyverse and introduction to data visualization with ggplot
+### Day 3: More tidyverse and introduction to data visualization with ggplot (Part 2 and Part 3)
 
 Wednesday October 25th, 9:30 am - 12:30 pm, Location: [Jefferson Building :octicons-link-external-24:](https://maps.app.goo.gl/2orhqJRo3djPfkCy6){:target="_blank"} room 453 
 
@@ -124,9 +148,7 @@ Wednesday October 25th, 9:30 am - 12:30 pm, Location: [Jefferson Building :octic
 * Aesthetics and layers in ggplot
 * Various plot types
 
-[Download R Markdown file :octicons-download-24:](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part3-student.Rmd){ .md-button } - [View completed version :material-arrow-right:](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part3.html){ .md-button }
-
-### Day 4: More on ggplot
+### Day 4: More on ggplot (Part 3)
 
 Friday October 27th, 9:30 am - 12:30 pm, Location: [CGIS South :octicons-link-external-24:](https://goo.gl/maps/n2FAUngGYj8vKVCo9){:target="_blank"}, S050 
 
@@ -134,9 +156,14 @@ Friday October 27th, 9:30 am - 12:30 pm, Location: [CGIS South :octicons-link-ex
 * Colors and grouping data
 * Multi-panel figures
 
-[Download R Markdown file :octicons-download-24:](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part4-student.Rmd){ .md-button } - [View completed version :material-arrow-right:](https://harvardinformatics.github.io/workshops/2023-fall/r/R-workshop-2023-Part4.html){ .md-button }
+### Student notebooks
 
+|     |     |     |
+| --- | --- | --- |
+| [Part 1 - Intro to R :octicons-download-24:](R-workshop-Part1-student.Rmd){ .md-button } | [Part 2 - tidyverse :octicons-download-24:](R-workshop-Part2-student.Rmd){ .md-button } | [Part 3 - ggplot :octicons-download-24:](R-workshop-Part3-student.Rmd){ .md-button } |
 
+### Completed notebooks
 
-
-
+|     |     |     |
+| --- | --- | --- |
+| [Part 1 - Intro to R :material-arrow-right:](R-workshop-Part1.md){ .md-button } | [Part 2 - tidyverse :material-arrow-right:](R-workshop-Part2.md){ .md-button } | [Part 3 - ggplot :material-arrow-right:](R-workshop-Part3.md){ .md-button } |
