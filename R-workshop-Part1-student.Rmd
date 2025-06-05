@@ -3,10 +3,8 @@ title: "Introduction to R Part 1: Data manipulation with tidyverse: R Basics"
 date: "October 18, 2023"
 author: "Adam Freedman, Gregg Thomas, and Lei Ma"
 output: 
-  md_document:
-    pandoc_args: ["--wrap=preserve"]
-    md_extensions: -smart
-    preserve_yaml: TRUE    
+  html_document:
+    keep_md: true
 ---
 
 Welcome to the first part of the [FAS Informatics :material-arrow-top-right:](https://informatics.fas.harvard.edu/){:target="_blank"} Intro to R workshop! 

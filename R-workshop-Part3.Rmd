@@ -3,10 +3,8 @@ title: "Introduction to R Part 3: ggplot"
 date: "October 25 & 27, 2023"
 author: "Adam Freedman, Tim Sackton, Gregg Thomas, Lei Ma"
 output: 
-  md_document:
-    pandoc_args: ["--wrap=preserve"]
-    md_extensions: -smart
-    preserve_yaml: TRUE
+  html_document:
+    keep_md: true
 ---
 
 Welcome to the Part 3 of the [FAS Informatics :material-arrow-top-right:](https://informatics.fas.harvard.edu/){:target="_blank"} Intro to R workshop! 

@@ -3,10 +3,8 @@ title: "Introduction to R Part 2: Data manipulation with tidyverse"
 date: "October 20, 2023"
 author: "Adam Freedman, Lei Ma, Gregg Thomas"
 output: 
-  md_document:
-    pandoc_args: ["--wrap=preserve"]
-    md_extensions: -smart
-    preserve_yaml: TRUE
+  html_document:
+    keep_md: true
 ---
 
 Welcome to Day 2 of our Introduction to R workshop! If you're viewing this file on the website, you are viewing the final, formatted version of the workshop. The workshop itself will take place in the RStudio program and you will *edit and execute the code in this file*. Please download the raw file [here :octicons-download-24:](R-workshop-Part2-student.Rmd)
