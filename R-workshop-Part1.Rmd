@@ -86,7 +86,7 @@ So in the section above and throughout this workshop we use a lot of context dep
 
 In an attempt to offset this unintentional language barrier we provide tables with some contextual definitions of terms we may use throughout the workshop at the following link: 
 
-[R Terminology :material-arrow-top-right:](/resources/glossary/#r-terms){:target="_blank" .md-button .md-button--primary .centered }
+[R Terminology :material-arrow-top-right:](../../resources/glossary.md#r-terms){:target="_blank" .md-button .md-button--primary .centered }
 
 If you see hear any terms you think should be added to these tables, please let us know.
 
