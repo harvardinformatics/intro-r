@@ -1,7 +1,10 @@
 ---
 title: "Introduction to R Part 1: Data manipulation with tidyverse: R Basics"
 date: "October 18, 2023"
-author: "Adam Freedman, Gregg Thomas, and Lei Ma"
+authors: 
+  - Adam Freedman
+  - Gregg Thomas
+  - Lei Ma
 output: 
   html_document:
     keep_md: true

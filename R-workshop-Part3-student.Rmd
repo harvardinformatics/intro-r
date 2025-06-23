@@ -1,7 +1,11 @@
 ---
 title: "Introduction to R Part 3: ggplot"
 date: "October 25 & 27, 2023"
-author: "Adam Freedman, Tim Sackton, Gregg Thomas, Lei Ma"
+authors: 
+  - Adam Freedman
+  - Tim Sackton
+  - Gregg Thomas 
+  - Lei Ma
 output: 
   html_document:
     keep_md: true
