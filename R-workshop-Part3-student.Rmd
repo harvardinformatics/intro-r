@@ -1,5 +1,6 @@
 ---
-title: "Introduction to R Part 3: ggplot"
+title: "[Workshop] Introduction to R Part 3: ggplot"
+description: "An introduction to data visualization in R with ggplot."
 date: "October 25 & 27, 2023"
 authors: 
   - Adam Freedman
@@ -10,6 +11,8 @@ output:
   html_document:
     keep_md: true
 ---
+
+# Introduction to R Part 3: ggplot
 
 Welcome to the third day of the [FAS Informatics :material-arrow-top-right:](https://informatics.fas.harvard.edu/){:target="_blank"} Intro to R workshop! 
 
@@ -1202,3 +1205,4 @@ Now that's a figure (almost) ready for publication!
 
 cowplot has other capabilities that we won't cover today, such as `plot_grid()` receiving a *list of grobs* as input (as opposed to typing the name of each one out) and the `get_legend()` function that allows us to save only the legend from a particular grob as its own grob, which can then be added onto a multi-panel figure as a shared legend.
 
+---

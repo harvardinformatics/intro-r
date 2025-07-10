@@ -1,5 +1,6 @@
 ---
-title: "Introduction to R Part 1: R Basics"
+title: "[Workshop] Introduction to R Part 1: R Basics"
+description: "Introduction to R basics including the RStudio interface, R commands from the console, R scripts, and data types."
 date: "October 18, 2023"
 authors: 
   - Adam Freedman
@@ -9,6 +10,8 @@ output:
   html_document:
     keep_md: true
 ---
+
+# Introduction to R Part 1: R Basics
 
 Welcome to the first part of the [FAS Informatics :material-arrow-top-right:](https://informatics.fas.harvard.edu/){:target="_blank"} Intro to R workshop! 
 
@@ -1206,3 +1209,5 @@ mean(vertebrates$weight_g, na.rm=T)
 ## End of Part 1
 
 In tomorrow's workshop, we will teach you how to load data in the [tidyverse :octicons-link-external-24:](https://www.tidyverse.org/){:target="_blank"} way, how to select and filter a data set using certain criteria, how to construct new variables, and how to write the resulting outputs to new files.
+
+---

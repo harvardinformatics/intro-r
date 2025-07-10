@@ -1,5 +1,6 @@
 ---
-title: "Introduction to R Part 2: Data manipulation with tidyverse"
+title: "[Workshop] Introduction to R Part 2: Data manipulation with tidyverse"
+description: "An introduction to 'tidy' data and how to manipulate data with the tidyverse family of R packages."
 date: "October 20, 2023"
 authors: 
   - Adam Freedman
@@ -10,9 +11,9 @@ output:
     keep_md: true
 ---
 
-Welcome to Day 2 of our Introduction to R workshop! If you're viewing this file on the website, you are viewing the final, formatted version of the workshop. The workshop itself will take place in the RStudio program and you will *edit and execute the code in this file*. Please download the raw file [here :octicons-download-24:](R-workshop-Part2-student.Rmd)
+# Introduction to R Part 2: Data manipulation with tidyverse
 
-## Introduction to tidyverse
+Welcome to Day 2 of our Introduction to R workshop! If you're viewing this file on the website, you are viewing the final, formatted version of the workshop. The workshop itself will take place in the RStudio program and you will *edit and execute the code in this file*. Please download the raw file [here :octicons-download-24:](R-workshop-Part2-student.Rmd)
 
 ## What is tidy data?
 
@@ -1309,3 +1310,5 @@ vertebrates %>%
 You will notice that this has produced a warning message : `summarize()` has grouped output by 'species'. You can override using the `.groups` argument. The output of summarize is itself a tibble, which is grouped. However, we can't group it by both species and section, since these are now unique combinations with only one row per pair. So summarize() is telling us it has chosen to group the output tibble by the `species` variable not the `section` variable. 
 
 ## End of Part 2
+
+---

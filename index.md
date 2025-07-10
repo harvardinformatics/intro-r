@@ -1,5 +1,6 @@
 ---
-title: Introduction to R
+title: "[Workshop] Introduction to R"
+description: "Harvard FAS Informatics' multi-day introduction to R, covering R and Rstudio basics, tidyverse, and ggplot."
 authors:
     - Adam Freedman
     - Danielle Khost
@@ -8,6 +9,8 @@ authors:
     - Gregg Thomas
 author_header: Workshop Developers
 ---
+
+# Introduction to R
 
 {{ author_row(page) }}
 
