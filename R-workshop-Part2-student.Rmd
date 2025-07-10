@@ -1,5 +1,5 @@
 ---
-title: "[Workshop] Introduction to R Part 2: Data manipulation with tidyverse"
+title: "[Workshop] Introduction to R Part 2: tidyverse"
 description: "An introduction to 'tidy' data and how to manipulate data with the tidyverse family of R packages."
 date: "October 20, 2023"
 author: 
