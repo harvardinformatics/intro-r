@@ -795,7 +795,7 @@ df1[,2]
 
 **Columns** can also be accessed by their *name* and the dollar sign operator, `$`.
 
-> Run the code block below to display the whole second column of the data frame with the `$` operatoe:
+> Run the code block below to display the whole second column of the data frame with the `$` operator:
 
 ```{r}
 
