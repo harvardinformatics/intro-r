@@ -1,17 +1,21 @@
 ---
-title: "Introduction to R Part 2: Data manipulation with tidyverse"
+title: "[Workshop] Introduction to R Part 2: tidyverse"
+description: "An introduction to 'tidy' data and how to manipulate data with the tidyverse family of R packages."
 date: "October 20, 2023"
-author: "Adam Freedman, Lei Ma, Gregg Thomas"
+author: 
+  - Adam Freedman
+  - Lei Ma
+  - Gregg Thomas
 output: 
   html_document:
     keep_md: true
 ---
 
+# Introduction to R Part 2: Data manipulation with tidyverse
+
 Welcome to the second day of the [FAS Informatics :material-arrow-top-right:](https://informatics.fas.harvard.edu/){:target="_blank"} Intro to R workshop! 
 
 This is the workshop file that should be opened in RStudio. This is an RMarkdown file, meaning that both formatted text and code blocks can be added to it, and the code blocks can be executed from the RStudio interface. Today we will be going through this document and executing the code blocks within it to demonstrate some basic R programming concepts.
-
-## Introduction to tidyverse
 
 ## What is tidy data?
 
@@ -735,3 +739,5 @@ We have now produced mean statistic by species.
 You will notice that this has produced a warning message : `summarize()` has grouped output by 'species'. You can override using the `.groups` argument. The output of summarize is itself a tibble, which is grouped. However, we can't group it by both species and section, since these are now unique combinations with only one row per pair. So summarize() is telling us it has chosen to group the output tibble by the `species` variable not the `section` variable. 
 
 ## End of Part 2
+
+---

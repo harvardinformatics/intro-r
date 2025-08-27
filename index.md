@@ -1,34 +1,18 @@
 ---
-title: Introduction to R
+title: "[Workshop] Introduction to R"
+description: "Harvard FAS Informatics' multi-day introduction to R, covering R and Rstudio basics, tidyverse, and ggplot."
+authors:
+    - Adam Freedman
+    - Danielle Khost
+    - Lei Ma
+    - Tim Sackton    
+    - Gregg Thomas
+author_header: Workshop Developers
 ---
 
-<style>
-    table thead { display: none; }
-    .md-typeset table, 
-    .md-typeset th, 
-    .md-typeset td {
-        border: none !important;
-    }
-    /* Remove borders from table, th, and td */
+# Introduction to R
 
-    .md-typeset__table tr:nth-child(even):hover,
-    .md-typeset__table tbody tr:nth-child(even):hover {
-        background-color: #f6f8fa !important;
-    }
-    .md-typeset__table tr:nth-child(odd):hover,
-    .md-typeset__table tbody tr:nth-child(odd):hover {
-        background-color: #ffffff !important;
-    }
-    /* Disable hover effect on table rows */
-
-    .md-button {
-        text-align: center !important;
-        justify-content: center !important;
-        align-items: center !important;
-        display: inline-flex !important;
-    }
-    /* Center the text in the button */
-</style>
+{{ author_row(page) }}
 
 This workshop aims to introduce first-time users to the [R programming language :octicons-link-external-24:](https://www.r-project.org/){:target="_blank"} and the [RStudio :octicons-link-external-24:](https://posit.co/download/rstudio-desktop/){:target="_blank"} development environment. We will provide a basic introduction to coding in R and then shift to data manipulation using the [tidyverse :octicons-link-external-24:](https://www.tidyverse.org/){:target="_blank"}, a set of R libraries designed to handle data tables in a consistent and easy way. Then, we'll learn how to generate some basic plots to explore our data using [ggplot :octicons-link-external-24:](https://ggplot2.tidyverse.org/){:target="_blank"}. You do not need any prior programming experience to take this workshop. But also note that this workshop is not a comprehensive programming class nor a comprehensive statistics class. The main goal of this workshop is to get you familiar with reading your data into R and performing basic operations and generating figures.
 
@@ -167,3 +151,36 @@ Friday October 27th, 9:30 am - 12:30 pm, Location: [CGIS South :octicons-link-ex
 |     |     |     |
 | --- | --- | --- |
 | [Part 1 - Intro to R :material-arrow-right:](R-workshop-Part1.md){ .md-button } | [Part 2 - tidyverse :material-arrow-right:](R-workshop-Part2.md){ .md-button } | [Part 3 - ggplot :material-arrow-right:](R-workshop-Part3.md){ .md-button } |
+
+---
+
+<!-- --------------------------------- -->
+<!-- Page speciifc CSS -->
+
+<style>
+    table thead { display: none; }
+    .md-typeset table, 
+    .md-typeset th, 
+    .md-typeset td {
+        border: none !important;
+    }
+    /* Remove borders from table, th, and td */
+
+    .md-typeset__table tr:nth-child(even):hover,
+    .md-typeset__table tbody tr:nth-child(even):hover {
+        background-color: #f6f8fa !important;
+    }
+    .md-typeset__table tr:nth-child(odd):hover,
+    .md-typeset__table tbody tr:nth-child(odd):hover {
+        background-color: #ffffff !important;
+    }
+    /* Disable hover effect on table rows */
+
+    .md-button {
+        text-align: center !important;
+        justify-content: center !important;
+        align-items: center !important;
+        display: inline-flex !important;
+    }
+    /* Center the text in the button */
+</style>
