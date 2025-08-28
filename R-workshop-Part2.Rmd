@@ -17,10 +17,10 @@ Welcome to Day 2 of our Introduction to R workshop! If you're viewing this file 
 
 ## What is tidy data?
 
-The notion of tidy data has been around in various incarnations for a while but has more recently been formalized in this [paper :octicons-download-24:](https://vita.had.co.nz/papers/tidy-data.pdf){:target="_blank"} by Hadley Wickham, the developer of *tidyverse*. Tidy data are, in short, data that have been organized in a consistent way that makes data exploration and visualization easier. Two key principles are that:
+The notion of tidy data has been around in various incarnations for a while but has more recently been formalized in this [paper :octicons-download-24:](https://vita.had.co.nz/papers/tidy-data.pdf){:target="\_blank"} by Hadley Wickham, the developer of *tidyverse*. Tidy data are, in short, data that have been organized in a consistent way that makes data exploration and visualization easier. Two key principles are that:
 
-* Each variable forms a column
-* Each observation forms a row
+-   Each variable forms a column
+-   Each observation forms a row
 
 Organized this way, for analysis with software such as R, values for different variables can be linked within observations, e.g. rows of our example data from day 1 are observations of individual trout or salamanders, and columns contain information about each individual (the habitat they were found in, body weight, etc.) such that one could explore how the weight or body size varies by habitat and species. Often times data that one pulls down from a repository (or that is provided by a collaborator) are not tidy! For example, multiple variables may be stored in the same column, such as when two different treatment types are concatenated into a single string. Tidying such data would require separating each treatment into a separate column.
 
@@ -36,23 +36,20 @@ R packages are extensions to the base R environment. They typically contain code
 
 Some packages are included with the base R installation. You can see the packages that come with R by default (or that you may have installed) if you click over to the *Packages* tab in your Rstudio window. However, many packages you will want to use for data analysis need to be downloaded. R packages generally come from one of two places:
 
-* [CRAN :octicons-link-external-24:](https://cran.r-project.org/){:target="_blank"}: default source for "official" R packages
-* [Bioconductor :octicons-link-external-24:](https://www.bioconductor.org/){:target="_blank"}: specialized packages for analyses of biological data
+-   [CRAN :octicons-link-external-24:](https://cran.r-project.org/){:target="\_blank"}: default source for "official" R packages
+-   [Bioconductor :octicons-link-external-24:](https://www.bioconductor.org/){:target="\_blank"}: specialized packages for analyses of biological data
 
-How you install packages will depend on where you are getting the package from. For *CRAN*, you can use the R function `install.packages()` or the Rstudio Tools -> Install Packages menu. For example, if you wanted to install the *abc* package for doing Approximate Bayesian Computation, in the R console you would simply type: *install.packages("abc")*. 
+How you install packages will depend on where you are getting the package from. For *CRAN*, you can use the R function `install.packages()` or the Rstudio Tools -\> Install Packages menu. For example, if you wanted to install the *abc* package for doing Approximate Bayesian Computation, in the R console you would simply type: *install.packages("abc")*.
 
-To install *Bioconductor* packages, you will need to first install the Bioconductor package manager (BUT DON"T DO THIS NOW!):
-```if (!require("BiocManager", quietly = TRUE))
-install.packages("BiocManager")
-BiocManager::install(version = "3.16")```
+To install *Bioconductor* packages, you will need to first install the Bioconductor package manager (BUT DON"T DO THIS NOW!): `if (!require("BiocManager", quietly = TRUE)) install.packages("BiocManager") BiocManager::install(version = "3.16")`
 
-Once the package manager is installed, you can install a Bioconductor project packages with the following syntax: ```BiocManager::install(<name of Bioconductor R package>)```. We won't discuss Bioconductor more in this workshop, but it is a useful resource to be aware of. 
+Once the package manager is installed, you can install a Bioconductor project packages with the following syntax: `BiocManager::install(<name of Bioconductor R package>)`. We won't discuss Bioconductor more in this workshop, but it is a useful resource to be aware of.
 
-Packages frequently have other R packages as dependencies, and so you will often get the prompt from R asking if you want to update (the dependencies) to their current version, and if you want to compile packages that require compilation from source. Packages compiled from source can be particularly prone to installation failures, especially on M1/M2 Macs, and often require some searching to decode how to proceed. But today we will only use packages that are simple and easy to install. 
+Packages frequently have other R packages as dependencies, and so you will often get the prompt from R asking if you want to update (the dependencies) to their current version, and if you want to compile packages that require compilation from source. Packages compiled from source can be particularly prone to installation failures, especially on M1/M2 Macs, and often require some searching to decode how to proceed. But today we will only use packages that are simple and easy to install.
 
-So we mentioned that *tidyverse* is a collection of R packages. You can conveniently install all these related packages with one install command. 
+So we mentioned that *tidyverse* is a collection of R packages. You can conveniently install all these related packages with one install command.
 
-> If you haven't already installed *tidyverse*, do that now by executing the following code block. 
+> If you haven't already installed *tidyverse*, do that now by executing the following code block.
 
 ```{r,eval=FALSE}
 
@@ -60,7 +57,7 @@ install.packages("tidyverse")
 
 ```
 
-Note that installing a package is not the same thing as loading it into your current R session. Once the package is installed, you have the functions on your computer, but in order to use them in your R session, you need to load the package, which we usually do with the `library` function. 
+Note that installing a package is not the same thing as loading it into your current R session. Once the package is installed, you have the functions on your computer, but in order to use them in your R session, you need to load the package, which we usually do with the `library` function.
 
 > Then load *tidyverse* by running the following code block
 
@@ -70,7 +67,7 @@ library(tidyverse)
 
 ```
 
-For more information, go to [tidyverse :octicons-link-external-24:](https://www.tidyverse.org/){:target="_blank"}.
+For more information, go to [tidyverse :octicons-link-external-24:](https://www.tidyverse.org/){:target="\_blank"}.
 
 Packages usually come with *vignettes*, which give you short introductions and tutorials for their use. You can find these on the web, but you can also browse them in R.
 
@@ -84,7 +81,7 @@ browseVignettes(package = "dplyr")
 
 ## Loading files the *tidyverse* way
 
-Now, back to data manipulation. 
+Now, back to data manipulation.
 
 As the entire point of of *tidyverse* is to facilitate data analysis, let's load data the *tidyverse* way, using the `read_csv()` function.
 
@@ -96,7 +93,7 @@ vertebrates <- read_csv(file="https://harvardinformatics.github.io/workshops/202
 
 ```
 
-Note that there are some key differences between `read_csv` or `read_table` and their base R equivalents (`read.csv` and `read.table`). One important one is that the default for `read_csv` is to assume the first row of your data contains column names, which is the opposite of `read.csv` as we saw yesterday. These functions also produce *tibbles*, which are effectively just *data.frames* with some improvements to how they are displayed and a few other minor, subtle differences. But you can think of them as pretty data.frames. 
+Note that there are some key differences between `read_csv` or `read_table` and their base R equivalents (`read.csv` and `read.table`). One important one is that the default for `read_csv` is to assume the first row of your data contains column names, which is the opposite of `read.csv` as we saw yesterday. These functions also produce *tibbles*, which are effectively just *data.frames* with some improvements to how they are displayed and a few other minor, subtle differences. But you can think of them as pretty data.frames.
 
 > Run the following code block to see some basic information about this data.
 
@@ -116,7 +113,7 @@ glimpse(vertebrates)
 
 ```
 
-We can of course use all our non-tidyverse (base R) functions to look at data, like `head` and `View`, since tibbles are just pretty data frames. 
+We can of course use all our non-tidyverse (base R) functions to look at data, like `head` and `View`, since tibbles are just pretty data frames.
 
 > To get the first 10 lines of vertebrates, run the following code block:
 
@@ -128,11 +125,11 @@ head(vertebrates, 10)
 
 ## A simple tidyverse function: sorting a tibble on a column value
 
-Today we'll talk about a bunch of functions that are part of tidyverse and provide convenient ways to manipulate tibbles. While we'll discuss this in the context of tibbles, everything here works on data frames too - remember a tibble is just a pretty data frame. 
+Today we'll talk about a bunch of functions that are part of tidyverse and provide convenient ways to manipulate tibbles. While we'll discuss this in the context of tibbles, everything here works on data frames too - remember a tibble is just a pretty data frame.
 
-Tidyverse functions can get very complex, but they share a common grammar. We'll see the real power of this on day 3 when we talk about the grammar of graphics using *ggplot*, but getting a handle on the basic grammar of the tidyverse can help you a lot with data manipulation as well. 
+Tidyverse functions can get very complex, but they share a common grammar. We'll see the real power of this on day 3 when we talk about the grammar of graphics using *ggplot*, but getting a handle on the basic grammar of the tidyverse can help you a lot with data manipulation as well.
 
-We'll start with something really simple: sorting a data frame. We do this with the `arrange()` function. 
+We'll start with something really simple: sorting a data frame. We do this with the `arrange()` function.
 
 > To sort the tibble by species, run the following code block:
 
@@ -148,7 +145,7 @@ What happens if we just type `species` in the **Console**?
 
 Tidyverse allows you to treat the **variables in your current data frame** as if they were **objects**. That is, within the arrange function (or almost any tidyverse function), you can reference the names of columns in your data frame and magically the function understands what you mean.
 
-What if we want to sort by multiple values? For example, first sort by section, and then sort by year? 
+What if we want to sort by multiple values? For example, first sort by section, and then sort by year?
 
 Many tidyverse functions have a special second argument that you will see listed in the help pages as `...`. You can look at `?arrange` as an example. This means that the second argument to these functions can be any number of columns, and the function will work on those columns in order. So to sort by section and then year:
 
@@ -170,11 +167,11 @@ arrange(vertebrates, section, desc(year))
 
 ```
 
-`desc()` here is a helper function that turns year into a descending sort instead of ascending. Tidyverse has a lot of these, although not many are applicable to `arrange()` we'll introduce more as we work through today. 
+`desc()` here is a helper function that turns year into a descending sort instead of ascending. Tidyverse has a lot of these, although not many are applicable to `arrange()` we'll introduce more as we work through today.
 
 Note that so far we haven't stored the sorted data. Let's try that now.
 
-> **Sorting exercise*. Sort the vertebrates tibble by species, then by year, then by sample date, and store the output in a new tibble called `sorted_verts`.
+> \*\*Sorting exercise\*. Sort the vertebrates tibble by species, then by year, then by sample date, and store the output in a new tibble called `sorted_verts`.
 
 ```{r}
 
@@ -182,10 +179,9 @@ sorted_verts <- arrange(vertebrates, species, sampledate)
 
 ```
 
-
 ## Selecting a subset of columns
 
-Sometimes in a big data set, there are a lot of columns that are not germane to the analysis at hand, such that one can simply select columns that represent the variables you want to work with. To do this we use the ```select()``` function. 
+Sometimes in a big data set, there are a lot of columns that are not germane to the analysis at hand, such that one can simply select columns that represent the variables you want to work with. To do this we use the `select()` function.
 
 For example, let's say we are interested in body size and weight as a function of habitat type adjacent to the watercourse that was sampled for trout and salamanders. The *section* variable has values for clear cut forest (CC) and old growth (OG). At some point, we might also be interested in looking at inter-annual variation. So, we are going to select the *year*,*section*,*species*,*length_1_mm*, and *weight_g* variables and assign the selected columns to a new tibble
 
@@ -197,7 +193,7 @@ select(vertebrates, year, section, species, length_1_mm, weight_g)
 
 ```
 
-The first argument to ```select()``` is the tibble one is subsetting from, and the rest of the arguments are the columns we wanted to keep. We see that ```select``` produced a tibble with the same number of rows as the *vertebrates* tibble, but only with the columns we chose to include. Note that, the above implementation of ```select()``` **DOES NOT** produce a new tibble: it simply prints the result to the screen. If we want to store the output, we need to redirect to a new tibble.
+The first argument to `select()` is the tibble one is subsetting from, and the rest of the arguments are the columns we wanted to keep. We see that `select` produced a tibble with the same number of rows as the *vertebrates* tibble, but only with the columns we chose to include. Note that, the above implementation of `select()` **DOES NOT** produce a new tibble: it simply prints the result to the screen. If we want to store the output, we need to redirect to a new tibble.
 
 > To produce a new tibbble consisting of *year*, *section*, *length_1_mm*, and *weight_g*, run the following code block:
 
@@ -210,7 +206,6 @@ size_data
 
 The `select` function, you should notice, works kind of like indexes we talked about yesterday. But it is a lot easier to use, because you can refer to the column names as variables in your command. Tidyverse magic at work!
 
-
 As another example,let's say we plan on doing a bunch of analyses only on salamanders, and we want, as our first step in data processing to get rid of all column variables that are exclusively related to trout: *clip*. Let's say we also don't care about which electroshock pass number the observation was made on (*pass*), and we don't really care about the *notes* column as it isn't data we can realistically analyze. How do we dump columns rather than selection *for* them? We can do this by applying a logical "NOT" by placing a *!* in front of a vector of variables we want to filter out.
 
 > To exclude the *clip*, *pass*, and *notes* variables, run the following code block:
@@ -221,7 +216,7 @@ select(vertebrates, !c(clip, pass, notes))
 
 ```
 
-> To convince yourself those variables actually got filtered out, run ```glimpse()``` in the code block below:
+> To convince yourself those variables actually got filtered out, run `glimpse()` in the code block below:
 
 ```{r}
 
@@ -229,8 +224,7 @@ glimpse(select(vertebrates, !c(clip, pass, notes)))
 
 ```
 
-Again, in this example we have NOT yet created a new tibble for downstream data analysis, we have simply printed the result of ```select()``` to the screen. We would have to redirect the output of this function to a new tibble to save the result.
-
+Again, in this example we have NOT yet created a new tibble for downstream data analysis, we have simply printed the result of `select()` to the screen. We would have to redirect the output of this function to a new tibble to save the result.
 
 > To generate the new tibble, run the following code block:
 
@@ -244,7 +238,7 @@ Of course, if we aren't interested in trout, we would want to filter on the *spe
 
 > **Column selection exercise:**
 >
-> 1. As a prelude to quantifying sampling effort across habitats and years, construct a new tibble called *sampling_data* that includes the following variables: *year*, *sitecode*, *section*, *reach*, and *species*:
+> 1.  As a prelude to quantifying sampling effort across habitats and years, construct a new tibble called *sampling_data* that includes the following variables: *year*, *sitecode*, *section*, *reach*, and *species*:
 
 ```{r}
 
@@ -252,9 +246,9 @@ sampling_data <- select(vertebrates, year, sitecode, section, reach, species)
 
 ```
 
-With large data frames with many columns, it can often be difficult to type out a list of everything you want. Conveniently, select comes with its own helper functions to allow you to pick columns. For example, the `starts_with()` function generates a list of all the columns that start with a particular word in the current data frame. 
+With large data frames with many columns, it can often be difficult to type out a list of everything you want. Conveniently, select comes with its own helper functions to allow you to pick columns. For example, the `starts_with()` function generates a list of all the columns that start with a particular word in the current data frame.
 
-> To see how ```starts_with```, works, run the following code block:
+> To see how `starts_with`, works, run the following code block:
 
 ```{r}
 
@@ -262,9 +256,10 @@ select(vertebrates, species, year, starts_with("length"))
 
 ```
 
-There are lots more of these: `?select` is your friend here. 
+There are lots more of these: `?select` is your friend here.
 
 ## Selecting a subset of rows based upon values of variables
+
 Up until now, we have been selecting columns to remove or keep. Often times, one wants to restrict analysis and visualization to a subset of the observations, that is, to select particular **rows**. In the case of our data set, perhaps you are only interested in cutthroat trout, and only those that occur in old growth forest. The `filter()` function allows you to select **rows** based upon values in multiple columns, similar to how we talked about logical vectors yesterday. This function works by only returning values where the condition is true. It not only excludes those for which it is FALSE, it also filters out rows where there is missing data (i.e. NA) for the column evaluated (because any logical test evaluates to false when given NA).
 
 Let us try creating a new tibble, with data restricted to trout.
@@ -291,7 +286,7 @@ trout_OG
 
 When we provide more than one filtering criterion, the commas between those criteria are equivalent of *AND* in a logical statement. The filter command above effectively says: return rows where species == "Cutthroat trout" AND section == "OG".
 
-Similarly, we can use "|" to specify *OR* in a logical filtering step. For example if we wanted records with either Cutthroat trout OR Coastal giant salamander we can specify two acceptable values for *species*.
+Similarly, we can use "\|" to specify *OR* in a logical filtering step. For example if we wanted records with either Cutthroat trout OR Coastal giant salamander we can specify two acceptable values for *species*.
 
 > To make this type of *OR* selection, run the code block below:
 
@@ -317,13 +312,13 @@ Let's try another, more complex example where we only want salamanders and combi
 
 > To do this, run the following code block:
 
-```{r}    
+```{r}
 
 filter(vertebrates, species %in% c("Coastal giant salamander", "Cascade torrent salamander"), (section == "OG" &  reach == "U") | (section == "CC" & reach=="L"))
 
 ```
 
-The ```%in%``` is a way to construct a logical statment meaning "IN the following vector". In this case, in the construction of a logical criterion for rows, *&* is used to specify *AND* and *|* is used to specify *OR*. It is *VERY IMPORTANT* to understand how R interprets these logical operators. In general, *AND* is *stronger* than *OR*, meaning the ANDs get interpreted first. 
+The `%in%` is a way to construct a logical statment meaning "IN the following vector". In this case, in the construction of a logical criterion for rows, *&* is used to specify *AND* and *\|* is used to specify *OR*. It is *VERY IMPORTANT* to understand how R interprets these logical operators. In general, *AND* is *stronger* than *OR*, meaning the ANDs get interpreted first.
 
 To clarify what we mean by this, imagine the following vector:
 
@@ -342,21 +337,21 @@ Now look at the result of the following two logical operations:
 
 ```
 
-In the first statement, the part after the "|" , i.e the *AND* gets done first, and it is FALSE. The part before, evaluting whether 3 is in *test* is TRUE. So, the logical statement is saying TRUE | FALSE, and in logical statments, if one of the options in an OR statment is TRUE, the statement returns TRUE. In the second statment, the condition before the "|" has an AND, so it is evaluated first. Both numbers aren't in *test* so it is FALSE. The part to the right of the "|" is also FALSE, thus FALSE OR FALSE returns FALSE.
+In the first statement, the part after the "\|" , i.e the *AND* gets done first, and it is FALSE. The part before, evaluting whether 3 is in *test* is TRUE. So, the logical statement is saying TRUE \| FALSE, and in logical statments, if one of the options in an OR statment is TRUE, the statement returns TRUE. In the second statment, the condition before the "\|" has an AND, so it is evaluated first. Both numbers aren't in *test* so it is FALSE. The part to the right of the "\|" is also FALSE, thus FALSE OR FALSE returns FALSE.
 
 For purposes of making our R code clearer -- and it is a good idea to do this in your R code -- when writing complex tibble filtering operations, we put the criteria joined by *AND* inside parentheses. Thus the statement is saying: "select rows for which species is in the vector of salamander names (that only includes salamanders), and for which either section equals OG *AND* reach equals U... *OR* ... section equals CC and reach equals L.
 
-Another way we could run the same command would be to use an *OR* statement instead of the ```%in%```. 
+Another way we could run the same command would be to use an *OR* statement instead of the `%in%`.
 
 > To use the *OR* statement to achieve this filtering, run the code block below:
 
-```{r}    
+```{r}
 
 filter(vertebrates, (species == "Coastal giant salamander" | species == "Cascade torrent salamander"), (section == "OG" &  reach == "U") | (section == "CC" & reach=="L"))
 
 ```
 
-> **Complex row selection exercise** Can you select only observations generated after the year 2000, where the species is Cutthroat trout, and where the reach is lower (L) or middle (M) but not upper (U). 
+> **Complex row selection exercise** Can you select only observations generated after the year 2000, where the species is Cutthroat trout, and where the reach is lower (L) or middle (M) but not upper (U).
 
 ```{r}
 
@@ -364,8 +359,8 @@ filter(vertebrates,species == "Cutthroat trout", reach != "U", year > 2000)
 
 ```
 
-
 ## Creating new variables with mutate()
+
 Often times, we want to perform analyses on synthetic variables that are derived from the original variables in a data set. For example, one might want to look at one variable normalized by the mean value of that variable, or one variable divided by another.
 
 In this data set, we have both weight (weight_g) and body size (length_1_mm). Let's add a column variable to our tibble that is weight divided by body size (length), which might be viewed as an index of body condition. We'll do this with the `mutate()` function.
@@ -378,13 +373,11 @@ vertebrates <- mutate(vertebrates, body_condition = weight_g/length_1_mm)
 
 ```
 
-In redirecting back to the *vertebrates* tibble, we are changing the input data rather than writing a new tibble with this variable added. Note also that this command will **overwrite** the body condition column, if it exists. This is often what is desired, but be aware of this behavior. 
+In redirecting back to the *vertebrates* tibble, we are changing the input data rather than writing a new tibble with this variable added. Note also that this command will **overwrite** the body condition column, if it exists. This is often what is desired, but be aware of this behavior.
 
-> **New variables creation exercise 1:**
-> For Coastal giant salamanders, *length_1_mm* represents snout to vent length and  *length_2_mm* represents snout to tail length. By subtracting the former from the latter, we can get the tail length. Use filter to select only Coastal giant salamanders (the only species for which *length_2_mm* was taken), then create a new column for tail length. Then use the ```mean()``` and ```sd()``` functions to calculate mean and standard deviation of tail length. Once you've done that, create a new column that is the variable *tail_outlier* which is a boolean variable that indicates whether tail length is greater than or less than 2 standard deviations away from the mean, and add this to the *coastal* tibble. Finally, creat e a new tibble called *outliers* that only contains Coastal salamanders with outlier-classified tail lengths.
+> **New variables creation exercise 1:** For Coastal giant salamanders, *length_1_mm* represents snout to vent length and *length_2_mm* represents snout to tail length. By subtracting the former from the latter, we can get the tail length. Use filter to select only Coastal giant salamanders (the only species for which *length_2_mm* was taken), then create a new column for tail length. Then use the `mean()` and `sd()` functions to calculate mean and standard deviation of tail length. Once you've done that, create a new column that is the variable *tail_outlier* which is a boolean variable that indicates whether tail length is greater than or less than 2 standard deviations away from the mean, and add this to the *coastal* tibble. Finally, creat e a new tibble called *outliers* that only contains Coastal salamanders with outlier-classified tail lengths.
 
-This is a complicated exercise, but there are hints in the comments below. Note there are many ways to do this exercise, and the hints are just one way. You might find ways to combined steps, for example. 
-
+This is a complicated exercise, but there are hints in the comments below. Note there are many ways to do this exercise, and the hints are just one way. You might find ways to combined steps, for example.
 
 ```{r}
 
@@ -409,12 +402,11 @@ outliers <- filter(coastal, tail_outlier == TRUE)
 ## You should have 522 observations in your outliers tibble. If you don't and you aren't sure what went wrong, put up your red sticky.
 ```
 
+### Using `mutate()` to reformat missing values
 
-### Using ```mutate()``` to reformat missing values
+Another important use of `mutate()` is to convert missing values. Data sets are frequently not constructed with R in mind, such that missing values might be formatted differently, e.g. -999 or "N/A". Of course, one wouldn't want to generate plots that included the value -999. While our example data already have missing data formatted in an R-compliant way, here is an example of how one would convert -999 to NA. We use `mutate()` combined with the `na_if()` function for this.
 
-Another important use of `mutate()` is to convert missing values. Data sets are frequently not constructed with R in mind, such that missing values might be formatted differently, e.g. -999 or "N/A". Of course, one wouldn't want to generate plots that included the value -999. While our example data already have missing data formatted in an R-compliant way, here is an example of how one would convert -999 to NA. We use `mutate()` combined with the `na_if()` function for this. 
-
-The `na_if()` function is a tidyverse function that converts the specified value to NA. 
+The `na_if()` function is a tidyverse function that converts the specified value to NA.
 
 > As an example of `na_if()`, run the code block below:
 
@@ -424,7 +416,7 @@ vertebrates <- mutate(vertebrates, length_1_mm = na_if(length_1_mm, -999))
 
 ```
 
-In other circumstances, one might want to replace a missing data point with an expected value of that data point (assuming the dispersion of that variable is not too large). For example, there are 17 NAs in *length_1_mm*. We can use the `replace_na()` function to do this, which is basically the inverse of `na_if()`. 
+In other circumstances, one might want to replace a missing data point with an expected value of that data point (assuming the dispersion of that variable is not too large). For example, there are 17 NAs in *length_1_mm*. We can use the `replace_na()` function to do this, which is basically the inverse of `na_if()`.
 
 > To replace NAs for *length_1_mm* with the median value in a new tibble, run the following code block:
 
@@ -434,9 +426,9 @@ nolengthNAs <- mutate(vertebrates, length_1_mm = replace_na(length_1_mm, median(
 
 ```
 
-In this case, we have created a new tibble, as we probably don't want to overwrite the original data, in case we want to undo the conversion of missing data to the median value. Notice, as with earlier use of summary statistics functions, we include the ```na.rm=TRUE``` statement. Otherwise, we would be replacing NA with NA, as applying ```median()``` to a vector containing NAs returns NA as its value! Of course, the calculation we just performed doesn't make much actual biological sense, because we are taking the median of *length_1_mm" across all species in the tibble, when what we should really do is a more complex operation (which we won't do right now), which would be to replace NAs for any species with a median calculated only from values for that species.
+In this case, we have created a new tibble, as we probably don't want to overwrite the original data, in case we want to undo the conversion of missing data to the median value. Notice, as with earlier use of summary statistics functions, we include the `na.rm=TRUE` statement. Otherwise, we would be replacing NA with NA, as applying `median()` to a vector containing NAs returns NA as its value! Of course, the calculation we just performed doesn't make much actual biological sense, because we are taking the median of \*length_1_mm" across all species in the tibble, when what we should really do is a more complex operation (which we won't do right now), which would be to replace NAs for any species with a median calculated only from values for that species.
 
-Let's try to create a new variable that represents a Z score, i.e. a transformation of a set of measurements that represents the number of standard deviations it is away from the mean (and in what direction). Above, we have seen the ```mean()``` and ```sd()``` functions. A Z-score for an observation is simply (observation - mean of observations) / standard deviation of observations, with the distribution of Z being standard normal, i.e. mean == 0 and standard deviation == 1. Using the *coastal* tibble, we can create a new variable *length_1_mm_Z* that represents a Z-transformation of snout-vent length for the Coastal giant salamander. We will write the output to a new tibble *coastalZ*. There are really three  ways to generate the new Z-score variable. The first, is to write the calculation of the Z-score from inside of the ```mutate()``` function. To do this ...
+Let's try to create a new variable that represents a Z score, i.e. a transformation of a set of measurements that represents the number of standard deviations it is away from the mean (and in what direction). Above, we have seen the `mean()` and `sd()` functions. A Z-score for an observation is simply (observation - mean of observations) / standard deviation of observations, with the distribution of Z being standard normal, i.e. mean == 0 and standard deviation == 1. Using the *coastal* tibble, we can create a new variable *length_1_mm_Z* that represents a Z-transformation of snout-vent length for the Coastal giant salamander. We will write the output to a new tibble *coastalZ*. There are really three ways to generate the new Z-score variable. The first, is to write the calculation of the Z-score from inside of the `mutate()` function. To do this ...
 
 > Run the code block below to create the Z-score variable:
 
@@ -459,8 +451,7 @@ sd(coastalZ$length_1_mm_Z, na.rm=TRUE)
 
 ```
 
-> **New variables creation exercise 2:**
-> Can you think of another way to generate the Z-score column? Hint: you can create new variables for the constituent parts of the Z-score function, and then perform the calculation using those constituent parts. Try doing that, updating *coastalZ* with the new variables. It should take three separate mutate commands. Write the Z-score to the new variable *z2*
+> **New variables creation exercise 2:** Can you think of another way to generate the Z-score column? Hint: you can create new variables for the constituent parts of the Z-score function, and then perform the calculation using those constituent parts. Try doing that, updating *coastalZ* with the new variables. It should take three separate mutate commands. Write the Z-score to the new variable *z2*
 
 ```{r}
 
@@ -469,9 +460,9 @@ coastalZ <- mutate(coastalZ, sdlength =  sd(length_1_mm, na.rm=TRUE))
 coastalZ <- mutate(coastalZ, z2 = (length_1_mm - meanlength) / sdlength)
 
 ```
- 
+
 To confirm this produces the same output as the first implementation, calculate the mean and standard deviation of *z2* (these should also be 0 and 1, respectively).
- 
+
 ```{r}
 
 mean(coastalZ$z2, na.rm=TRUE)
@@ -481,7 +472,7 @@ sd(coastalZ$z2, na.rm=TRUE)
 
 The distinction between these two approaches is that, in the first case, one is recycling the mean and standard deviation values (effectively vectors of size 1 each) in applying them to every element of *length_1_mm* in calculating the Z-score values in the respective rows. In the second case, because we have constructed mean and standard deviation variables of equal length to *length_1_mm*, we are doing mathematical operations on same-sized vectors. Of course, one might not want to store the same (e.g.mean) value over thousands of rows. The point here is to reinforce the idea that the same result can be achieved by constructing vectors of different lengths.
 
-### Tibbles won't recycle vectors of length > 1 
+### Tibbles won't recycle vectors of length \> 1
 
 As a side note to this, it is important to know that mutate requires that the object passed to the new column name argument is a vector of length 1 or a vector of length equal to the number of rows in the tibble. If you try to recycle a vector of length 2 in a mutate command, you'll get an error:
 
@@ -532,7 +523,7 @@ Other useful flavors of join are *inner_join*, which only keep observations obse
 
 It can often be the case that a data table was created with different column variables that represent different types of the same class of measurement. For example, repeated weight measurements of a laboratory organism undergoing an experimental treatment might be recorded with a separate column for each measurement date. From a statistical and plotting perspective, date is a factor, and it can be more convenient to have all the weights in a single column, and a separate column for measurement date. In addition, it can make it easier to inspect data if there are fewer columns to look at ... otherwise, you are panning back and forth.
 
-While converting from wide to long is often a step for tidying untidy data, we will show how to do this with some already tidied data on ... wait for it ... penguins!  The [Palmer penguins :octicons-link-external-24:](https://allisonhorst.github.io/palmerpenguins/){:target="_blank"} data set contains measurement data for 3 species of penguins collected on three islands at the LTER site in the Palmer Archipelago, Antarctica. 
+While converting from wide to long is often a step for tidying untidy data, we will show how to do this with some already tidied data on ... wait for it ... penguins! The [Palmer penguins :octicons-link-external-24:](https://allisonhorst.github.io/palmerpenguins/){:target="\_blank"} data set contains measurement data for 3 species of penguins collected on three islands at the LTER site in the Palmer Archipelago, Antarctica.
 
 While the data are available as an R package, we have converted the data to a tsv file that can be easily loaded into Rstudio:
 
@@ -559,7 +550,7 @@ penguins <- mutate(penguins, id = row_number())
 # Then, we use the function pivot_longer() to merge columns together
 penguins_long <- pivot_longer(penguins, c(bill_length_mm, bill_depth_mm, flipper_length_mm), names_to="morphtype", values_to="mm")
 
-``` 
+```
 
 In this operation, we specify the data frame being transformed, as well as a vector of column names for the columns we wish to merge. *names_to* is the new column that we are creating that will contain the old column name (of those column names merged), while *values_to* is the name of the new column that will store the actual measurement data.
 
@@ -571,7 +562,7 @@ glimpse(penguins_long)
 
 ```
 
-One thing we can see is that the new values in *morphtype* are unnecessarily long, because they all contain "_mm" embedded in the label ... but we know the data are measured in millimeters, hence the name of the new column *mm*. So, we can use `mutate()` and `str_replace()` to strip that suffix off of the values:            
+One thing we can see is that the new values in *morphtype* are unnecessarily long, because they all contain "\_mm" embedded in the label ... but we know the data are measured in millimeters, hence the name of the new column *mm*. So, we can use `mutate()` and `str_replace()` to strip that suffix off of the values:
 
 ```{r}
 
@@ -579,26 +570,25 @@ penguins_long <- mutate(penguins_long, morphtype = str_replace(morphtype, "_mm",
 
 ```
 
-It should be noted, that there are other, more complicated ways of performing wide-to-long operations. For more information, see the tidyverse documentation for [pivot_longer :octicons-link-external-24:](https://tidyr.tidyverse.org/reference/pivot_longer.html){:target="_blank"}, or use R help to get more information displayed inside Rstudio.
+It should be noted, that there are other, more complicated ways of performing wide-to-long operations. For more information, see the tidyverse documentation for [pivot_longer :octicons-link-external-24:](https://tidyr.tidyverse.org/reference/pivot_longer.html){:target="\_blank"}, or use R help to get more information displayed inside Rstudio.
 
 ## Multi-step data processing with pipes
 
-Thus far, we have demonstrated how to execute particular *tidyverse* functions as distinct data-processing steps. However, most of the time one wants to perform a sequence of data-processing operations that require more than one R function. Without a means to chain these steps together, one would have to deploy a particular R function on a tibble, redirect the output to a new (or the same input) tibble, then deploy the next R function on the new tibble, etc. Or, one could try to nest sequential function executions within other function executions, e.g. ```new_tibble <-(function2(function1(original_tibble)))``` which can get unwieldy and error-prone very quickly. The good news is, *tidyverse* had a way of chaining together data processing steps that is analogous to pipes in the bash shell ... and guess what? They are also called pipes. The general syntax of using pipes is:
+Thus far, we have demonstrated how to execute particular *tidyverse* functions as distinct data-processing steps. However, most of the time one wants to perform a sequence of data-processing operations that require more than one R function. Without a means to chain these steps together, one would have to deploy a particular R function on a tibble, redirect the output to a new (or the same input) tibble, then deploy the next R function on the new tibble, etc. Or, one could try to nest sequential function executions within other function executions, e.g. `new_tibble <-(function2(function1(original_tibble)))` which can get unwieldy and error-prone very quickly. The good news is, *tidyverse* had a way of chaining together data processing steps that is analogous to pipes in the bash shell ... and guess what? They are also called pipes. The general syntax of using pipes is:
 
-
-```
+```         
 tidy_data <- function1(data, args) %>% function2(args)
 ```
 
-The ```%>%``` is the pipe, and it redirects the output of function1 to function2. 
+The `%>%` is the pipe, and it redirects the output of function1 to function2.
 
-The pipe implicitly fills the first unnamed argument of the right hand function with the output of the left hand function. So in this case, the output of function1 is implicitly assigned to the first argument of function2. Because tidyverse functions always take the input data as their first argument, this is very convenient. 
+The pipe implicitly fills the first unnamed argument of the right hand function with the output of the left hand function. So in this case, the output of function1 is implicitly assigned to the first argument of function2. Because tidyverse functions always take the input data as their first argument, this is very convenient.
 
-In the above command structure the final output of data processing with ```function1``` and ```function2``` gets directed to *tidy_data*, a new cleaned tibble.
+In the above command structure the final output of data processing with `function1` and `function2` gets directed to *tidy_data*, a new cleaned tibble.
 
-Now, as a more concrete example, let's see how we can use ```select()``` and ```filter()``` together with a pipe.
+Now, as a more concrete example, let's see how we can use `select()` and `filter()` together with a pipe.
 
-> To combine ```select()``` and  ```filter()``` operations to creata new tibble called *new_data*, run the code block below:
+> To combine `select()` and `filter()` operations to creata new tibble called *new_data*, run the code block below:
 
 ```{r}
 
@@ -610,7 +600,7 @@ In this example, we pipe together the two function calls we executed earlier, bu
 
 > **pipe exercise:**
 >
-> 1. Try creating a more complex piped workflow, calling in sequence the ```filter()``` and ```select()``` commands above, followed by using ```mutate()``` to normalize all weights by the maximum value of all cutthroat trout weights.
+> 1.  Try creating a more complex piped workflow, calling in sequence the `filter()` and `select()` commands above, followed by using `mutate()` to normalize all weights by the maximum value of all cutthroat trout weights.
 
 ```{r}
 
@@ -618,18 +608,17 @@ wnorm <- select(vertebrates, year, section, species, length_1_mm, weight_g) %>% 
 
 ```
 
-> 2. Try experimenting with different row and column selections, and new variable creations with these three functions. You can even switch the order, e.g. create a new synthetic variable then applying ```filter()``` to it.
+> 2.  Try experimenting with different row and column selections, and new variable creations with these three functions. You can even switch the order, e.g. create a new synthetic variable then applying `filter()` to it.
 
 As a side note, you sometimes want to pipe the output of one function to the input of another function when the second function DOESN'T use the first argument for data. A common example of this is the function `lm()`, which is used to fit a linear model to data. The first argument to lm is the formula you want to fit, and the second argument is the data. There are two common options to still use a pipe here:
 
-Because the output of the left hand function is piped to the first *unnamed* argument, if you name every argument before data, you'll be okay:
-`vertebrates %>% filter_command() %>% lm(formula = x ~ y)`
+Because the output of the left hand function is piped to the first *unnamed* argument, if you name every argument before data, you'll be okay: `vertebrates %>% filter_command() %>% lm(formula = x ~ y)`
 
-You can reference the piped output via the special variable `.` in the right hand function: 
-`vertebrates %>% filter_command() %>% lm(x ~ y, data = .)
+You can reference the piped output via the special variable `.` in the right hand function: \`vertebrates %\>% filter_command() %\>% lm(x \~ y, data = .)
 
 ## Finding unique values
-There are *tidyverse* flavors of standard R functions. For example, to get the unique values for a column, instead of using ```unique()```, we can use the ```dplyr``` function ``` distinct()```.
+
+There are *tidyverse* flavors of standard R functions. For example, to get the unique values for a column, instead of using `unique()`, we can use the `dplyr` function `distinct()`.
 
 > To get the unique values for year, run the command below:
 
@@ -639,11 +628,11 @@ distinct(vertebrates, year)
 
 ```
 
-This function requires that you supply a tibble and column name for which you want to get the unique values. It does not behave as you would like if you simply supply the vector ```vertebrates$year```.
+This function requires that you supply a tibble and column name for which you want to get the unique values. It does not behave as you would like if you simply supply the vector `vertebrates$year`.
 
 ## *Tidyverse* functions for getting data summaries
 
-Yesterday, we showed you how the ```summary``` function will print out basic summary statistics for all columns in a data frame. Today, we introduce the ```dyplr``` function ```summarize()``` for generating specific statistics on one or more variables. For example, to get the number of individuals for which unique, individual ids are available (derived from pit tagging that started only in 2007).
+Yesterday, we showed you how the `summary` function will print out basic summary statistics for all columns in a data frame. Today, we introduce the `dyplr` function `summarize()` for generating specific statistics on one or more variables. For example, to get the number of individuals for which unique, individual ids are available (derived from pit tagging that started only in 2007).
 
 > To generate this data summary, run the command below:
 
@@ -665,7 +654,7 @@ summarize(vertebrates, meanweight=mean(weight_g, na.rm=TRUE), meansize=mean(leng
 
 ```
 
-Perhaps we are getting tired of always typing `na.rm = TRUE`, and instead want to first filter our dataset to remove rows that contain missing values. Tidyverse contains a nice function, called `drop_na()`, that does just this. By default it looks for missing values in *every* column in in our tibble, but if you look at `?drop_na` you'll see it has one of those `...` arguments, so we can pass it column names to check. 
+Perhaps we are getting tired of always typing `na.rm = TRUE`, and instead want to first filter our dataset to remove rows that contain missing values. Tidyverse contains a nice function, called `drop_na()`, that does just this. By default it looks for missing values in *every* column in in our tibble, but if you look at `?drop_na` you'll see it has one of those `...` arguments, so we can pass it column names to check.
 
 As an exercise, can you rewrite the summarize function above, but remove missing values before piping to summarize. Leave off the `na.rm=TRUE` to make sure it worked!
 
@@ -675,11 +664,11 @@ drop_na(vertebrates) %>% summarize(meanweight=mean(weight_g), meansize=mean(leng
 
 ```
 
-You may have noticed that these two ways of handling NAs lead to different results from summarize. This is due to the fact that the first approach will compute statistics from all values that aren't NAs, regardless if other variables for that observation have missing data. In the second, we drop all observations that have missing data for any variable. Depending upon the particular data set and planned downstream analyses, there may be good reasons for choosing one approach over the other. 
+You may have noticed that these two ways of handling NAs lead to different results from summarize. This is due to the fact that the first approach will compute statistics from all values that aren't NAs, regardless if other variables for that observation have missing data. In the second, we drop all observations that have missing data for any variable. Depending upon the particular data set and planned downstream analyses, there may be good reasons for choosing one approach over the other.
 
-### Using ```group_by()``` with ```summarize()```
+### Using `group_by()` with `summarize()`
 
-In most data sets, summarizing across all observations (rows) may not be particularly informative, because what one usually wants to do is to get information specific to different groups of observations, e.g. those in different habitats, exposed to different experimental treatments, etc. Thus, in most circumstances one will want to define those groups for a tibble. One can do this using the ```group_by()``` function, which takes as it's first argument the name of the data frame, and the following arguments are variables to group by; these can then be followed by other keyword arguments). An obvious grouping for the *vertebrates* tibble is species.
+In most data sets, summarizing across all observations (rows) may not be particularly informative, because what one usually wants to do is to get information specific to different groups of observations, e.g. those in different habitats, exposed to different experimental treatments, etc. Thus, in most circumstances one will want to define those groups for a tibble. One can do this using the `group_by()` function, which takes as it's first argument the name of the data frame, and the following arguments are variables to group by; these can then be followed by other keyword arguments). An obvious grouping for the *vertebrates* tibble is species.
 
 > To obtain this grouping, run the command block below:
 
@@ -690,7 +679,7 @@ by_species
 
 ```
 
-Notice that in the header of the *by_species* tibble there is now an indication that there are four groups. It is important to note that ```group_by()``` does not change the data in the tibble: there is no column that specifies the groups. But wait, we know there are only three species in the data set. Let's check to see what the values are for species.
+Notice that in the header of the *by_species* tibble there is now an indication that there are four groups. It is important to note that `group_by()` does not change the data in the tibble: there is no column that specifies the groups. But wait, we know there are only three species in the data set. Let's check to see what the values are for species.
 
 > To get the unique values for species, run the command below:
 
@@ -700,7 +689,7 @@ distinct(vertebrates, species)
 
 ```
 
-It seems that there are some entries for which the species is unknown. So, let's discard those entries with filter and regroup our data. 
+It seems that there are some entries for which the species is unknown. So, let's discard those entries with filter and regroup our data.
 
 > To generate grouped data after removing rows with no species information, run the following code block:
 
@@ -730,11 +719,11 @@ vertebrates %>%
 
 ```
 
-We have now produced mean statistic by species. 
+We have now produced mean statistic by species.
 
-> ```group_by()``` **exercise:**
+> `group_by()` **exercise:**
 >
-> Try building a tibble grouped by *species* and  *section*, then use summarize to get the mean and standard deviation of weight. But first, get rid of missing values for both of these variables (hint: use `drop_na()`) and **DON'T** make changes to the *vertebrates* tibble.
+> Try building a tibble grouped by *species* and *section*, then use summarize to get the mean and standard deviation of weight. But first, get rid of missing values for both of these variables (hint: use `drop_na()`) and **DON'T** make changes to the *vertebrates* tibble.
 
 ```{r}
 
@@ -751,8 +740,8 @@ vertebrates %>%
 
 ```
 
-You will notice that this has produced a warning message : `summarize()` has grouped output by 'species'. You can override using the `.groups` argument. The output of summarize is itself a tibble, which is grouped. However, we can't group it by both species and section, since these are now unique combinations with only one row per pair. So summarize() is telling us it has chosen to group the output tibble by the `species` variable not the `section` variable. 
+You will notice that this has produced a warning message : `summarize()` has grouped output by 'species'. You can override using the `.groups` argument. The output of summarize is itself a tibble, which is grouped. However, we can't group it by both species and section, since these are now unique combinations with only one row per pair. So summarize() is telling us it has chosen to group the output tibble by the `species` variable not the `section` variable.
 
 ## End of Part 2
 
----
+------------------------------------------------------------------------
