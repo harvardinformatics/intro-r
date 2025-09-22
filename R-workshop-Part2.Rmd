@@ -541,7 +541,7 @@ As we shall see in Part 3 of this workshop, having the actual measurements aggre
 # First, we need to make each row have a unique ID. This is another way to do it
 mypenguins <- mutate(penguins, id = row_number())
 # Then, we use the function pivot_longer() to merge columns together
-penguins_long <- pivot_longer(mypenguins, c(bill_length_mm, bill_depth_mm, flipper_length_mm), names_to="morphtype", values_to="mm")
+
 
 ```
 
