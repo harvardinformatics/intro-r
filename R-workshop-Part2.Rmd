@@ -423,7 +423,7 @@ The `na_if()` function is a tidyverse function that converts the specified value
 
 ```{r,eval=FALSE}
 
-penguins <- mutate(mypenguis, bill_length_mm = na_if(bill_length_mm, -999))
+penguins <- mutate(mypenguins, bill_length_mm = na_if(bill_length_mm, -999))
 
 ```
 
