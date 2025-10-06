@@ -121,15 +121,13 @@ OK, what is going wrong here? If we look at the error message, we can see that w
 
 Let's pick another variable from our penguins dataset, `bill_length_mm`.
 > **Exercise**
-> In the clode block below, plot a scatterplot showing the distribution of body mass vs bill length:
+> In the clode block below, plot a scatterplot with geom_point showing the distribution of body mass vs bill length:
 
 ```{r}
 ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm)) +
   geom_point()
 ```
 
-
-NOTE: ADD MORE TO THIS SECTION!
 
 > Exercise: pick a geom from the ggplot site and adapt it to our penguin data
 
@@ -195,6 +193,15 @@ ggplot(penguins, aes(x = body_mass_g)) +
 ```
 
 R is throwing an error because it is only inside the `aes()` function that you can directly reference a variable in the data.
+
+> **Exercise**
+> Make a density plot of body size and have the fill color be by species and the line color by sex. Make the distributions slightly transparent for better visualization.
+
+```{r}
+ggplot(penguins, aes(x=body_mass_g,fill=species, color = sex, alpha = 0.9)) +
+  geom_density()
+```
+
 
 To sum, in this section, we learned that you can set an aesthetic property to be constant across all data by putting it outside the `aes()` function or you can map it to a variable by putting it inside. Later, we will learn that you can override the aesthetic by putting an `aes()` function inside the `geom` function.
 
@@ -352,6 +359,25 @@ g +
   scale_color_manual(values = c("darkorange", "purple", "cyan4"))
 ```
 
+
+We can control other things with scales for aesthetics too! For instance, when manually setting colors using `scale_color_manual`, let's say we want to assign specific colors to a specific species, rather than the default behavior where colors are assigned in variable factor order. The other things you can change in `scale_color_manual` is how each color is mapped to each discrete value and also how each discrete value is labeled. We can explicitly set key:value pairs inside this to control which penguin gets which color. The keys must be how they are stored in the data. But if how they are stored in the data is not what we want to display, like common name instead of scientific name, we can then label these penguins whatever we want using the `label` parameter.
+
+> **Exercise**
+> Read the documentation of `scale_fill_manual` to figure out how to manually assign colors to each species (using the same colors as above). 
+
+```{r}
+g + 
+  geom_point(aes(shape=species), size=3, alpha = 0.8) +
+  scale_color_manual(values = c("Chinstrap"="darkorange", "Adelie"="purple", "Gentoo"="cyan4")) +
+  labs(title = "Penguin bill dimensions",
+       subtitle = "Bill length and depth for Adelie, Chinstrap and Gentoo Penguins at Palmer Station LTER",
+       x = "Bill length (mm)",
+       y = "Bill depth (mm)",
+       color = "Penguin species",
+       shape = "Penguin species")
+```
+
+
 BONUS: Read about pre-made color palettes
 
 We can use `scale_color_brewer` to take advantage of pre-made discrete color palettes. To see all the options type `RColorBrewer::display.brewer.all()` in your console. For more information on how to generate custom palettes, use rgb values to specify colors, and more, see chapter 12 "Using Colors in Plots" in the [R Graphics Cookbook :octicons-link-external-24:](https://r-graphics.org/CHAPTER-COLORS){:target="_blank"}.
@@ -364,13 +390,6 @@ g +
 
 BONUS: Read for more things you can control with scales for aesthetics
 
-The other things you can change in `scale_color_manual` is how each color is mapped to each discrete value and also how each discrete value is labeled. We can explicitly set key:value pairs inside this to control which penguin gets which color. The keys must be how they are stored in the data. But if how they are stored in the data is not what we want to display, like common name instead of scientific name, we can then label these penguins whatever we want using the `label` parameter.
-
-```{r}
-g + 
-  geom_point(aes(shape=species), size=3, alpha = 0.8) +
-  scale_color_manual(values = c("Chinstrap"="darkorange", "Adelie"="purple", "Gentoo"="cyan4"), labels = c("Chinstrap"="P.antarcticus", "Gentoo"="P.papua", "Adelie"="P.adeliae"))
-```
 
 #### Adding X/Y axis scale
 
@@ -407,22 +426,39 @@ g +
   scale_y_continuous(n.breaks = 10)
 ```
 
-BONUS: scaling the axes works for discrete values as well
 
-There are many more options for the scale functions. You can even use them with discrete variables to change the order of the labels or the colors of the bars. Here's an example of how you can change the order of the species in the legend. In the below code, I reordered the bars and also used the `position` argument to move the x axis to the top of the plot.
+Scaling the axes works for discrete variables as well! For example, here is a bar plot (which plots a *single discrete variable*) that simply counts the number of species:
 
 ```{r}
 ggplot(penguins, aes(x = species, fill=species)) +
-  geom_bar()
+  geom_bar(stat='count')
 
-ggplot(penguins, aes(x = species, fill=species)) +
-  geom_bar() +
-  scale_x_discrete(limits = c("Chinstrap", "Gentoo", "Adelie"), position ="top")
 ```
+
+Let's say that we want to change the *ordering* that the species (our discrete variable) are plotted in. We can do this using the counterpart function to `scale_x_continuous` called, predictably, `scale_x_discrete`.
+
+> **Exercise**
+> Consult the documentation for `scale_x_discrete` to figure out how to change the ordering of the bars to be "Chinstrap", "Gentoo", "Adelie".
+
+```{r}
+ggplot(penguins, aes(x = species, fill=species)) +
+  geom_bar(stat='count') +
+  scale_x_discrete(limits = c("Chinstrap", "Gentoo", "Adelie"))
+```
+
+
 
 #### Base plot with all data elements
 
 In the last sections we learned how to use `labs()`, `scale_color_manual()` , and `scale_x/y_continuous()` to affect change on the visual elements of the plot that depend on data. Let's put those together and see how close we are to the example plot.
+
+> **Exercise**
+> Using the code we went thru above, to the base plot (i.e. the object we saved as `g`), add:
+> - the `geom_point` layer 
+> - the manual color scale 
+> - the continuous x axis scale with the right breaks and limits
+> - the continuous y axis scale with set number of breaks
+> - the labs() layer with the titles, subtitle, and legend labels
 
 ```{r}
 g + 
@@ -450,17 +486,7 @@ Themes govern practically everything that isn't about how your data is presented
 
 ![](https://isabella-b.com/blog/ggplot2-theme-elements-reference/ggplot2-theme-elements-reference-v2_hu8994090e1960a0a71878a3756da20076_580819_2000x2000_fit_lanczos_2.png)
 
-In the below code, we've assembled all of our previous layers and added on the theme elements that need to be changed to create, finally, the look of the example plot. The adjustments made are:
-
--   place the legend inside the plot panel
-
--   adjust position of inside legend to the lower right
-
--   italicized the plot subtitle
-
--   changed the plot panel background color to "linen"
-
--   removed the default white legend background color (you'll see what this means if you remove this line)
+In the below code, we've assembled all of our previous layers and added on the theme elements that need to be changed to create, finally, the look of the example plot. Let's go thru and try to figure out what each other the arguments in the `theme()` function are doing (remember: if you ever forget what exactly a function does or what arguments it takes, you can always type `?` and the the function's name in the R console):
 
 ```{r}
 g_final <- ggplot(data = penguins, 
@@ -483,7 +509,7 @@ g_final <- ggplot(data = penguins,
        y = "Bill depth (mm)",
        color = "Penguin species",
        shape = "Penguin species") +
-  theme(legend.position = c(.85,.15),
+  theme(legend.position.inside = c(.85,.15),
         plot.subtitle = element_text(face= "italic"),
         plot.subtitle.position = "plot",
         plot.title.position = "plot",
@@ -491,6 +517,20 @@ g_final <- ggplot(data = penguins,
         legend.background = element_blank())
 g_final
 ```
+
+
+The adjustments made are:
+
+-   place the legend inside the plot panel
+
+-   adjust position of inside legend to the lower right
+
+-   italicized the plot subtitle
+
+-   changed the plot panel background color to "linen"
+
+-   removed the default white legend background color (you'll see what this means if you remove this line)
+
 
 BONUS: Read about how you can change the look of the whole plot with just one line
 
@@ -518,7 +558,7 @@ However, if you want to save a plot for publication and then also intend to publ
 
 ## Plotting multiple plots in one window with facetting (NEW/FROM ORIGINAL)
 
-In almost any scientific paper you will see figure with multiple panels, with subsets of plots split by some categorical variable (e.g. "treatment" vs "control" etc.) The coward's route is to make the plot individually, then combine them in Powerpoint or Illustrator, but there is no need! `ggplot2` provides an easy way to compare groups in different panels called **facetting**. `facet_wrap()` and `facet_grid()` allow you to split your plot into multiple panels by another group variable. For our purposes, `facet_wrap()` is more useful, so we will focus on that.
+In almost any scientific paper you will see figure with multiple panels, with subsets of plots split by some categorical variable (e.g. "treatment" vs "control" etc.) The coward's route is to make the plot individually, then combine them in Powerpoint or Illustrator, but there is no need! `ggplot2` provides an easy way to compare groups in different panels called **facetting**. The function `facet_wrap()` allows you to split your plot into a 2D sequence of rows and columns based on a given variable. 
 
 We specify a variable in our **data** with the syntax `facet_wrap(~variable)` and `facet_wrap` will split the *same* overall data set into facets based upon grouping variables that subdivide the data so you can compare and contrast patterns in different groups (or pairs of groupings). For example, if we go back to our scatterplot showing bill length vs body size and say we want to split the data based on the sex of the birds:
 
@@ -533,6 +573,14 @@ NOTE: FILL THIS SECTION OUT MORE
 
 > **Exercise**
 > Something splitting by species??
+
+```{r}
+ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm)) +
+  geom_point() +
+  geom_smooth() + 
+  facet_wrap(~species)
+```
+
 
 
 ## Exploring different plot types (NEW/FROM ORIGINAL)
