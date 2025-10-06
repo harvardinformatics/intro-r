@@ -1,9 +1,10 @@
 ---
 title: "[Workshop] Introduction to R Part 1: R Basics"
 description: "Introduction to R basics including the RStudio interface, R commands from the console, R scripts, and data types."
-date: "October 18, 2023"
+date: "October 06, 2025"
 authors: 
   - Adam Freedman
+  - Danielle Khost
   - Gregg Thomas
   - Lei Ma
 output: 
@@ -13,7 +14,7 @@ output:
 
 # Introduction to R Part 1: R Basics
 
-Welcome to the first part of the [FAS Informatics :material-arrow-top-right:](https://informatics.fas.harvard.edu/){:target="_blank"} Intro to R workshop! 
+Welcome to the first part of the [FAS Informatics](https://informatics.fas.harvard.edu/) Intro to R workshop! 
 
 This is the workshop file that should be opened in RStudio. This is an RMarkdown file, meaning that both formatted text and code blocks can be added to it, and the code blocks can be executed from the RStudio interface. Today we will be going through this document and executing the code blocks within it to demonstrate some basic R programming concepts.
 

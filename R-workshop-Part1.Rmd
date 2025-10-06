@@ -1,9 +1,10 @@
 ---
 title: "[Workshop] Introduction to R Part 1: R Basics"
 description: "Introduction to R basics including the RStudio interface, R commands from the console, R scripts, and data types."
-date: "October 18, 2023"
+date: "October 06, 2025"
 authors: 
   - Adam Freedman
+  - Danielle Khost
   - Gregg Thomas
   - Lei Ma
 output: 
