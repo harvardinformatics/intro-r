@@ -1,12 +1,13 @@
 ---
 title: "[Workshop] Introduction to R Part 3: ggplot"
 description: "An introduction to data visualization in R with ggplot."
-date: "October 25 & 27, 2023"
+date: "October 21 & 23, 2025"
 authors: 
   - Adam Freedman
   - Tim Sackton
   - Gregg Thomas 
   - Lei Ma
+  - Danielle Khost
 output: 
   html_document:
     keep_md: true
@@ -104,7 +105,7 @@ ggplot(penguins, aes(x = body_mass_g)) +
   geom_histogram(bins=10)
 ```
 
-## Exploring other geometries (NEW)
+## Exploring other plot types (NEW)
 
 So far, we've only looked at a single type of plot, `geom_histogram`, but there are many more option in `ggplot`, and even more in the various add-on packages to `ggplot`! Let's look at another plot type you are likely familiar with, the scatterplot, which uses `geom_point`.
 
@@ -129,16 +130,27 @@ ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm)) +
 ```
 
 
-> Exercise: pick a geom from the ggplot site and adapt it to our penguin data
+### A quick word on variable types and geom selection
+If we take a look at the [quick reference guide :octicons-link-external-24:](https://ggplot2.tidyverse.org/reference/#geoms){:target="_blank"} for ggplot, we can see that the geoms are grouped based on whether they take a single variable or multiple, and whether the variables are **discrete** or **continuous**. As we remember from stats class, a "discrete" variable is any variable with values that are *distinct* and countable (i.e. not infinite), while a "continuous" variable can be any value within a range. When plotting, it is always important to consider the nature of your variable(s) and what you are trying to convey, and pick the appropriate `geom` for the job.
+
+> For example: if we want to visualize the distribution of body mass of the birds, would plotting it this way make sense??
+
+```{r}
+ggplot(penguins, aes(x=body_mass_g)) +
+  geom_bar()
+```
 
 
-### Adding new data to a ggplot (NEW)
+> Exercise: check out the ggplot [quick reference guide :octicons-link-external-24:](https://ggplot2.tidyverse.org/reference/#geoms){:target="_blank"} and choose a geom of your liking, then try adapting it to our penguins data.
+
+
+## Adding new data to a ggplot (NEW)
 We know that a `ggplot2` plot requires at least one **layer** (i.e. a **geom** function), but because of `ggplot2`'s modularity, it can take multiple **geom** layers in a single plot.
 
-To explore this, if we "eyeball" the scatterplot we just made showing beak length by body size, we can maybe see that there is a relationship between the two variables
+To explore this, if we "eyeball" the scatterplot we just made showing beak length by body size, we can maybe see that there is a relationship between the two variables. However, let's evaluate this more thoroughly.
 
 > **Exercise**
-> Look up the `geom_smooth` function, then add it to the scatterplot to plot a linear fit line to our data (using just the default settings for `geom_smooth`)
+> Look up the `geom_smooth` function, then add it to the scatterplot to plot a linear fit line to our data (using just the default settings for `geom_smooth`). Hint: remember you can look up manual pages for functions in Rstudio by typing `?function_name` in the `Console` window 
 
 ```{r}
 ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm)) +
@@ -543,44 +555,18 @@ g_final + theme_void()
 ```
 
 
-### Saving ggplots (FROM ORIGINAL)
-
-Now that we've made a pretty ggplot with tidy code, how do we save it to share with others? There are a few ways. 
-
-The first way - if you've been working on your project in an rmarkdown document - you don't have to do anything! You can `knit` the rmarkdown document into HTML and share all the text, code, and images, without changing a thing. 
-
-The second way is to use the RStudio GUI. Open the panel on the lower right containing the tabs Files/Plots/Packages/Help/ etc tabs and click on the plots tab. Then copy and paste the code you used to generate the plot (or in our case just the name of the object `iris_plot`) into the console, and the plot will show up there. Then, you can click the export button and save the plot. This is great if you want to throw something into powerpoint or share on slack/email with a collaborator your intermediate results. 
-
-However, if you want to save a plot for publication and then also intend to publish the code used to generate that plot, the best practice is to use an R Script, copy and paste all (and only) the code you used to generate the final plot, save it, and then use the `ggsave()` function to export your plot. Open a new R script now and copy ALL the code you used to generate the latest plot. This includes importing the tidyverse and datasets package, transforming the iris data, and of course the plotting code itself. Then, use `ggsave()` to save the plot using the default parameters.
-
-> **Exercise**: Open a new R script (should have a .R extension) to reproduce the final, beautiful penguin plot we just made in the last code chunk by copy and pasting the necessary code. Then, use `ggsave()` to save the plot using the default parameters. To really check that your code is standalone, **clear your environment** and run the script. If it works, you're good to go!
-
-
 ## Plotting multiple plots in one window with facetting (NEW/FROM ORIGINAL)
 
 In almost any scientific paper you will see figure with multiple panels, with subsets of plots split by some categorical variable (e.g. "treatment" vs "control" etc.) The coward's route is to make the plot individually, then combine them in Powerpoint or Illustrator, but there is no need! `ggplot2` provides an easy way to compare groups in different panels called **facetting**. The function `facet_wrap()` allows you to split your plot into a 2D sequence of rows and columns based on a given variable. 
 
-We specify a variable in our **data** with the syntax `facet_wrap(~variable)` and `facet_wrap` will split the *same* overall data set into facets based upon grouping variables that subdivide the data so you can compare and contrast patterns in different groups (or pairs of groupings). For example, if we go back to our scatterplot showing bill length vs body size and say we want to split the data based on the sex of the birds:
+We specify a variable in our **data** with the syntax `facet_wrap(vars(variable))` and `facet_wrap` will group the data set into facets based on the values of that variable, allowing us to compare and contrast patterns in different groups (or pairs of groupings). For example, if we go back to our scatterplot showing bill length vs body size, say we want to split the data based on the sex of the birds:
 
 ```{r}
 ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm)) +
   geom_point() +
   geom_smooth() + 
-  facet_wrap(~sex)
+  facet_wrap(vars(sex))
 ```
-
-NOTE: FILL THIS SECTION OUT MORE
-
-> **Exercise**
-> Something splitting by species??
-
-```{r}
-ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm)) +
-  geom_point() +
-  geom_smooth() + 
-  facet_wrap(~species)
-```
-
 
 
 ## Exploring different plot types (NEW/FROM ORIGINAL)
@@ -589,8 +575,23 @@ So far we have looked at scatter plots and histograms, but there are a TON of di
 > **Exercise**
 > Draw a *violin plot* showing distribution of body mass on each island. Color by species and use a theme of your choice.
 
+```{r}
+ggplot(penguins, aes(x=species, y=body_mass_g, fill=species)) +
+  geom_violin() +
+  theme_classic()
+```
+
+
 > **Exercise**
-> Use a *bar plot* to count the NUMBER of each different species of bird in the dataset (hint: check the `stat` argument).
+> Use a *bar plot* to count the NUMBER of each different species of bird in the dataset (hint: check the `stat` argument in `geom_bar`), and group according to island. Pair with a theme of your choice.
+
+```{r}
+ggplot(penguins, aes(x=species)) +
+  geom_bar(stat='count') +
+  facet_wrap(vars(island)) +
+  theme_classic()
+```
+
 
 ------
 
@@ -712,4 +713,43 @@ install.packages("ggsignif")
 library(ggsignif)
 ```
 
+To estimate significance between two different grouping or conditions, we use the `comparisons` argument, which takes a `list` of pairwise character vectors with the labels of the groups we want to compare. For example, if we wanted to calculate whether the body masses of the birds are significantly different between sexes:
 
+```{r}
+ggplot(penguins_cleaned, aes(x=sex, y=body_mass_g)) + 
+  geom_boxplot() +
+  geom_signif(comparisons = list(c("male","female")))
+```
+
+> **Exercise**
+> Create a boxplot showing the distribution of body masses between the three different species of penguins (Adelie, Chinstrap, and Gentoo) and add significance brackets between all pairs of species that indicate whether they are significantly different in size.
+> Bonus: check the documentation of `geom_signif` and see if you can find an argument that minimizes the overlap between brackets and experiment to make the plot look nice.
+
+```{r}
+ggplot(penguins_cleaned, aes(x=species, y=body_mass_g)) + 
+  geom_boxplot() +
+  geom_signif(comparisons = list(c("Adelie","Chinstrap"),c("Chinstrap","Gentoo"),c("Adelie","Gentoo")), step_increase = 0.15)
+```
+
+In the above example we are manually specifying all pairwise comparisons, which is a little cumbersome and does not work well if we have a large number of comparisons to make. Here is an example of how we can automate the process. As the `comparisons` argument for `geom_signif` just wants a list, we can use the `combn` combinatorics function (which is part of base R) to create a list of all pairwise combination of the species names in our data frame:
+
+```{r}
+species_list <- combn(unique(penguins_cleaned$species), m=2, simplify = FALSE)
+
+ggplot(penguins_cleaned, aes(x=species, y=body_mass_g)) + 
+  geom_boxplot() +
+  geom_signif(comparisons = species_list, step_increase = 0.15)
+```
+
+
+### Saving ggplots (FROM ORIGINAL)
+
+Now that we've made a pretty ggplot with tidy code, how do we save it to share with others? There are a few ways. 
+
+The first way - if you've been working on your project in an rmarkdown document - you don't have to do anything! You can `knit` the rmarkdown document into HTML and share all the text, code, and images, without changing a thing. 
+
+The second way is to use the RStudio GUI. Open the panel on the lower right containing the tabs Files/Plots/Packages/Help/ etc tabs and click on the plots tab. Then copy and paste the code you used to generate the plot (or in our case just the name of the object `iris_plot`) into the console, and the plot will show up there. Then, you can click the export button and save the plot. This is great if you want to throw something into powerpoint or share on slack/email with a collaborator your intermediate results. 
+
+However, if you want to save a plot for publication and then also intend to publish the code used to generate that plot, the best practice is to use an R Script, copy and paste all (and only) the code you used to generate the final plot, save it, and then use the `ggsave()` function to export your plot. Open a new R script now and copy ALL the code you used to generate the latest plot. This includes importing the tidyverse and datasets package, transforming the iris data, and of course the plotting code itself. Then, use `ggsave()` to save the plot using the default parameters.
+
+> **Exercise**: Open a new R script (should have a .R extension) to reproduce the final, beautiful penguin plot we just made in the last code chunk by copy and pasting the necessary code. Then, use `ggsave()` to save the plot using the default parameters. To really check that your code is standalone, **clear your environment** and run the script. If it works, you're good to go!
