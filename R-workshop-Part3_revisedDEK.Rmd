@@ -105,22 +105,30 @@ ggplot(penguins, aes(x = body_mass_g)) +
   geom_histogram(bins=10)
 ```
 
+If you are ever uncertain of what arguments a layer function takes or what a particular argument is doing, you can bring up the manual page in the Rstudio IDE by typing `?function`. E.g.
+
+```{r}
+?geom_histogram
+```
+
+
 ## Exploring other plot types (NEW)
 
 So far, we've only looked at a single type of plot, `geom_histogram`, but there are many more option in `ggplot`, and even more in the various add-on packages to `ggplot`! Let's look at another plot type you are likely familiar with, the scatterplot, which uses `geom_point`.
 
 > **Exercise**
-> In the code block below, using the same aesthetics we used for the histogram, use `geom_point` to draw a scatterplot:
-
+> In the code block below, using the same aesthetics we used for the histogram, use `geom_point` to draw a scatterplot of body_mass_g:
 
 ```{r}
 ggplot(penguins, aes(x = body_mass_g)) +
   geom_point()
 ```
 
+
 OK, what is going wrong here? If we look at the error message, we can see that we are missing an **aesthetic** property; unlike with `geom_histogram`, which only requires a single variable (the `x`), `geom_point` requires both an `x` and a `y`...which makes sense, as scatterplots are all about comparing two variable against each other, while a histogram shows the distribution of a single variable.
 
 Let's pick another variable from our penguins dataset, `bill_length_mm`.
+
 > **Exercise**
 > In the clode block below, plot a scatterplot with geom_point showing the distribution of body mass vs bill length:
 
@@ -140,12 +148,13 @@ ggplot(penguins, aes(x=body_mass_g)) +
   geom_bar()
 ```
 
+We can see that the above code WILL produce a plot without throwing an error (except for the usual "missing data" warning), and the plot even looks vaguely plausible. However, this is probably not the way we want to visualize this particular data...we can see that `geom_bar` is intended for a *single, discrete variable*, whereas data like "body mass" is a continuous variable. If we look closer at the plot, we can see that what is happening is `geom_bar` is *counting* the number of times each discrete body mass value occurs in the data. A better way to visualize this would be with a histogram or density plot.
 
 > Exercise: check out the ggplot [quick reference guide :octicons-link-external-24:](https://ggplot2.tidyverse.org/reference/#geoms){:target="_blank"} and choose a geom of your liking, then try adapting it to our penguins data.
 
 
 ## Adding new data to a ggplot (NEW)
-We know that a `ggplot2` plot requires at least one **layer** (i.e. a **geom** function), but because of `ggplot2`'s modularity, it can take multiple **geom** layers in a single plot.
+We know that a `ggplot2` plot requires at least one **layer** (i.e. a **geom** function), but because of `ggplot2`'s modularity, it can take multiple **geom** layers in a single plot. All we need to do is simply add the new layer using the `+` symbol as before. As a reminder, a **layer** in ggplot can display data, a statistical summary or some additional metadata.
 
 To explore this, if we "eyeball" the scatterplot we just made showing beak length by body size, we can maybe see that there is a relationship between the two variables. However, let's evaluate this more thoroughly.
 
@@ -181,7 +190,7 @@ ggplot(penguins, aes(x = body_mass_g)) +
   geom_histogram(color = "black", fill = "blue", linetype="dashed", alpha=0.6)
 ```
 
-In the above code, we used aesthetic mappings to change the visual properties of all the histogram bars at once. This is called **setting** the aesthetic property. Another thing we can do is **mapping** the aesthetic property to a variable in the data. This is done by putting the aesthetic inside the `aes()` function. This is useful when you want to color the bars by a variable in the data, like the species of the penguin:
+In the above code, we used aesthetic mappings to change the visual properties of all the histogram bars at once. This is called **setting** the aesthetic property. Another thing we can do is **mapping** the aesthetic property to a variable in the data. This is done by putting the aesthetic inside the `aes()` function, just like how we map variables to `x` and `y`. This is useful when you want to color the bars by a variable in the data, like the species of the penguin:
 
 ```{r}
 ggplot(penguins, aes(x = body_mass_g, fill = species)) +
@@ -210,8 +219,8 @@ R is throwing an error because it is only inside the `aes()` function that you c
 > Make a density plot of body size and have the fill color be by species and the line color by sex. Make the distributions slightly transparent for better visualization.
 
 ```{r}
-ggplot(penguins, aes(x=body_mass_g,fill=species, color = sex, alpha = 0.9)) +
-  geom_density()
+ggplot(penguins, aes(x=body_mass_g,fill=species, color = sex)) +
+  geom_density(alpha = 0.6)
 ```
 
 
@@ -220,7 +229,7 @@ To sum, in this section, we learned that you can set an aesthetic property to be
 
 ### Inheriting aesthetics (FROM REVISED)
 
-But first, we'll see how we can add another geom layer to the plot.
+But first, we'll explore more about how adding another geom layer to the plot interacts with mapping aesthetics!
 
 In the below code, we will display data as a scatter plot using `geom_point()` layer. Since scatter plots require an x and y axis, in our `aes()` call we'll have to specify both. Let's compare the penguins' body mass with their bill lengths. We used `body_mass_g` and bill length is stored in the `bill_length_mm` column of our data. We will also add another geom layer, `geom_smooth()`, which is a function that will calculate and add a linear fit to the points.
 
@@ -245,6 +254,8 @@ ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm)) +
 In the above figure, now the `geom_smooth()` function ONLY inherits the x and y aesthetic options and knows nothing about the species, which is why you only see a single linear fit across all the data. When you are layering multiple geoms together, you can more finely control how the aesthetics are mapped by putting them inside the `geom` function.
 
 To sum up this section, we learned that you can layer geoms on the same graph to show different relationships in the data. Each geom can inherit the aesthetics from the `ggplot()` function, but you can also override these aesthetics by specifying them in the `geom` function.
+
+### In summary: handy vocab quick-ref
 
 Here's some vocabulary to tie it together:
 
@@ -565,12 +576,43 @@ We specify a variable in our **data** with the syntax `facet_wrap(vars(variable)
 ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm)) +
   geom_point() +
   geom_smooth() + 
-  facet_wrap(vars(sex))
+  facet_wrap(vars(island))
+```
+
+As a note, an alternate (classic) syntax for specifying the facetting variable that you might see in other peoples' code is `facet_wrap(~variable)`. So the following code would be equivalent to what we just ran:
+
+```{r}
+ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm)) +
+  geom_point() +
+  geom_smooth() + 
+  facet_wrap(~island)
+```
+
+
+`facet_wrap()` is primarily useful for when you have a single variable with many levels that you want to wrap (i.e. 1D -> 2D). While you CAN provide multiple variables, it looks a little janky...
+
+```{r}
+ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm)) +
+  geom_point() +
+  geom_smooth() + 
+  facet_wrap(vars(island, year))
+```
+
+If we want a matric of panels with rows and columns based off of two variables, we can instead use the related function `facet_grid()`, which will facet the plot into rows and columns based off of every combination of the two provided variables! Let's try it out...
+
+> **Exercise**
+> Consulting the documentation for `facet_grid`, make a scatter plot with a smoothed fit line split by island and year. 
+
+```{r}
+ggplot(penguins, aes(x = body_mass_g, y = bill_length_mm)) +
+  geom_point() +
+  geom_smooth() + 
+  facet_grid(rows = vars(island), cols = vars(year))
 ```
 
 
 ## Exploring different plot types (NEW/FROM ORIGINAL)
-So far we have looked at scatter plots and histograms, but there are a TON of different `geoms` in `ggplot2`, and many other `R` packages that add `geoms` that use the `tidyverse/ggplot2` grammar. To get familiar with syntax, as well as reading documentation, let's do a few exercises where we plot the penguins in a number of different ways.
+So far we have looked mainly at scatter plots and histograms, but there are a TON of different `geoms` in `ggplot2`, and many other `R` packages that add `geoms` that use the `tidyverse/ggplot2` grammar. To get familiar with syntax, as well as getting even more practice reading documentation, let's do a few exercises where we plot the penguins in a number of different ways.
 
 > **Exercise**
 > Draw a *violin plot* showing distribution of body mass on each island. Color by species and use a theme of your choice.
@@ -601,7 +643,7 @@ ggplot(penguins, aes(x=species)) +
 So far, we've been working with a nice, clean dataset that is already in an ideal arrangement for visualization with `ggplot`. Unfortunately, out in the wild data usually does not look like this. Let's check out the seedy underbelly of the penguins dataset and look at the RAW data:
 
 ```{r}
-glimpse(penguins_raw)
+view(penguins_raw)
 ```
 
 We can see this is much messier...we have columns we aren't interested in, inconsistent column naming (with spaces in the column labels!!), extra text in the species labels...
@@ -730,6 +772,7 @@ ggplot(penguins_cleaned, aes(x=species, y=body_mass_g)) +
   geom_boxplot() +
   geom_signif(comparisons = list(c("Adelie","Chinstrap"),c("Chinstrap","Gentoo"),c("Adelie","Gentoo")), step_increase = 0.15)
 ```
+
 
 In the above example we are manually specifying all pairwise comparisons, which is a little cumbersome and does not work well if we have a large number of comparisons to make. Here is an example of how we can automate the process. As the `comparisons` argument for `geom_signif` just wants a list, we can use the `combn` combinatorics function (which is part of base R) to create a list of all pairwise combination of the species names in our data frame:
 
