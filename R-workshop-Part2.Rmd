@@ -272,7 +272,7 @@ There are lots more of these: `?select` is your friend here.
 
 ## Selecting a subset of rows based upon values of variables
 
-Up until now, we have been selecting columns to remove or keep. Often times, one wants to restrict analysis and visualization to a subset of the observations, that is, to select particular **rows**. In the case of our data set, perhaps you are only interested in cutthroat trout, and only those that occur in old growth forest. The `filter()` function allows you to select **rows** based upon values in multiple columns, similar to how we talked about logical vectors yesterday. This function works by only returning values where the condition is true. It not only excludes those for which it is FALSE, it also filters out rows where there is missing data (i.e. NA) for the column evaluated (because any logical test evaluates to false when given NA).
+Up until now, we have been selecting columns to remove or keep. Often times, one wants to restrict analysis and visualization to a subset of the observations, that is, to select particular **rows**. In the case of our data set, perhaps you are only interested in Adelie penguins, or perhaps only males. The `filter()` function allows you to select **rows** based upon values in multiple columns, similar to how we talked about logical vectors yesterday. This function works by only returning values where the condition is true. It not only excludes those for which it is FALSE, it also filters out rows where there is missing data (i.e. NA) for the column evaluated (because any logical test evaluates to false when given NA).
 
 Let us try creating a new tibble, with data restricted to Adelie penguins.
 
