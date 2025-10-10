@@ -818,27 +818,13 @@ df1$data
 
 So far we have been working with small objects we created by hand. A more common way to create **data frames** is by **reading tables from a file**. There are a few functions to do this in R. The old school way of doing this it by using the `read.table()` and `read.csv()` functions, with the latter being a generic file loader for which you can specify what delimits the columns: comma, space, tab, or some other character.
 
-For this workshop, our data set comes from... wait for it ... penguins! The [palmer penguins](https://allisonhorst.github.io/palmerpenguins/ )data set contains measurement data for 3 species of penguins collected on three islands at the LTER site in the Palmer Archipelago, Antarctica. *palmerpenguins* is itself an R package that we can load like other packages after it has been installed:
-
-```{r}
-install.packages("palmerpenguins")
-library(palmerpenguins)
-```
-
-For the purpose of demonstrating how to write a data frame to a file, and then load that file back up we can first load data from a file:
-
-> Run the code block below to write the penguins data frame to a csv file:
-
-```{r}
-write_csv(penguins,file="mypenguins.csv")
-```
-
+For this workshop, our data set comes from... wait for it ... penguins! The [palmer penguins](https://allisonhorst.github.io/palmerpenguins/ )data set contains measurement data for 3 species of penguins collected on three islands at the LTER site in the Palmer Archipelago, Antarctica. *palmerpenguins* is itself an R package. We can actually load the csv-formatted `penguins` data usin the `read_csv` function, and can take advantage of the ability to read tables from remote repositories using the weblink the file:
 
 
 > Run the following code block to create an object called `mypenguins` to which the data in *mypenguins.csv* is assigned.
 
 ```{r}
-mypenguins <- read_csv("mypenguins.csv")
+mypenguins <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2020/2020-07-28/penguins.csv")
 ```
 
 
