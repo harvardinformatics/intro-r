@@ -375,7 +375,7 @@ penguins <- mutate(penguins, depth_sizeadj = bill_depth_mm/bill_length_mm)
 
 ```
 
-In redirecting back to the *penguins* tibble, we are changing the input data rather than writing a new tibble with this variable added. Note also that this command will **overwrite** the body condition column, if it exists. This is often what is desired, but be aware of this behavior.
+In redirecting back to the *penguins* tibble, we are changing the input data rather than writing a new tibble with this variable added. One should be aware (and careful!) when redirecting back to the original tibble, because if you create a new variable or transform an old variable, and assign a name to the new variable that already exists, it will overwrite the old variable.
 
 > **New variables creation exercise 1:** For male adelie penguins, we want to flag outlier observations where body mass is unusually large or small relative to the mean value. To do this, you will need to use the `mean()` and `sd()` functions to calculate mean and standard deviation of body mass. Once you've done that, create a new column that is the variable *mass_outlier* which is a boolean variable that indicates whether body mass is greater than or less than 2 standard deviations away from the mean, and add this to the *adelie_males* tibble. Finally, creat e a new tibble called *outliers* that only contains male Adelie penguins with outlier-classified body mass values.
 
