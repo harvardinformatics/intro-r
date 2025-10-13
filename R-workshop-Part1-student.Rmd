@@ -1,9 +1,10 @@
 ---
 title: "[Workshop] Introduction to R Part 1: R Basics"
 description: "Introduction to R basics including the RStudio interface, R commands from the console, R scripts, and data types."
-date: "October 18, 2023"
+date: "October 13, 2025"
 authors: 
   - Adam Freedman
+  - Danielle Khost
   - Gregg Thomas
   - Lei Ma
 output: 
@@ -13,7 +14,7 @@ output:
 
 # Introduction to R Part 1: R Basics
 
-Welcome to the first part of the [FAS Informatics :material-arrow-top-right:](https://informatics.fas.harvard.edu/){:target="_blank"} Intro to R workshop! 
+Welcome to the first part of the [FAS Informatics](https://informatics.fas.harvard.edu/) Intro to R workshop! 
 
 This is the workshop file that should be opened in RStudio. This is an RMarkdown file, meaning that both formatted text and code blocks can be added to it, and the code blocks can be executed from the RStudio interface. Today we will be going through this document and executing the code blocks within it to demonstrate some basic R programming concepts.
 
@@ -92,7 +93,7 @@ So in the section above and throughout this workshop we use a lot of context dep
 
 In an attempt to offset this unintentional language barrier we provide tables with some contextual definitions of terms we may use throughout the workshop at the following link: 
 
-[R Terminology :material-arrow-top-right:](/resources/glossary/#r-terms){:target="_blank" .md-button .md-button--primary .centered }
+[R Terminology](https://informatics.fas.harvard.edu/resources/glossary/#r-terms)
 
 If you see hear any terms you think should be added to these tables, please let us know.
 
@@ -355,7 +356,7 @@ Congratulations on writing your first R script (of this workshop, at least)!
 
 The above file is a pure R script. It will only take R commands and execute them all at once.
 
-This file, and the other files we'll be using in this workshop, are **R Markdown** files. You'll notice several things about this file that differ from the R script we just made. First, the file extension is **.Rmd** rather than **.r**. You'll also see that this text has some different formatting and coloring that the R script. This is because an **R Markdown** file is capable of formatting plain text for viewing and writing and executing code. This makes it a great file format for keeping a lab notebook for reproducible science or even for teaching a workshop! **R Markdown** files can also be **knit**, meaning the text will be formatted and the code will be run and output displayed and formatted and everything will be compiled into a single file, either HTML, PDF, or LaTeX. Conceivably, one could write a whole paper or book with **RMarkdown**. Check out more about R Markdown formatting [here :octicons-link-external-24:](https://r02pro.github.io/rmd-text-formating.html){:target="_blank"}.
+This file, and the other files we'll be using in this workshop, are **R Markdown** files. You'll notice several things about this file that differ from the R script we just made. First, the file extension is **.Rmd** rather than **.r**. You'll also see that this text has some different formatting and coloring that the R script. This is because an **R Markdown** file is capable of formatting plain text for viewing and writing and executing code. This makes it a great file format for keeping a lab notebook for reproducible science or even for teaching a workshop! **R Markdown** files can also be **knit**, meaning the text will be formatted and the code will be run and output displayed and formatted and everything will be compiled into a single file, either HTML, PDF, or LaTeX. Conceivably, one could write a whole paper or book with **RMarkdown**. Check out more about R Markdown formatting [here](https://r02pro.github.io/rmd-text-formating.html){:target="_blank"}.
 
 Code is written and executed in R Markdown with **code blocks**, which are delineated by the backtick character (\`). Each code block can have a language specified (in our case we will exclusively use `r`) as well as options specific to that block. Here is an example of an R code block in this R Markdown file:
 
@@ -638,7 +639,7 @@ We can extract portions of vectors that we've created using the square brackets,
 
 nums[1]
 nums[1:5]
-nums[c(1,4,5)]
+nums[c(1, 4, 5)]
 
 ```
 
@@ -744,7 +745,7 @@ We can use the function `head()` to look at part of a data frame (or any R objec
 ```{r}
 
 head(df1)
-head(df1, n=2)
+head(df1, n = 2)
 
 ```
 
@@ -766,7 +767,7 @@ Much like elements in a vector can be accessed using square brackets `[]` and in
 
 ```{r}
 
-df1[1,2]
+df1[1, 2]
 
 ```
 
@@ -776,7 +777,7 @@ This displays the element in the first row and second column of the data frame, 
 
 ```{r}
 
-df1[2,1]
+df1[2, 1]
 
 ```
 
@@ -788,14 +789,14 @@ By leaving one index off, we can retrieve entire rows or columns from the data f
 
 ```{r}
 
-df1[1,]
-df1[,2]
+df1[1, ]
+df1[, 2]
 
 ```
 
 **Columns** can also be accessed by their *name* and the dollar sign operator, `$`.
 
-> Run the code block below to display the whole second column of the data frame with the `$` operatoe:
+> Run the code block below to display the whole second column of the data frame with the `$` operator:
 
 ```{r}
 
@@ -817,37 +818,36 @@ df1$data
 
 So far we have been working with small objects we created by hand. A more common way to create **data frames** is by **reading tables from a file**. There are a few functions to do this in R. The old school way of doing this it by using the `read.table()` and `read.csv()` functions, with the latter being a generic file loader for which you can specify what delimits the columns: comma, space, tab, or some other character.
 
-For this workshop, we are going to read the [and_vertebrates :octicons-link-external-24:](https://lter.github.io/lterdatasampler/reference/and_vertebrates.html){:target="_blank"} data set from LTER, which stands for Long Term Ecological Research network. This data set is comprised of sampling data for cutthroat trout and two salamander species in different habitats, for different years, with weight and body size measurements, as well as unique individual identifiers. It is a rather large data set, consisting of over 32,209 rows and 16 columns.
+For this workshop, our data set comes from... wait for it ... penguins! The [palmer penguins](https://allisonhorst.github.io/palmerpenguins/) data set contains measurement data for 3 species of penguins collected on three islands at the LTER site in the Palmer Archipelago, Antarctica. *palmerpenguins* is itself an R package, but we can also read in the raw CSV file from a URL using the `read_csv` function.
 
-Today, we will load files into **data frames** in the standard, older way. In tomorrow's workshop, we will introduce you to *tidyverse* and teach you how loading files as **tibbles** can offer a number of advantages. For now, let's try the standard way:
-
-> Run the following code block to read data from a file into an object in R (in this case, as a **data frame**) with the `read.csv()` function:
+> Run the following code block to create an object called `mypenguins` to which the data in *penguins.csv* is assigned.
 
 ```{r}
-
-vertebrates <- read.csv(file="https://harvardinformatics.github.io/workshops/2023-spring/r/data/LTER_andvertebrates.csv", sep=",", header=TRUE)
-
+library(readr)
+mypenguins <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2020/2020-07-28/penguins.csv")
 ```
+
+
 
 As with manually constructed data frames, we can access *rows* and *columns* within it. 
 
-Let's see how many unique sampling dates there are, regardless of species. The `sampledate` column is the date variable. We can use the `length()` and `unique()` function, where the latter returns unique values as a vector, and the former returns the length of that vector.
+Let's see how many unique penguins species are in the data set. The `species` column is the date variable. We can use the `length()` and `unique()` function, where the latter returns unique values as a vector, and the former returns the length of that vector.
 
 > Run the code block below to count the sampling dates in the data set:
 
 ```{r}
 
-length(unique(vertebrates$sampledate))
+length(unique(mypenguins$species))
 
 ```
 
-Loaded in this manner, if you type `vertebrates` in the R console, it will return a large number of columns before print a "reached max" statement and telling you how many columns it didn't print. But for a quick view, analogous to unix, you can use the head function, as above.
+Loaded in this manner, if you type `mypenguins` in the R console, it will return a large number of columns before print a "reached max" statement and telling you how many columns it didn't print. But for a quick view, analogous to unix, you can use the head function, as above.
 
 > Run the code block below to view the first 10 lines of the data set:
 
 ```{r}
 
-head(vertebrates,10)
+head(mypenguins, 10)
 
 ```
 
@@ -856,12 +856,12 @@ In Rstudio, we can also use the `View()` (notice the capital "V") function to op
 > Run the following command in the R **Console** below to open the data set in a new tab in the text editor:
 
 ```
-View(vertebrates)
+View(mypenguins)
 ```
 
 A word of caution with `View()`: be careful `View`ing large datasets, since they can be difficult for RStudio to display and may slow down the program.
 
-> 1. Can you guess what the R function is to see the last n columns? Try `tail()` to get the last 10 columns of the *vertebrates* data frame:
+> 1. Can you guess what the R function is to see the last n rows? Try `tail()` to get the last 10 columns of the *mypenguins* data frame:
 
 ```{r}
 
@@ -873,18 +873,20 @@ A word of caution with `View()`: be careful `View`ing large datasets, since they
 
 Another useful function is `summary()` which provides basic summary statistics on the values of each column.
 
-> 2. What is the average weight in grams of the observed animals?
+> 2. What is the average body mass in grams of the observed animals?
 
 ```{r}
 
-### 2. Use any method to get the average weight of the animals
+### 2. Use any method to get the average body mass of the penguins
 
-### 2. Use any method to get the average weight of the animals
+### 2. Use any method to get the average body mass of the penguins
 
 ```
 
 ## End of Part 1
 
-In tomorrow's workshop, we will teach you how to load data in the [tidyverse :octicons-link-external-24:](https://www.tidyverse.org/){:target="_blank"} way, how to select and filter a data set using certain criteria, how to construct new variables, and how to write the resulting outputs to new files.
+In tomorrow's workshop, we will teach you how to manipulate data in the [tidyverse](https://www.tidyverse.org/) way, including how to select and filter a data set using certain criteria, how to construct new variables, and how to write the resulting outputs to new files. 
+
+What you probably didn't realize is that we used a *tidyverse* file loading function `read_csv` which created a data frame object that is actually a *tibble* , a fancy *tidyverse* version of a data frame that we will discuss in more detail in our next workshop session.
 
 ---

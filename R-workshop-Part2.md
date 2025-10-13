@@ -1,7 +1,7 @@
 ---
 title: "[Workshop] Introduction to R Part 2: tidyverse"
 description: "An introduction to 'tidy' data and how to manipulate data with the tidyverse family of R packages."
-date: "October 20, 2023"
+date: "September 24, 2025"
 authors: 
   - Adam Freedman
   - Lei Ma
@@ -17,12 +17,12 @@ Welcome to Day 2 of our Introduction to R workshop! If you're viewing this file 
 
 ## What is tidy data?
 
-The notion of tidy data has been around in various incarnations for a while but has more recently been formalized in this [paper :octicons-download-24:](https://vita.had.co.nz/papers/tidy-data.pdf){:target="_blank"} by Hadley Wickham, the developer of *tidyverse*. Tidy data are, in short, data that have been organized in a consistent way that makes data exploration and visualization easier. Two key principles are that:
+The notion of tidy data has been around in various incarnations for a while but has more recently been formalized in this [paper :octicons-download-24:](https://vita.had.co.nz/papers/tidy-data.pdf){:target="\_blank"} by Hadley Wickham, the developer of *tidyverse*. Tidy data are, in short, data that have been organized in a consistent way that makes data exploration and visualization easier. Two key principles are that:
 
-* Each variable forms a column
-* Each observation forms a row
+-   Each variable forms a column
+-   Each observation forms a row
 
-Organized this way, for analysis with software such as R, values for different variables can be linked within observations, e.g. rows of our example data from day 1 are observations of individual trout or salamanders, and columns contain information about each individual (the habitat they were found in, body weight, etc.) such that one could explore how the weight or body size varies by habitat and species. Often times data that one pulls down from a repository (or that is provided by a collaborator) are not tidy! For example, multiple variables may be stored in the same column, such as when two different treatment types are concatenated into a single string. Tidying such data would require separating each treatment into a separate column.
+Organized this way, for analysis with software such as R, values for different variables can be linked within observations, e.g. rows of our example data from day 1 are observations of individual penguins, and columns contain information about each individual (species, sex, island where recorded, body mass, etc.) such that one could explore how the weight or flipper length varies by sex and species. Often times data that one pulls down from a repository (or that is provided by a collaborator) are not tidy! For example, multiple variables may be stored in the same column, such as when two different treatment types are concatenated into a single string. Tidying such data would require separating each treatment into a separate column.
 
 ## What is *tidyverse*?
 
@@ -36,639 +36,606 @@ R packages are extensions to the base R environment. They typically contain code
 
 Some packages are included with the base R installation. You can see the packages that come with R by default (or that you may have installed) if you click over to the *Packages* tab in your Rstudio window. However, many packages you will want to use for data analysis need to be downloaded. R packages generally come from one of two places:
 
-* [CRAN :octicons-link-external-24:](https://cran.r-project.org/){:target="_blank"}: default source for "official" R packages
-* [Bioconductor :octicons-link-external-24:](https://www.bioconductor.org/){:target="_blank"}: specialized packages for analyses of biological data
+-   [CRAN :octicons-link-external-24:](https://cran.r-project.org/){:target="\_blank"}: default source for "official" R packages
+-   [Bioconductor :octicons-link-external-24:](https://www.bioconductor.org/){:target="\_blank"}: specialized packages for analyses of biological data
 
-How you install packages will depend on where you are getting the package from. For *CRAN*, you can use the R function `install.packages()` or the Rstudio Tools -> Install Packages menu. For example, if you wanted to install the *abc* package for doing Approximate Bayesian Computation, in the R console you would simply type: *install.packages("abc")*. 
+How you install packages will depend on where you are getting the package from. For *CRAN*, you can use the R function `install.packages()` or the Rstudio Tools -\> Install Packages menu. For example, if you wanted to install the *abc* package for doing Approximate Bayesian Computation, in the R console you would simply type: *install.packages("abc")*.
 
-To install *Bioconductor* packages, you will need to first install the Bioconductor package manager (BUT DON"T DO THIS NOW!):
-```if (!require("BiocManager", quietly = TRUE))
-install.packages("BiocManager")
-BiocManager::install(version = "3.16")```
+To install *Bioconductor* packages, you will need to first install the Bioconductor package manager (BUT DON"T DO THIS NOW!): `if (!require("BiocManager", quietly = TRUE)) install.packages("BiocManager") BiocManager::install(version = "3.16")`
 
-Once the package manager is installed, you can install a Bioconductor project packages with the following syntax: ```BiocManager::install(<name of Bioconductor R package>)```. We won't discuss Bioconductor more in this workshop, but it is a useful resource to be aware of. 
+Once the package manager is installed, you can install a Bioconductor project packages with the following syntax: `BiocManager::install(<name of Bioconductor R package>)`. We won't discuss Bioconductor more in this workshop, but it is a useful resource to be aware of.
 
-Packages frequently have other R packages as dependencies, and so you will often get the prompt from R asking if you want to update (the dependencies) to their current version, and if you want to compile packages that require compilation from source. Packages compiled from source can be particularly prone to installation failures, especially on M1/M2 Macs, and often require some searching to decode how to proceed. But today we will only use packages that are simple and easy to install. 
+Packages frequently have other R packages as dependencies, and so you will often get the prompt from R asking if you want to update (the dependencies) to their current version, and if you want to compile packages that require compilation from source. Packages compiled from source can be particularly prone to installation failures, especially on M1/M2 Macs, and often require some searching to decode how to proceed. But today we will only use packages that are simple and easy to install.
 
-So we mentioned that *tidyverse* is a collection of R packages. You can conveniently install all these related packages with one install command. 
+So we mentioned that *tidyverse* is a collection of R packages. You can conveniently install all these related packages with one install command.
 
-> If you haven't already installed *tidyverse*, do that now by executing the following code block. 
+> If you haven't already installed *tidyverse* and the *palmerpenguins" dataset, do that now by executing the following code block.
 
 
-```r
+``` r
 install.packages("tidyverse")
 ```
 
-Note that installing a package is not the same thing as loading it into your current R session. Once the package is installed, you have the functions on your computer, but in order to use them in your R session, you need to load the package, which we usually do with the `library` function. 
+Note that installing a package is not the same thing as loading it into your current R session. Once the package is installed, you have the functions on your computer, but in order to use them in your R session, you need to load the package, which we usually do with the `library` function.
 
 > Then load *tidyverse* by running the following code block
 
 
-```r
+``` r
 library(tidyverse)
 ```
 
 ```
-## Warning: package 'tidyverse' was built under R version 4.1.3
+## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.2
+## ✔ ggplot2   4.0.0     ✔ tibble    3.3.0
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.1.0     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 ```
 
-```
-## -- Attaching packages --------------------------------------- tidyverse 1.3.2 --
-## v ggplot2 3.5.1     v purrr   1.0.1
-## v tibble  3.2.1     v dplyr   1.1.2
-## v tidyr   1.3.0     v stringr 1.5.0
-## v readr   2.1.4     v forcats 1.0.0
-```
-
-```
-## Warning: package 'tibble' was built under R version 4.1.3
-```
-
-```
-## Warning: package 'tidyr' was built under R version 4.1.3
-```
-
-```
-## Warning: package 'readr' was built under R version 4.1.3
-```
-
-```
-## Warning: package 'purrr' was built under R version 4.1.3
-```
-
-```
-## Warning: package 'dplyr' was built under R version 4.1.3
-```
-
-```
-## Warning: package 'stringr' was built under R version 4.1.3
-```
-
-```
-## Warning: package 'forcats' was built under R version 4.1.3
-```
-
-```
-## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()
-```
-
-For more information, go to [tidyverse :octicons-link-external-24:](https://www.tidyverse.org/){:target="_blank"}.
+For more information, go to [tidyverse :octicons-link-external-24:](https://www.tidyverse.org/){:target="\_blank"}.
 
 Packages usually come with *vignettes*, which give you short introductions and tutorials for their use. You can find these on the web, but you can also browse them in R.
 
 > Run the following code block to see the vignettes for the **dplyr** package, which is part of the tidyverse
 
 
-```r
+``` r
 browseVignettes(package = "dplyr")
 ```
 
-## Loading files the *tidyverse* way
+## Our data
+Today's data set comes from... wait for it ... penguins! In particular, we are using the [Palmer penguins :octicons-link-external-24:](https://allisonhorst.github.io/palmerpenguins/){:target="\_blank"} data set contains measurement data for 3 species of penguins collected on three islands at the LTER site in the Palmer Archipelago, Antarctica.
 
-Now, back to data manipulation. 
-
-As the entire point of of *tidyverse* is to facilitate data analysis, let's load data the *tidyverse* way, using the `read_csv()` function.
-
-> Run the following code block to load the csv data file:
+This data is available as an R package which we can install as follows:
 
 
-```r
-vertebrates <- read_csv(file="https://harvardinformatics.github.io/workshops/2023-fall/r/data/LTER_andvertebrates.csv")
+``` r
+install.packages("palmerpenguins")
+```
+
+## An introduction to data frames and "tibbles"
+In most cases, tabular data are represented as a "data.frame", where the expectation is that, in line with the notion of "tidy" data, rows are observations and columns are variables for which there are values recorded for each observation, including the absence of an observation, i.e. missing data. Historically in R and prior to tidyverse,one would load a data frame from a file with a file reading function such as `read.csv()` or `read.table()`, and one would have to explicitly specify whether or not the first row represented the variable names for each column, whether there were row names, etc. Tidyverse has its own data load functions, `read_csv()` and `read_table()` which load tabular data as "tibbles". *tibbles* are effectively just *data.frames* with some improvements to how they are displayed, how variables can be accessed and a few other minor, subtle differences. But you can think of them as pretty data.frames.
+
+Because the data set we are using today already comes built into the *palmerpenguins* package, the *penguins* dataframe is immediately available after loading the `palmerpenguins` R package. In most use cases, your data are stored as a text file in some sort of tabular format--space, tab or comma separated--and tidyverse has file loading functions. To show how loading works, we will write the `penguins` dataframe from *palmerpenguins* to a csv file, the use the tidyverse `read_csv` function to load it.
+
+> Run the following code block to write the peguins data frame to a file then load it as a tibble
+
+
+``` r
+library(palmerpenguins)
 ```
 
 ```
-## Rows: 32209 Columns: 16
-## -- Column specification --------------------------------------------------------
-## Delimiter: ","
-## chr  (7): sitecode, section, reach, unittype, species, clip, notes
-## dbl  (8): year, pass, unitnum, vert_index, pitnumber, length_1_mm, length_2_...
-## date (1): sampledate
 ## 
-## i Use `spec()` to retrieve the full column specification for this data.
-## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+## Attaching package: 'palmerpenguins'
 ```
 
-Note that there are some key differences between `read_csv` or `read_table` and their base R equivalents (`read.csv` and `read.table`). One important one is that the default for `read_csv` is to assume the first row of your data contains column names, which is the opposite of `read.csv` as we saw yesterday. These functions also produce *tibbles*, which are effectively just *data.frames* with some improvements to how they are displayed and a few other minor, subtle differences. But you can think of them as pretty data.frames. 
+```
+## The following objects are masked from 'package:datasets':
+## 
+##     penguins, penguins_raw
+```
+
+``` r
+write.csv(penguins,file="penguins.csv")
+mypenguins<-read_csv("penguins.csv")
+```
+
+```
+## New names:
+## • `` -> `...1`
+```
+
+```
+## Rows: 344 Columns: 9
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: ","
+## chr (3): species, island, sex
+## dbl (6): ...1, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+```
+
+Tidyverse file loading functions assume the first row of your data contains column names, while the base R functions (e.g. `read.csv` and `read.table`) do not. Tidyverse file loaders return a tibble rather than a standard dataframe.  One of the first things you will notice is that upon loading you will get a brief summary of the tibble contents, such as the tibble dimensions, the column separator, and the names of variables (columns) belonging to each type: *dbl* for numeric and *chr* for character. We can also take a quick peek at the first few rows by simply calling the tibble. 
 
 > Run the following code block to see some basic information about this data.
 
 
-```r
-vertebrates
+``` r
+mypenguins
 ```
 
 ```
-## # A tibble: 32,209 x 16
-##     year sitecode section reach  pass unitnum unittype vert_index pitnumber
-##    <dbl> <chr>    <chr>   <chr> <dbl>   <dbl> <chr>         <dbl>     <dbl>
-##  1  1987 MACKCC-L CC      L         1       1 R                 1        NA
-##  2  1987 MACKCC-L CC      L         1       1 R                 2        NA
-##  3  1987 MACKCC-L CC      L         1       1 R                 3        NA
-##  4  1987 MACKCC-L CC      L         1       1 R                 4        NA
-##  5  1987 MACKCC-L CC      L         1       1 R                 5        NA
-##  6  1987 MACKCC-L CC      L         1       1 R                 6        NA
-##  7  1987 MACKCC-L CC      L         1       1 R                 7        NA
-##  8  1987 MACKCC-L CC      L         1       1 R                 8        NA
-##  9  1987 MACKCC-L CC      L         1       1 R                 9        NA
-## 10  1987 MACKCC-L CC      L         1       1 R                10        NA
-## # i 32,199 more rows
-## # i 7 more variables: species <chr>, length_1_mm <dbl>, length_2_mm <dbl>,
-## #   weight_g <dbl>, clip <chr>, sampledate <date>, notes <chr>
+## # A tibble: 344 × 9
+##     ...1 species island    bill_length_mm bill_depth_mm flipper_length_mm
+##    <dbl> <chr>   <chr>              <dbl>         <dbl>             <dbl>
+##  1     1 Adelie  Torgersen           39.1          18.7               181
+##  2     2 Adelie  Torgersen           39.5          17.4               186
+##  3     3 Adelie  Torgersen           40.3          18                 195
+##  4     4 Adelie  Torgersen           NA            NA                  NA
+##  5     5 Adelie  Torgersen           36.7          19.3               193
+##  6     6 Adelie  Torgersen           39.3          20.6               190
+##  7     7 Adelie  Torgersen           38.9          17.8               181
+##  8     8 Adelie  Torgersen           39.2          19.6               195
+##  9     9 Adelie  Torgersen           34.1          18.1               193
+## 10    10 Adelie  Torgersen           42            20.2               190
+## # ℹ 334 more rows
+## # ℹ 3 more variables: body_mass_g <dbl>, sex <chr>, year <dbl>
 ```
+
+In the R markdown, you will notice that in this view there are tabs at the bottom right for advancing to additional sets of rows. If there were too many columns to be displayed in the window, there would also be an arrow at the top right allowing you to advance to the "right" to see additional columns.sa
 
 One theme of tidyverse is that it provides replacements for a lot of base R functions with better formatting. A tibble is one example of this; the `glimpse()` function is another; it is basically a pretty version of `str()`.
 
 > Run the following code block to get a "glimpse" of the data:
 
 
-```r
-glimpse(vertebrates)
+``` r
+glimpse(mypenguins)
 ```
 
 ```
-## Rows: 32,209
-## Columns: 16
-## $ year        <dbl> 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987~
-## $ sitecode    <chr> "MACKCC-L", "MACKCC-L", "MACKCC-L", "MACKCC-L", "MACKCC-L"~
-## $ section     <chr> "CC", "CC", "CC", "CC", "CC", "CC", "CC", "CC", "CC", "CC"~
-## $ reach       <chr> "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L"~
-## $ pass        <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1~
-## $ unitnum     <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2~
-## $ unittype    <chr> "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R"~
-## $ vert_index  <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, ~
-## $ pitnumber   <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
-## $ species     <chr> "Cutthroat trout", "Cutthroat trout", "Cutthroat trout", "~
-## $ length_1_mm <dbl> 58, 61, 89, 58, 93, 86, 107, 131, 103, 117, 100, 127, 99, ~
-## $ length_2_mm <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
-## $ weight_g    <dbl> 1.75, 1.95, 5.60, 2.15, 6.90, 5.90, 10.50, 20.60, 9.55, 13~
-## $ clip        <chr> "NONE", "NONE", "NONE", "NONE", "NONE", "NONE", "NONE", "N~
-## $ sampledate  <date> 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-0~
-## $ notes       <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
+## Rows: 344
+## Columns: 9
+## $ ...1              <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1…
+## $ species           <chr> "Adelie", "Adelie", "Adelie", "Adelie", "Adelie", "A…
+## $ island            <chr> "Torgersen", "Torgersen", "Torgersen", "Torgersen", …
+## $ bill_length_mm    <dbl> 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34.1, …
+## $ bill_depth_mm     <dbl> 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18.1, …
+## $ flipper_length_mm <dbl> 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, 186…
+## $ body_mass_g       <dbl> 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, …
+## $ sex               <chr> "male", "female", "female", NA, "female", "male", "f…
+## $ year              <dbl> 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…
 ```
 
-We can of course use all our non-tidyverse (base R) functions to look at data, like `head` and `View`, since tibbles are just pretty data frames. 
+We can of course use all our non-tidyverse (base R) functions to look at data, like `head` and `View`, since tibbles are just pretty data frames.
 
-> To get the first 10 lines of vertebrates, run the following code block:
+> To get the first 10 lines of mypenguins, run the following code block:
 
 
-```r
-head(vertebrates, 10)
+``` r
+head(mypenguins, 10)
 ```
 
 ```
-## # A tibble: 10 x 16
-##     year sitecode section reach  pass unitnum unittype vert_index pitnumber
-##    <dbl> <chr>    <chr>   <chr> <dbl>   <dbl> <chr>         <dbl>     <dbl>
-##  1  1987 MACKCC-L CC      L         1       1 R                 1        NA
-##  2  1987 MACKCC-L CC      L         1       1 R                 2        NA
-##  3  1987 MACKCC-L CC      L         1       1 R                 3        NA
-##  4  1987 MACKCC-L CC      L         1       1 R                 4        NA
-##  5  1987 MACKCC-L CC      L         1       1 R                 5        NA
-##  6  1987 MACKCC-L CC      L         1       1 R                 6        NA
-##  7  1987 MACKCC-L CC      L         1       1 R                 7        NA
-##  8  1987 MACKCC-L CC      L         1       1 R                 8        NA
-##  9  1987 MACKCC-L CC      L         1       1 R                 9        NA
-## 10  1987 MACKCC-L CC      L         1       1 R                10        NA
-## # i 7 more variables: species <chr>, length_1_mm <dbl>, length_2_mm <dbl>,
-## #   weight_g <dbl>, clip <chr>, sampledate <date>, notes <chr>
+## # A tibble: 10 × 9
+##     ...1 species island    bill_length_mm bill_depth_mm flipper_length_mm
+##    <dbl> <chr>   <chr>              <dbl>         <dbl>             <dbl>
+##  1     1 Adelie  Torgersen           39.1          18.7               181
+##  2     2 Adelie  Torgersen           39.5          17.4               186
+##  3     3 Adelie  Torgersen           40.3          18                 195
+##  4     4 Adelie  Torgersen           NA            NA                  NA
+##  5     5 Adelie  Torgersen           36.7          19.3               193
+##  6     6 Adelie  Torgersen           39.3          20.6               190
+##  7     7 Adelie  Torgersen           38.9          17.8               181
+##  8     8 Adelie  Torgersen           39.2          19.6               195
+##  9     9 Adelie  Torgersen           34.1          18.1               193
+## 10    10 Adelie  Torgersen           42            20.2               190
+## # ℹ 3 more variables: body_mass_g <dbl>, sex <chr>, year <dbl>
 ```
+
+For the rest of the workshop, we will just use the `penguins` tibble provided with *palmerpenguins* rather than our newly created `mypenguins` tibble, as they are identical. It is also worth noting that, if you are using other tools in R that produce data frames, you can use the `as_tibble` function to convert the dataframe to a tibble on the fly. Similarly,if your collaborator has provided you with messy data that is not immediately amenable to loading as a tibble, you can use a standard data load, do some relevant manipulations, then use the `as_tibble` function. 
 
 ## A simple tidyverse function: sorting a tibble on a column value
 
-Today we'll talk about a bunch of functions that are part of tidyverse and provide convenient ways to manipulate tibbles. While we'll discuss this in the context of tibbles, everything here works on data frames too - remember a tibble is just a pretty data frame. 
+Today we'll talk about a bunch of functions that are part of tidyverse and provide convenient ways to manipulate tibbles. While we'll discuss this in the context of tibbles, everything here works on data frames too - remember a tibble is just a pretty data frame.
 
-Tidyverse functions can get very complex, but they share a common grammar. We'll see the real power of this on day 3 when we talk about the grammar of graphics using *ggplot*, but getting a handle on the basic grammar of the tidyverse can help you a lot with data manipulation as well. 
+Tidyverse functions can get very complex, but they share a common grammar. We'll see the real power of this on day 3 when we talk about the grammar of graphics using *ggplot*, but getting a handle on the basic grammar of the tidyverse can help you a lot with data manipulation as well.
 
-We'll start with something really simple: sorting a data frame. We do this with the `arrange()` function. 
+We'll start with something really simple: sorting a data frame. We do this with the `arrange()` function.
 
 > To sort the tibble by species, run the following code block:
 
 
-```r
-arrange(vertebrates, species)
+``` r
+arrange(penguins, species)
 ```
 
 ```
-## # A tibble: 32,209 x 16
-##     year sitecode section reach  pass unitnum unittype vert_index pitnumber
-##    <dbl> <chr>    <chr>   <chr> <dbl>   <dbl> <chr>         <dbl>     <dbl>
-##  1  1994 MACKCC-L CC      L         1       3 SC               20        NA
-##  2  1994 MACKCC-L CC      L         1       3 SC               21        NA
-##  3  2002 MACKCC-L CC      L         2       2 SC               13        NA
-##  4  2003 MACKCC-L CC      L         1       2 SC               48        NA
-##  5  2003 MACKCC-L CC      L         2       2 SC               20        NA
-##  6  2003 MACKOG-U OG      U         1      18 P                21        NA
-##  7  2004 MACKCC-L CC      L         1       2 SC               33        NA
-##  8  2012 MACKCC-L CC      L         1       2 SC               49        NA
-##  9  2012 MACKOG-U OG      U         1      16 SC                1        NA
-## 10  2012 MACKOG-U OG      U         1      16 SC                2        NA
-## # i 32,199 more rows
-## # i 7 more variables: species <chr>, length_1_mm <dbl>, length_2_mm <dbl>,
-## #   weight_g <dbl>, clip <chr>, sampledate <date>, notes <chr>
+## # A tibble: 344 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    <fct>   <fct>              <dbl>         <dbl>             <int>       <int>
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           NA            NA                  NA          NA
+##  5 Adelie  Torgersen           36.7          19.3               193        3450
+##  6 Adelie  Torgersen           39.3          20.6               190        3650
+##  7 Adelie  Torgersen           38.9          17.8               181        3625
+##  8 Adelie  Torgersen           39.2          19.6               195        4675
+##  9 Adelie  Torgersen           34.1          18.1               193        3475
+## 10 Adelie  Torgersen           42            20.2               190        4250
+## # ℹ 334 more rows
+## # ℹ 2 more variables: sex <fct>, year <int>
 ```
 
-All tidyverse functions take the tibble or data frame to operate on as their first argument. The second argument ('species') is what makes tidyverse special. Note that we are using the syntax we've used before to refer to objects, here: a simple unquoted word or variable name.
+All tidyverse functions take the tibble or data frame to operate on as their first argument. The second argument ('species') is what makes tidyverse special. Note that we are using the syntax we've used before to refer to objects, here: a simple unquoted word or variable name. 
 
 What happens if we just type `species` in the **Console**?
 
 Tidyverse allows you to treat the **variables in your current data frame** as if they were **objects**. That is, within the arrange function (or almost any tidyverse function), you can reference the names of columns in your data frame and magically the function understands what you mean.
 
-What if we want to sort by multiple values? For example, first sort by section, and then sort by year? 
+What if we want to sort by multiple values? For example, first sort by section, and then sort by year?
 
-Many tidyverse functions have a special second argument that you will see listed in the help pages as `...`. You can look at `?arrange` as an example. This means that the second argument to these functions can be any number of columns, and the function will work on those columns in order. So to sort by section and then year:
+Many tidyverse functions have a special second argument that you will see listed in the help pages as `...`. You can look at `?arrange` as an example. This means that the second argument to these functions can be any number of columns, and the function will work on those columns in order. So to sort by year and then sex (i.e. sex within year):
 
-> To sort the tibble by section, then by year, run the following code block:
+> To sort the tibble by year, then by sex, run the following code block:
 
 
-```r
-arrange(vertebrates, section, year)
+``` r
+arrange(penguins, year, sex)
 ```
 
 ```
-## # A tibble: 32,209 x 16
-##     year sitecode section reach  pass unitnum unittype vert_index pitnumber
-##    <dbl> <chr>    <chr>   <chr> <dbl>   <dbl> <chr>         <dbl>     <dbl>
-##  1  1987 MACKCC-L CC      L         1       1 R                 1        NA
-##  2  1987 MACKCC-L CC      L         1       1 R                 2        NA
-##  3  1987 MACKCC-L CC      L         1       1 R                 3        NA
-##  4  1987 MACKCC-L CC      L         1       1 R                 4        NA
-##  5  1987 MACKCC-L CC      L         1       1 R                 5        NA
-##  6  1987 MACKCC-L CC      L         1       1 R                 6        NA
-##  7  1987 MACKCC-L CC      L         1       1 R                 7        NA
-##  8  1987 MACKCC-L CC      L         1       1 R                 8        NA
-##  9  1987 MACKCC-L CC      L         1       1 R                 9        NA
-## 10  1987 MACKCC-L CC      L         1       1 R                10        NA
-## # i 32,199 more rows
-## # i 7 more variables: species <chr>, length_1_mm <dbl>, length_2_mm <dbl>,
-## #   weight_g <dbl>, clip <chr>, sampledate <date>, notes <chr>
+## # A tibble: 344 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    <fct>   <fct>              <dbl>         <dbl>             <int>       <int>
+##  1 Adelie  Torgersen           39.5          17.4               186        3800
+##  2 Adelie  Torgersen           40.3          18                 195        3250
+##  3 Adelie  Torgersen           36.7          19.3               193        3450
+##  4 Adelie  Torgersen           38.9          17.8               181        3625
+##  5 Adelie  Torgersen           41.1          17.6               182        3200
+##  6 Adelie  Torgersen           36.6          17.8               185        3700
+##  7 Adelie  Torgersen           38.7          19                 195        3450
+##  8 Adelie  Torgersen           34.4          18.4               184        3325
+##  9 Adelie  Biscoe              37.8          18.3               174        3400
+## 10 Adelie  Biscoe              35.9          19.2               189        3800
+## # ℹ 334 more rows
+## # ℹ 2 more variables: sex <fct>, year <int>
 ```
 
-In this case, sorting is done first by *section*, and then *year*. Alternately, you could sort section in ascending order and year in descending order:
+In this case, sorting is done first by *year*, and then *sex*. Alternately, you could sort year in descending order and sex in ascending (alphabetic) order:
 
-> To sort the tibble in ascending order by section, and descending order by year, run the following code block:
+> To sort the tibble in descending order by year, and ascending order by sex, run the following code block:
 
 
-```r
-arrange(vertebrates, section, desc(year))
+``` r
+arrange(penguins, desc(year),sex)
 ```
 
 ```
-## # A tibble: 32,209 x 16
-##     year sitecode section reach  pass unitnum unittype vert_index pitnumber
-##    <dbl> <chr>    <chr>   <chr> <dbl>   <dbl> <chr>         <dbl>     <dbl>
-##  1  2019 MACKCC-L CC      L         1       1 C                 1        NA
-##  2  2019 MACKCC-L CC      L         1       1 C                 2        NA
-##  3  2019 MACKCC-L CC      L         1       1 C                 3        NA
-##  4  2019 MACKCC-L CC      L         1       1 C                 4        NA
-##  5  2019 MACKCC-L CC      L         1       1 C                 5   1044073
-##  6  2019 MACKCC-L CC      L         1       1 C                 6   1044084
-##  7  2019 MACKCC-L CC      L         1       1 C                 7   1044043
-##  8  2019 MACKCC-L CC      L         1       1 C                 8        NA
-##  9  2019 MACKCC-L CC      L         1       1 C                 9        NA
-## 10  2019 MACKCC-L CC      L         1       1 C                10        NA
-## # i 32,199 more rows
-## # i 7 more variables: species <chr>, length_1_mm <dbl>, length_2_mm <dbl>,
-## #   weight_g <dbl>, clip <chr>, sampledate <date>, notes <chr>
+## # A tibble: 344 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    <fct>   <fct>              <dbl>         <dbl>             <int>       <int>
+##  1 Adelie  Biscoe              35            17.9               192        3725
+##  2 Adelie  Biscoe              37.7          16                 183        3075
+##  3 Adelie  Biscoe              37.9          18.6               193        2925
+##  4 Adelie  Biscoe              38.6          17.2               199        3750
+##  5 Adelie  Biscoe              38.1          17                 181        3175
+##  6 Adelie  Biscoe              38.1          16.5               198        3825
+##  7 Adelie  Biscoe              39.7          17.7               193        3200
+##  8 Adelie  Biscoe              39.6          20.7               191        3900
+##  9 Adelie  Torgersen           38.6          17                 188        2900
+## 10 Adelie  Torgersen           35.7          17                 189        3350
+## # ℹ 334 more rows
+## # ℹ 2 more variables: sex <fct>, year <int>
 ```
 
-`desc()` here is a helper function that turns year into a descending sort instead of ascending. Tidyverse has a lot of these, although not many are applicable to `arrange()` we'll introduce more as we work through today. 
+`desc()` here is a helper function that turns year into a descending sort instead of ascending. Tidyverse has a lot of these, although not many are applicable to `arrange()` we'll introduce more as we work through today.
 
 Note that so far we haven't stored the sorted data. Let's try that now.
 
-> **Sorting exercise*. Sort the vertebrates tibble by species, then by year, then by sample date, and store the output in a new tibble called `sorted_verts`.
+> \*\*Sorting exercise\*. Sort your `penguins` tibble by species, then by year, then by body mass, and store the output in a new tibble called `sorted_penguins`.
 
 
-```r
-sorted_verts <- arrange(vertebrates, species, sampledate)
+``` r
+sorted_penguins <- arrange(penguins, species, year, body_mass_g)
 ```
-
 
 ## Selecting a subset of columns
 
-Sometimes in a big data set, there are a lot of columns that are not germane to the analysis at hand, such that one can simply select columns that represent the variables you want to work with. To do this we use the ```select()``` function. 
+Sometimes in a big data set, there are a lot of columns that are not germane to the analysis at hand, such that one can simply select columns that represent the variables you want to work with. To do this we use the `select()` function.
 
-For example, let's say we are interested in body size and weight as a function of habitat type adjacent to the watercourse that was sampled for trout and salamanders. The *section* variable has values for clear cut forest (CC) and old growth (OG). At some point, we might also be interested in looking at inter-annual variation. So, we are going to select the *year*,*section*,*species*,*length_1_mm*, and *weight_g* variables and assign the selected columns to a new tibble
+For example, let's say you are only interested in looking at the relationship between flipper length and body mass, irrespective of year and island, such that you only want to retain those two morphological measurements, sex, and species
 
-> To select these variables from the *vertebrates* tibble, run the following code block:
+> To select these variables from the *penguins* tibble, run the following code block:
 
 
-```r
-select(vertebrates, year, section, species, length_1_mm, weight_g)
+``` r
+select(penguins, species, sex, flipper_length_mm, body_mass_g)
 ```
 
 ```
-## # A tibble: 32,209 x 5
-##     year section species         length_1_mm weight_g
-##    <dbl> <chr>   <chr>                 <dbl>    <dbl>
-##  1  1987 CC      Cutthroat trout          58     1.75
-##  2  1987 CC      Cutthroat trout          61     1.95
-##  3  1987 CC      Cutthroat trout          89     5.6 
-##  4  1987 CC      Cutthroat trout          58     2.15
-##  5  1987 CC      Cutthroat trout          93     6.9 
-##  6  1987 CC      Cutthroat trout          86     5.9 
-##  7  1987 CC      Cutthroat trout         107    10.5 
-##  8  1987 CC      Cutthroat trout         131    20.6 
-##  9  1987 CC      Cutthroat trout         103     9.55
-## 10  1987 CC      Cutthroat trout         117    13   
-## # i 32,199 more rows
+## # A tibble: 344 × 4
+##    species sex    flipper_length_mm body_mass_g
+##    <fct>   <fct>              <int>       <int>
+##  1 Adelie  male                 181        3750
+##  2 Adelie  female               186        3800
+##  3 Adelie  female               195        3250
+##  4 Adelie  <NA>                  NA          NA
+##  5 Adelie  female               193        3450
+##  6 Adelie  male                 190        3650
+##  7 Adelie  female               181        3625
+##  8 Adelie  male                 195        4675
+##  9 Adelie  <NA>                 193        3475
+## 10 Adelie  <NA>                 190        4250
+## # ℹ 334 more rows
 ```
 
-The first argument to ```select()``` is the tibble one is subsetting from, and the rest of the arguments are the columns we wanted to keep. We see that ```select``` produced a tibble with the same number of rows as the *vertebrates* tibble, but only with the columns we chose to include. Note that, the above implementation of ```select()``` **DOES NOT** produce a new tibble: it simply prints the result to the screen. If we want to store the output, we need to redirect to a new tibble.
+The first argument to `select()` is the tibble one is subsetting from, and the rest of the arguments are the columns we wanted to keep. We see that `select` produced a tibble with the same number of rows as the *penguins* tibble, but only with the columns we chose to include. Note that, the above implementation of `select()` **DOES NOT** produce a new tibble: it simply prints the result to the screen. If we want to store the output, we need to redirect to a new tibble.
 
-> To produce a new tibbble consisting of *year*, *section*, *length_1_mm*, and *weight_g*, run the following code block:
+> To produce a new tibbble consisting of *species*, *sex*, *flipper_length_mm*, *body_mass_g*, run the following code block:
 
 
-```r
-size_data <- select(vertebrates, year, section, species, length_1_mm, weight_g)
-size_data
+``` r
+flipper_mass_data <- select(penguins, species, sex, flipper_length_mm, body_mass_g)
+flipper_mass_data
 ```
 
 ```
-## # A tibble: 32,209 x 5
-##     year section species         length_1_mm weight_g
-##    <dbl> <chr>   <chr>                 <dbl>    <dbl>
-##  1  1987 CC      Cutthroat trout          58     1.75
-##  2  1987 CC      Cutthroat trout          61     1.95
-##  3  1987 CC      Cutthroat trout          89     5.6 
-##  4  1987 CC      Cutthroat trout          58     2.15
-##  5  1987 CC      Cutthroat trout          93     6.9 
-##  6  1987 CC      Cutthroat trout          86     5.9 
-##  7  1987 CC      Cutthroat trout         107    10.5 
-##  8  1987 CC      Cutthroat trout         131    20.6 
-##  9  1987 CC      Cutthroat trout         103     9.55
-## 10  1987 CC      Cutthroat trout         117    13   
-## # i 32,199 more rows
+## # A tibble: 344 × 4
+##    species sex    flipper_length_mm body_mass_g
+##    <fct>   <fct>              <int>       <int>
+##  1 Adelie  male                 181        3750
+##  2 Adelie  female               186        3800
+##  3 Adelie  female               195        3250
+##  4 Adelie  <NA>                  NA          NA
+##  5 Adelie  female               193        3450
+##  6 Adelie  male                 190        3650
+##  7 Adelie  female               181        3625
+##  8 Adelie  male                 195        4675
+##  9 Adelie  <NA>                 193        3475
+## 10 Adelie  <NA>                 190        4250
+## # ℹ 334 more rows
 ```
 
 The `select` function, you should notice, works kind of like indexes we talked about yesterday. But it is a lot easier to use, because you can refer to the column names as variables in your command. Tidyverse magic at work!
 
+Alternatively, and this gets more useful when we have a lot of columns we want to keep and only a few we want to discard, we can dump columns rather than select *for* them. We can do this by applying a logical "NOT" by placing a *!* in front of a vector of variables we want to filter out.
 
-As another example,let's say we plan on doing a bunch of analyses only on salamanders, and we want, as our first step in data processing to get rid of all column variables that are exclusively related to trout: *clip*. Let's say we also don't care about which electroshock pass number the observation was made on (*pass*), and we don't really care about the *notes* column as it isn't data we can realistically analyze. How do we dump columns rather than selection *for* them? We can do this by applying a logical "NOT" by placing a *!* in front of a vector of variables we want to filter out.
-
-> To exclude the *clip*, *pass*, and *notes* variables, run the following code block:
+> To exclude the *island*, *bill_length_mm*, and *bill_depth_mm* variables, run the following code block:
 
 
-```r
-select(vertebrates, !c(clip, pass, notes))
+``` r
+select(penguins, !c(island, bill_length_mm, bill_depth_mm))
 ```
 
 ```
-## # A tibble: 32,209 x 13
-##     year sitecode section reach unitnum unittype vert_index pitnumber species   
-##    <dbl> <chr>    <chr>   <chr>   <dbl> <chr>         <dbl>     <dbl> <chr>     
-##  1  1987 MACKCC-L CC      L           1 R                 1        NA Cutthroat~
-##  2  1987 MACKCC-L CC      L           1 R                 2        NA Cutthroat~
-##  3  1987 MACKCC-L CC      L           1 R                 3        NA Cutthroat~
-##  4  1987 MACKCC-L CC      L           1 R                 4        NA Cutthroat~
-##  5  1987 MACKCC-L CC      L           1 R                 5        NA Cutthroat~
-##  6  1987 MACKCC-L CC      L           1 R                 6        NA Cutthroat~
-##  7  1987 MACKCC-L CC      L           1 R                 7        NA Cutthroat~
-##  8  1987 MACKCC-L CC      L           1 R                 8        NA Cutthroat~
-##  9  1987 MACKCC-L CC      L           1 R                 9        NA Cutthroat~
-## 10  1987 MACKCC-L CC      L           1 R                10        NA Cutthroat~
-## # i 32,199 more rows
-## # i 4 more variables: length_1_mm <dbl>, length_2_mm <dbl>, weight_g <dbl>,
-## #   sampledate <date>
+## # A tibble: 344 × 5
+##    species flipper_length_mm body_mass_g sex     year
+##    <fct>               <int>       <int> <fct>  <int>
+##  1 Adelie                181        3750 male    2007
+##  2 Adelie                186        3800 female  2007
+##  3 Adelie                195        3250 female  2007
+##  4 Adelie                 NA          NA <NA>    2007
+##  5 Adelie                193        3450 female  2007
+##  6 Adelie                190        3650 male    2007
+##  7 Adelie                181        3625 female  2007
+##  8 Adelie                195        4675 male    2007
+##  9 Adelie                193        3475 <NA>    2007
+## 10 Adelie                190        4250 <NA>    2007
+## # ℹ 334 more rows
 ```
 
-> To convince yourself those variables actually got filtered out, run ```glimpse()``` in the code block below:
+> To convince yourself those variables actually got filtered out, run `glimpse()` in the code block below:
 
 
-```r
-glimpse(select(vertebrates, !c(clip, pass, notes)))
+``` r
+glimpse(select(penguins, !c(island, bill_length_mm, bill_depth_mm)))
 ```
 
 ```
-## Rows: 32,209
-## Columns: 13
-## $ year        <dbl> 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987~
-## $ sitecode    <chr> "MACKCC-L", "MACKCC-L", "MACKCC-L", "MACKCC-L", "MACKCC-L"~
-## $ section     <chr> "CC", "CC", "CC", "CC", "CC", "CC", "CC", "CC", "CC", "CC"~
-## $ reach       <chr> "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L", "L"~
-## $ unitnum     <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2~
-## $ unittype    <chr> "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R", "R"~
-## $ vert_index  <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, ~
-## $ pitnumber   <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
-## $ species     <chr> "Cutthroat trout", "Cutthroat trout", "Cutthroat trout", "~
-## $ length_1_mm <dbl> 58, 61, 89, 58, 93, 86, 107, 131, 103, 117, 100, 127, 99, ~
-## $ length_2_mm <dbl> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA~
-## $ weight_g    <dbl> 1.75, 1.95, 5.60, 2.15, 6.90, 5.90, 10.50, 20.60, 9.55, 13~
-## $ sampledate  <date> 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-07, 1987-10-0~
+## Rows: 344
+## Columns: 5
+## $ species           <fct> Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…
+## $ flipper_length_mm <int> 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, 186…
+## $ body_mass_g       <int> 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, …
+## $ sex               <fct> male, female, female, NA, female, male, female, male…
+## $ year              <int> 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…
 ```
 
-Again, in this example we have NOT yet created a new tibble for downstream data analysis, we have simply printed the result of ```select()``` to the screen. We would have to redirect the output of this function to a new tibble to save the result.
-
+Again, in this example we have NOT yet created a new tibble for downstream data analysis, we have simply printed the result of `select()` to the screen. We would have to redirect the output of this function to a new tibble to save the result.
 
 > To generate the new tibble, run the following code block:
 
 
-```r
-no_trout_or_clip_stuff <- select(vertebrates, !c(clip, pass, notes))
+``` r
+noyear_bill_island <- select(penguins, !c(island, bill_length_mm, bill_depth_mm))
 ```
 
-Of course, if we aren't interested in trout, we would want to filter on the *species* column variable, so as to only include salamanders. We will show you how to do this in the next section. But before we do that, let's try and exercise:
 
 > **Column selection exercise:**
 >
-> 1. As a prelude to quantifying sampling effort across habitats and years, construct a new tibble called *sampling_data* that includes the following variables: *year*, *sitecode*, *section*, *reach*, and *species*:
+> 1.  As a prelude to quantifying the relationship within species between bill traits, construct a new tibble called *bill_data* that includes the following variables: *species*, *sex*, *bill_length_mm*, and *bill_depth_mm*:
 
 
-```r
-sampling_data <- select(vertebrates, year, sitecode, section, reach, species)
+``` r
+bill_data <- select(penguins, species, sex, bill_length_mm, bill_depth_mm)
 ```
 
-With large data frames with many columns, it can often be difficult to type out a list of everything you want. Conveniently, select comes with its own helper functions to allow you to pick columns. For example, the `starts_with()` function generates a list of all the columns that start with a particular word in the current data frame. 
+With large data frames with many columns, it can often be difficult to type out a list of everything you want. Conveniently, select comes with its own helper functions to allow you to pick columns. For example, the `starts_with()` function generates a list of all the columns that start with a particular word in the current data frame.
 
-> To see how ```starts_with```, works, run the following code block:
+> To see how `starts_with`, works, run the following code block:
 
 
-```r
-select(vertebrates, species, year, starts_with("length"))
+``` r
+select(penguins, species, sex, starts_with("bill"))
 ```
 
 ```
-## # A tibble: 32,209 x 4
-##    species          year length_1_mm length_2_mm
-##    <chr>           <dbl>       <dbl>       <dbl>
-##  1 Cutthroat trout  1987          58          NA
-##  2 Cutthroat trout  1987          61          NA
-##  3 Cutthroat trout  1987          89          NA
-##  4 Cutthroat trout  1987          58          NA
-##  5 Cutthroat trout  1987          93          NA
-##  6 Cutthroat trout  1987          86          NA
-##  7 Cutthroat trout  1987         107          NA
-##  8 Cutthroat trout  1987         131          NA
-##  9 Cutthroat trout  1987         103          NA
-## 10 Cutthroat trout  1987         117          NA
-## # i 32,199 more rows
+## # A tibble: 344 × 4
+##    species sex    bill_length_mm bill_depth_mm
+##    <fct>   <fct>           <dbl>         <dbl>
+##  1 Adelie  male             39.1          18.7
+##  2 Adelie  female           39.5          17.4
+##  3 Adelie  female           40.3          18  
+##  4 Adelie  <NA>             NA            NA  
+##  5 Adelie  female           36.7          19.3
+##  6 Adelie  male             39.3          20.6
+##  7 Adelie  female           38.9          17.8
+##  8 Adelie  male             39.2          19.6
+##  9 Adelie  <NA>             34.1          18.1
+## 10 Adelie  <NA>             42            20.2
+## # ℹ 334 more rows
 ```
 
-There are lots more of these: `?select` is your friend here. 
+There are lots more of these: `?select` is your friend here.
 
 ## Selecting a subset of rows based upon values of variables
+
 Up until now, we have been selecting columns to remove or keep. Often times, one wants to restrict analysis and visualization to a subset of the observations, that is, to select particular **rows**. In the case of our data set, perhaps you are only interested in cutthroat trout, and only those that occur in old growth forest. The `filter()` function allows you to select **rows** based upon values in multiple columns, similar to how we talked about logical vectors yesterday. This function works by only returning values where the condition is true. It not only excludes those for which it is FALSE, it also filters out rows where there is missing data (i.e. NA) for the column evaluated (because any logical test evaluates to false when given NA).
 
-Let us try creating a new tibble, with data restricted to trout.
+Let us try creating a new tibble, with data restricted to Adelie penguins.
 
 > Create a new tibble, with data restricted to trout by running the code block below:
 
 
-```r
-trout <- filter(vertebrates, species=="Cutthroat trout")
-trout
+``` r
+adelie <- filter(penguins, species=="Adelie")
+adelie
 ```
 
 ```
-## # A tibble: 20,433 x 16
-##     year sitecode section reach  pass unitnum unittype vert_index pitnumber
-##    <dbl> <chr>    <chr>   <chr> <dbl>   <dbl> <chr>         <dbl>     <dbl>
-##  1  1987 MACKCC-L CC      L         1       1 R                 1        NA
-##  2  1987 MACKCC-L CC      L         1       1 R                 2        NA
-##  3  1987 MACKCC-L CC      L         1       1 R                 3        NA
-##  4  1987 MACKCC-L CC      L         1       1 R                 4        NA
-##  5  1987 MACKCC-L CC      L         1       1 R                 5        NA
-##  6  1987 MACKCC-L CC      L         1       1 R                 6        NA
-##  7  1987 MACKCC-L CC      L         1       1 R                 7        NA
-##  8  1987 MACKCC-L CC      L         1       1 R                 8        NA
-##  9  1987 MACKCC-L CC      L         1       1 R                 9        NA
-## 10  1987 MACKCC-L CC      L         1       1 R                10        NA
-## # i 20,423 more rows
-## # i 7 more variables: species <chr>, length_1_mm <dbl>, length_2_mm <dbl>,
-## #   weight_g <dbl>, clip <chr>, sampledate <date>, notes <chr>
+## # A tibble: 152 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    <fct>   <fct>              <dbl>         <dbl>             <int>       <int>
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           NA            NA                  NA          NA
+##  5 Adelie  Torgersen           36.7          19.3               193        3450
+##  6 Adelie  Torgersen           39.3          20.6               190        3650
+##  7 Adelie  Torgersen           38.9          17.8               181        3625
+##  8 Adelie  Torgersen           39.2          19.6               195        4675
+##  9 Adelie  Torgersen           34.1          18.1               193        3475
+## 10 Adelie  Torgersen           42            20.2               190        4250
+## # ℹ 142 more rows
+## # ℹ 2 more variables: sex <fct>, year <int>
 ```
 
-Note the `==`, as we discussed yesterday for logical operations. We can add additional logical conditions for other variables if we want to make more complex selections. For example, we might only want to look at trout in old growth forest (i.e. where the *section* variable value is "OG"). Let's do this:
+Note the `==`, as we discussed yesterday for logical operations. We can add additional logical conditions for other variables if we want to make more complex selections. For example, we might only want to look at male Adelie penguins. Let's do this:
 
 > To select rows for trout in old growth forest, run the following code block:
 
 
-```r
-trout_OG <- filter(vertebrates, species=="Cutthroat trout", section =="OG")
-trout_OG
+``` r
+adelie_males <- filter(penguins, species=="Adelie", sex =="male")
+adelie_males
 ```
 
 ```
-## # A tibble: 9,360 x 16
-##     year sitecode section reach  pass unitnum unittype vert_index pitnumber
-##    <dbl> <chr>    <chr>   <chr> <dbl>   <dbl> <chr>         <dbl>     <dbl>
-##  1  1987 MACKOG-L OG      L         1       1 R                 1        NA
-##  2  1987 MACKOG-L OG      L         1       1 R                 2        NA
-##  3  1987 MACKOG-L OG      L         1       1 R                 3        NA
-##  4  1987 MACKOG-L OG      L         1       1 R                 4        NA
-##  5  1987 MACKOG-L OG      L         1       1 R                 5        NA
-##  6  1987 MACKOG-L OG      L         1       1 R                 6        NA
-##  7  1987 MACKOG-L OG      L         1       1 R                 7        NA
-##  8  1987 MACKOG-L OG      L         1       1 R                 8        NA
-##  9  1987 MACKOG-L OG      L         1       2 P                 1        NA
-## 10  1987 MACKOG-L OG      L         1       2 P                 2        NA
-## # i 9,350 more rows
-## # i 7 more variables: species <chr>, length_1_mm <dbl>, length_2_mm <dbl>,
-## #   weight_g <dbl>, clip <chr>, sampledate <date>, notes <chr>
+## # A tibble: 73 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    <fct>   <fct>              <dbl>         <dbl>             <int>       <int>
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.3          20.6               190        3650
+##  3 Adelie  Torgersen           39.2          19.6               195        4675
+##  4 Adelie  Torgersen           38.6          21.2               191        3800
+##  5 Adelie  Torgersen           34.6          21.1               198        4400
+##  6 Adelie  Torgersen           42.5          20.7               197        4500
+##  7 Adelie  Torgersen           46            21.5               194        4200
+##  8 Adelie  Biscoe              37.7          18.7               180        3600
+##  9 Adelie  Biscoe              38.2          18.1               185        3950
+## 10 Adelie  Biscoe              38.8          17.2               180        3800
+## # ℹ 63 more rows
+## # ℹ 2 more variables: sex <fct>, year <int>
 ```
 
-When we provide more than one filtering criterion, the commas between those criteria are equivalent of *AND* in a logical statement. The filter command above effectively says: return rows where species == "Cutthroat trout" AND section == "OG".
+When we provide more than one filtering criterion, the commas between those criteria are equivalent of *AND* in a logical statement. The filter command above effectively says: return rows where species == "Adelie" AND sex == "male".
 
-Similarly, we can use "|" to specify *OR* in a logical filtering step. For example if we wanted records with either Cutthroat trout OR Coastal giant salamander we can specify two acceptable values for *species*.
+Similarly, we can use "\|" to specify either  in a logical filtering step. For example if we wanted records for either Adelie OR Gentoo penguins,  we can specify two acceptable values for *species*.
 
 > To make this type of *OR* selection, run the code block below:
 
 
-```r
-trout_cgs<- filter(vertebrates, species=="Cutthroat trout" | species == "Coastal giant salamander")
-trout_cgs
+``` r
+adelie_gentoo <- filter(penguins, species=="Adelie" | species == "Gentoo")
+adelie_gentoo
 ```
 
 ```
-## # A tibble: 32,191 x 16
-##     year sitecode section reach  pass unitnum unittype vert_index pitnumber
-##    <dbl> <chr>    <chr>   <chr> <dbl>   <dbl> <chr>         <dbl>     <dbl>
-##  1  1987 MACKCC-L CC      L         1       1 R                 1        NA
-##  2  1987 MACKCC-L CC      L         1       1 R                 2        NA
-##  3  1987 MACKCC-L CC      L         1       1 R                 3        NA
-##  4  1987 MACKCC-L CC      L         1       1 R                 4        NA
-##  5  1987 MACKCC-L CC      L         1       1 R                 5        NA
-##  6  1987 MACKCC-L CC      L         1       1 R                 6        NA
-##  7  1987 MACKCC-L CC      L         1       1 R                 7        NA
-##  8  1987 MACKCC-L CC      L         1       1 R                 8        NA
-##  9  1987 MACKCC-L CC      L         1       1 R                 9        NA
-## 10  1987 MACKCC-L CC      L         1       1 R                10        NA
-## # i 32,181 more rows
-## # i 7 more variables: species <chr>, length_1_mm <dbl>, length_2_mm <dbl>,
-## #   weight_g <dbl>, clip <chr>, sampledate <date>, notes <chr>
+## # A tibble: 276 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    <fct>   <fct>              <dbl>         <dbl>             <int>       <int>
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           NA            NA                  NA          NA
+##  5 Adelie  Torgersen           36.7          19.3               193        3450
+##  6 Adelie  Torgersen           39.3          20.6               190        3650
+##  7 Adelie  Torgersen           38.9          17.8               181        3625
+##  8 Adelie  Torgersen           39.2          19.6               195        4675
+##  9 Adelie  Torgersen           34.1          18.1               193        3475
+## 10 Adelie  Torgersen           42            20.2               190        4250
+## # ℹ 266 more rows
+## # ℹ 2 more variables: sex <fct>, year <int>
 ```
 
-> **Row selection exercise:** Create a new tibble that only contains Cutthroat trout, in old growth forest, and before the year 2000)
+> **Row selection exercise:** Create a new tibble that only contains Chinstrap penguins, that are females, for years after 2007)
 
 
-```r
-trout_OG_early <- filter(vertebrates, species=="Cutthroat trout", section =="OG", year < 2000)
-trout_OG_early
+``` r
+chinstrap_females_after2007 <- filter(penguins, species=="Chinstrap", sex =="female", year > 2007)
+chinstrap_females_after2007
 ```
 
 ```
-## # A tibble: 3,398 x 16
-##     year sitecode section reach  pass unitnum unittype vert_index pitnumber
-##    <dbl> <chr>    <chr>   <chr> <dbl>   <dbl> <chr>         <dbl>     <dbl>
-##  1  1987 MACKOG-L OG      L         1       1 R                 1        NA
-##  2  1987 MACKOG-L OG      L         1       1 R                 2        NA
-##  3  1987 MACKOG-L OG      L         1       1 R                 3        NA
-##  4  1987 MACKOG-L OG      L         1       1 R                 4        NA
-##  5  1987 MACKOG-L OG      L         1       1 R                 5        NA
-##  6  1987 MACKOG-L OG      L         1       1 R                 6        NA
-##  7  1987 MACKOG-L OG      L         1       1 R                 7        NA
-##  8  1987 MACKOG-L OG      L         1       1 R                 8        NA
-##  9  1987 MACKOG-L OG      L         1       2 P                 1        NA
-## 10  1987 MACKOG-L OG      L         1       2 P                 2        NA
-## # i 3,388 more rows
-## # i 7 more variables: species <chr>, length_1_mm <dbl>, length_2_mm <dbl>,
-## #   weight_g <dbl>, clip <chr>, sampledate <date>, notes <chr>
+## # A tibble: 21 × 8
+##    species   island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    <fct>     <fct>           <dbl>         <dbl>             <int>       <int>
+##  1 Chinstrap Dream            50.5          18.4               200        3400
+##  2 Chinstrap Dream            46.4          17.8               191        3700
+##  3 Chinstrap Dream            40.9          16.6               187        3200
+##  4 Chinstrap Dream            42.5          16.7               187        3350
+##  5 Chinstrap Dream            47.5          16.8               199        3900
+##  6 Chinstrap Dream            47.6          18.3               195        3850
+##  7 Chinstrap Dream            46.9          16.6               192        2700
+##  8 Chinstrap Dream            46.2          17.5               187        3650
+##  9 Chinstrap Dream            45.5          17                 196        3500
+## 10 Chinstrap Dream            50.9          17.9               196        3675
+## # ℹ 11 more rows
+## # ℹ 2 more variables: sex <fct>, year <int>
 ```
 
 Remember that in order to select a set of rows, one is performing a logical operation, effectively seeing if the values of a column or a set of columns in a row meets the specified criterion, constructing a logical vector of TRUEs and FALSEs depending upon whether the criterion is met, and then printing (or redirecting to a new tibble) all columns but only the rows that are TRUE, i.e. where the criterion is met.
 
-Let's try another, more complex example where we only want salamanders and combinations of upper reach and old growth forest or lower reach and clear-cut forest.
+Let's try another, more complex example where we only want Adelie penguins, but only males from Biscoe or females from Torgersen. There is not a clear research question behind this sort of selection...but ... it is a useful example for how to string together logical/conditional statements to subset data.
 
 > To do this, run the following code block:
 
 
-```r
-filter(vertebrates, species %in% c("Coastal giant salamander", "Cascade torrent salamander"), (section == "OG" &  reach == "U") | (section == "CC" & reach=="L"))
+``` r
+filter(penguins, species %in% c("Adelie"), (island == "Biscoe" &  sex == "male") | (island == "Torgersen" & sex=="female"))
 ```
 
 ```
-## # A tibble: 4,360 x 16
-##     year sitecode section reach  pass unitnum unittype vert_index pitnumber
-##    <dbl> <chr>    <chr>   <chr> <dbl>   <dbl> <chr>         <dbl>     <dbl>
-##  1  1993 MACKCC-L CC      L         1       1 P                16        NA
-##  2  1993 MACKCC-L CC      L         1       2 C                36        NA
-##  3  1993 MACKCC-L CC      L         1       2 C                37        NA
-##  4  1993 MACKCC-L CC      L         1       2 C                38        NA
-##  5  1993 MACKCC-L CC      L         1       2 C                39        NA
-##  6  1993 MACKCC-L CC      L         1       2 C                40        NA
-##  7  1993 MACKCC-L CC      L         1       2 C                41        NA
-##  8  1993 MACKCC-L CC      L         1       2 C                42        NA
-##  9  1993 MACKCC-L CC      L         1       2 C                43        NA
-## 10  1993 MACKCC-L CC      L         1       2 C                44        NA
-## # i 4,350 more rows
-## # i 7 more variables: species <chr>, length_1_mm <dbl>, length_2_mm <dbl>,
-## #   weight_g <dbl>, clip <chr>, sampledate <date>, notes <chr>
+## # A tibble: 46 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    <fct>   <fct>              <dbl>         <dbl>             <int>       <int>
+##  1 Adelie  Torgersen           39.5          17.4               186        3800
+##  2 Adelie  Torgersen           40.3          18                 195        3250
+##  3 Adelie  Torgersen           36.7          19.3               193        3450
+##  4 Adelie  Torgersen           38.9          17.8               181        3625
+##  5 Adelie  Torgersen           41.1          17.6               182        3200
+##  6 Adelie  Torgersen           36.6          17.8               185        3700
+##  7 Adelie  Torgersen           38.7          19                 195        3450
+##  8 Adelie  Torgersen           34.4          18.4               184        3325
+##  9 Adelie  Biscoe              37.7          18.7               180        3600
+## 10 Adelie  Biscoe              38.2          18.1               185        3950
+## # ℹ 36 more rows
+## # ℹ 2 more variables: sex <fct>, year <int>
 ```
 
-The ```%in%``` is a way to construct a logical statment meaning "IN the following vector". In this case, in the construction of a logical criterion for rows, *&* is used to specify *AND* and *|* is used to specify *OR*. It is *VERY IMPORTANT* to understand how R interprets these logical operators. In general, *AND* is *stronger* than *OR*, meaning the ANDs get interpreted first. 
+While we could simply have filtered on `species==Adelie`, we demonstrate the `%in%` as a way to construct a logical statement meaning "IN the following vector", such that if there were multiple values for species, rather than stringing together a series of *OR* statements, we evaluate membership in the vector. In this case, in the construction of a logical criterion for rows, *&* is used to specify *AND* and *\|* is used to specify *OR*. It is *VERY IMPORTANT* to understand how R interprets these logical operators. In general, *AND* is *stronger* than *OR*, meaning the ANDs get interpreted first.
 
 To clarify what we mean by this, imagine the following vector:
 
 
-```r
+``` r
 test <- c(1,2,3)
 ```
 
 Now look at the result of the following two logical operations:
 
 
-```r
+``` r
 3 %in% test | 5 %in% test & 4 %in% test 
 ```
 
@@ -676,7 +643,7 @@ Now look at the result of the following two logical operations:
 ## [1] TRUE
 ```
 
-```r
+``` r
 3 %in% test & 5 %in% test | 4 %in% test
 ```
 
@@ -684,203 +651,220 @@ Now look at the result of the following two logical operations:
 ## [1] FALSE
 ```
 
-In the first statement, the part after the "|" , i.e the *AND* gets done first, and it is FALSE. The part before, evaluting whether 3 is in *test* is TRUE. So, the logical statement is saying TRUE | FALSE, and in logical statments, if one of the options in an OR statment is TRUE, the statement returns TRUE. In the second statment, the condition before the "|" has an AND, so it is evaluated first. Both numbers aren't in *test* so it is FALSE. The part to the right of the "|" is also FALSE, thus FALSE OR FALSE returns FALSE.
+In the first statement, the part after the "\|" , i.e the *AND* gets done first, and it is FALSE. The part before, evaluting whether 3 is in *test* is TRUE. So, the logical statement is saying TRUE \| FALSE, and in logical statments, if one of the options in an OR statment is TRUE, the statement returns TRUE. In the second statment, the condition before the "\|" has an AND, so it is evaluated first. Both numbers aren't in *test* so it is FALSE. The part to the right of the "\|" is also FALSE, thus FALSE OR FALSE returns FALSE.
 
-For purposes of making our R code clearer -- and it is a good idea to do this in your R code -- when writing complex tibble filtering operations, we put the criteria joined by *AND* inside parentheses. Thus the statement is saying: "select rows for which species is in the vector of salamander names (that only includes salamanders), and for which either section equals OG *AND* reach equals U... *OR* ... section equals CC and reach equals L.
+For purposes of making our R code clearer -- and it is a good idea to do this in your R code -- when writing complex tibble filtering operations, we put the criteria joined by *AND* inside parentheses. Thus the statement is saying: "select rows for which species is in the vector of names that only include Adelie, and for which island equals BISCO *AND* sex equals male... *OR* ... island equals Torgersen and sex equals female.
 
-Another way we could run the same command would be to use an *OR* statement instead of the ```%in%```. 
+of course, with a simple dataset such as the penguins data, we could use *OR* instead of the `%in%`.
 
-> To use the *OR* statement to achieve this filtering, run the code block below:
+> To use the *OR* statement to select multiple species with two different year-sex combinations, run the code block below:
 
 
-```r
-filter(vertebrates, (species == "Coastal giant salamander" | species == "Cascade torrent salamander"), (section == "OG" &  reach == "U") | (section == "CC" & reach=="L"))
+``` r
+filter(penguins, (species == "Adelie" | species == "Gentoo"), (sex == "male" &  year == "2008") | (sex == "female" & year==2009))
 ```
 
 ```
-## # A tibble: 4,360 x 16
-##     year sitecode section reach  pass unitnum unittype vert_index pitnumber
-##    <dbl> <chr>    <chr>   <chr> <dbl>   <dbl> <chr>         <dbl>     <dbl>
-##  1  1993 MACKCC-L CC      L         1       1 P                16        NA
-##  2  1993 MACKCC-L CC      L         1       2 C                36        NA
-##  3  1993 MACKCC-L CC      L         1       2 C                37        NA
-##  4  1993 MACKCC-L CC      L         1       2 C                38        NA
-##  5  1993 MACKCC-L CC      L         1       2 C                39        NA
-##  6  1993 MACKCC-L CC      L         1       2 C                40        NA
-##  7  1993 MACKCC-L CC      L         1       2 C                41        NA
-##  8  1993 MACKCC-L CC      L         1       2 C                42        NA
-##  9  1993 MACKCC-L CC      L         1       2 C                43        NA
-## 10  1993 MACKCC-L CC      L         1       2 C                44        NA
-## # i 4,350 more rows
-## # i 7 more variables: species <chr>, length_1_mm <dbl>, length_2_mm <dbl>,
-## #   weight_g <dbl>, clip <chr>, sampledate <date>, notes <chr>
+## # A tibble: 94 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    <fct>   <fct>              <dbl>         <dbl>             <int>       <int>
+##  1 Adelie  Biscoe              40.1          18.9               188        4300
+##  2 Adelie  Biscoe              42            19.5               200        4050
+##  3 Adelie  Biscoe              41.4          18.6               191        3700
+##  4 Adelie  Biscoe              40.6          18.8               193        3800
+##  5 Adelie  Biscoe              37.6          19.1               194        3750
+##  6 Adelie  Biscoe              41.3          21.1               195        4400
+##  7 Adelie  Biscoe              41.1          18.2               192        4050
+##  8 Adelie  Biscoe              41.6          18                 192        3950
+##  9 Adelie  Biscoe              41.1          19.1               188        4100
+## 10 Adelie  Torgersen           41.8          19.4               198        4450
+## # ℹ 84 more rows
+## # ℹ 2 more variables: sex <fct>, year <int>
 ```
 
-> **Complex row selection exercise** Can you select only observations generated after the year 2000, where the species is Cutthroat trout, and where the reach is lower (L) or middle (M) but not upper (U). 
+> **Complex row selection exercise** Can you select only observations for males from before 2009, including Adelie penguins with a body mass greater than 4043 and Gentoo penguins with a body mass greater than 5485. These values are the mean mass for males of each species.
 
 
-```r
-filter(vertebrates,species == "Cutthroat trout", reach != "U", year > 2000)
+``` r
+filter(penguins,year< 2009, sex=="male", (species=="Adelie" & body_mass_g > 4043) | (species=="Gentoo" & body_mass_g > 5485)) 
 ```
 
 ```
-## # A tibble: 7,884 x 16
-##     year sitecode section reach  pass unitnum unittype vert_index pitnumber
-##    <dbl> <chr>    <chr>   <chr> <dbl>   <dbl> <chr>         <dbl>     <dbl>
-##  1  2001 MACKCC-L CC      L         1       1 C                 1        NA
-##  2  2001 MACKCC-L CC      L         1       1 C                 2        NA
-##  3  2001 MACKCC-L CC      L         1       1 C                 3        NA
-##  4  2001 MACKCC-L CC      L         1       1 C                 4        NA
-##  5  2001 MACKCC-L CC      L         1       1 C                 5        NA
-##  6  2001 MACKCC-L CC      L         1       1 C                 6        NA
-##  7  2001 MACKCC-L CC      L         1       1 C                 7        NA
-##  8  2001 MACKCC-L CC      L         1       1 C                 8        NA
-##  9  2001 MACKCC-L CC      L         1       1 C                 9        NA
-## 10  2001 MACKCC-L CC      L         1       1 C                10        NA
-## # i 7,874 more rows
-## # i 7 more variables: species <chr>, length_1_mm <dbl>, length_2_mm <dbl>,
-## #   weight_g <dbl>, clip <chr>, sampledate <date>, notes <chr>
+## # A tibble: 44 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    <fct>   <fct>              <dbl>         <dbl>             <int>       <int>
+##  1 Adelie  Torgersen           39.2          19.6               195        4675
+##  2 Adelie  Torgersen           34.6          21.1               198        4400
+##  3 Adelie  Torgersen           42.5          20.7               197        4500
+##  4 Adelie  Torgersen           46            21.5               194        4200
+##  5 Adelie  Dream               39.2          21.1               196        4150
+##  6 Adelie  Dream               39.8          19.1               184        4650
+##  7 Adelie  Dream               44.1          19.7               196        4400
+##  8 Adelie  Dream               39.6          18.8               190        4600
+##  9 Adelie  Dream               42.3          21.2               191        4150
+## 10 Adelie  Biscoe              40.1          18.9               188        4300
+## # ℹ 34 more rows
+## # ℹ 2 more variables: sex <fct>, year <int>
 ```
-
 
 ## Creating new variables with mutate()
+
 Often times, we want to perform analyses on synthetic variables that are derived from the original variables in a data set. For example, one might want to look at one variable normalized by the mean value of that variable, or one variable divided by another.
 
-In this data set, we have both weight (weight_g) and body size (length_1_mm). Let's add a column variable to our tibble that is weight divided by body size (length), which might be viewed as an index of body condition. We'll do this with the `mutate()` function.
+In this data set, we have bill length (bill_length_mm) and bill depth (bill_depth_mm). Let's add a column variable to our tibble that is depth divided by length, which might be viewed as a bill size-adjusted depth. We'll do this with the `mutate()` function.
 
-> To add a *body_condition* variable to *vertebrates*, run the code block below:
+> To add a *depth_sizeadj* variable to *penguins*, run the code block below:
 
 
-```r
-vertebrates <- mutate(vertebrates, body_condition = weight_g/length_1_mm)
+``` r
+penguins <- mutate(penguins, depth_sizeadj = bill_depth_mm/bill_length_mm)
 ```
 
-In redirecting back to the *vertebrates* tibble, we are changing the input data rather than writing a new tibble with this variable added. Note also that this command will **overwrite** the body condition column, if it exists. This is often what is desired, but be aware of this behavior. 
+In redirecting back to the *penguins* tibble, we are changing the input data rather than writing a new tibble with this variable added. Note also that this command will **overwrite** the body condition column, if it exists. This is often what is desired, but be aware of this behavior.
 
-> **New variables creation exercise 1:**
-> For Coastal giant salamanders, *length_1_mm* represents snout to vent length and  *length_2_mm* represents snout to tail length. By subtracting the former from the latter, we can get the tail length. Use filter to select only Coastal giant salamanders (the only species for which *length_2_mm* was taken), then create a new column for tail length. Then use the ```mean()``` and ```sd()``` functions to calculate mean and standard deviation of tail length. Once you've done that, create a new column that is the variable *tail_outlier* which is a boolean variable that indicates whether tail length is greater than or less than 2 standard deviations away from the mean, and add this to the *coastal* tibble. Finally, creat e a new tibble called *outliers* that only contains Coastal salamanders with outlier-classified tail lengths.
+> **New variables creation exercise 1:** For male adelie penguins, we want to flag outlier observations where body mass is unusually large or small relative to the mean value. To do this, you will need to use the `mean()` and `sd()` functions to calculate mean and standard deviation of body mass. Once you've done that, create a new column that is the variable *mass_outlier* which is a boolean variable that indicates whether body mass is greater than or less than 2 standard deviations away from the mean, and add this to the *adelie_males* tibble. Finally, creat e a new tibble called *outliers* that only contains male Adelie penguins with outlier-classified body mass values.
 
-This is a complicated exercise, but there are hints in the comments below. Note there are many ways to do this exercise, and the hints are just one way. You might find ways to combined steps, for example. 
+This is a complicated exercise, but there are hints in the comments below. Note there are many ways to do this exercise, and the hints are just one way. You might find ways to combined steps, for example.
+
+## Extract the mean body mass of male Adelie penguins from the `adelie_males` tibble
+Create a new variable called mass_mean that stores the mean of the body_mass_g column; remember that you need to include the argument na.rm = TRUE to tell the mean function to remove missing values first
 
 
-
-```r
-## Create a new tibble that contains just coastal giant salamander observations
-coastal <- filter(vertebrates, species=="Coastal giant salamander")
-
-## Create a new variable called tail_length equal to length_2_mm minus length_1_mm
-coastal <- mutate(coastal, tail_length = length_2_mm - length_1_mm)
-
-## Create a new variable called tail_mean that stores the mean of tail_length column; remember that you need to include the argument na.rm = TRUE to tell the mean function to remove missing values first
-tail_mean <- mean(coastal$tail_length, na.rm=TRUE)
-
-## Create a new variable called tail_sd that stores the standard deviation of tail_length column. The function for this is sd(); like mean() you need to include the argument na.rm = TRUE to tell the sd function to remove missing values first
-tail_sd <- sd(coastal$tail_length, na.rm=TRUE)
-
-## Create a new column in the coastal tibble that is TRUE if tail_length more than two standard deviations from the mean
-coastal <- mutate(coastal, tail_outlier=(tail_length > (tail_mean+2*tail_sd) | (tail_length<tail_mean-2*tail_sd)))
-
-## Filter the coastal tibble to keep only rows where outlier is TRUE
-outliers <- filter(coastal, tail_outlier == TRUE)
-
-## You should have 522 observations in your outliers tibble. If you don't and you aren't sure what went wrong, put up your red sticky.
+``` r
+mass_mean <- mean(adelie_males$body_mass_g, na.rm=TRUE)
 ```
 
+## Create a new variable called tail_sd that stores the standard deviation of the mass column. The function for this is sd(); like mean() you need to include the argument na.rm = TRUE to tell the sd function to remove missing values first
 
-### Using ```mutate()``` to reformat missing values
 
-Another important use of `mutate()` is to convert missing values. Data sets are frequently not constructed with R in mind, such that missing values might be formatted differently, e.g. -999 or "N/A". Of course, one wouldn't want to generate plots that included the value -999. While our example data already have missing data formatted in an R-compliant way, here is an example of how one would convert -999 to NA. We use `mutate()` combined with the `na_if()` function for this. 
+``` r
+mass_sd <- sd(adelie_males$body_mass_g, na.rm=TRUE)
+```
 
-The `na_if()` function is a tidyverse function that converts the specified value to NA. 
+## Create a new column in the adelie_males tibble that is TRUE if body mass is more than two standard deviations from the mean
+
+
+``` r
+adelie_males <- mutate(adelie_males, mass_outlier=((body_mass_g > (mass_mean+2*mass_sd)) | (body_mass_g < (mass_mean-2*mass_sd))))
+```
+
+## Filter the adelie_males tibble to keep only rows where mass_outlier is TRUE
+
+
+``` r
+outliers <- filter(adelie_males, mass_outlier == TRUE)
+```
+## You should have two observations in your outliers tibble. If you don't and you aren't sure what went wrong, put up your red sticky.
+
+### Using `mutate()` to reformat missing values
+
+Another important use of `mutate()` is to convert missing values. Data sets are frequently not constructed with R in mind, such that missing values might be formatted differently, e.g. -999 or "N/A". Of course, one wouldn't want to generate plots that included the value -999. While our example data already have missing data formatted in an R-compliant way, here is an example of how one would convert -999 to NA. We use `mutate()` combined with the `na_if()` function for this.
+
+The `na_if()` function is a tidyverse function that converts the specified value to NA.
 
 > As an example of `na_if()`, run the code block below:
 
 
-```r
-vertebrates <- mutate(vertebrates, length_1_mm = na_if(length_1_mm, -999))
+``` r
+penguins <- mutate(mypenguins, bill_length_mm = na_if(bill_length_mm, -999))
 ```
 
-In other circumstances, one might want to replace a missing data point with an expected value of that data point (assuming the dispersion of that variable is not too large). For example, there are 17 NAs in *length_1_mm*. We can use the `replace_na()` function to do this, which is basically the inverse of `na_if()`. 
+In other circumstances, one might want to replace a missing data point with an expected value of that data point (assuming the dispersion of that variable is not too large). For example, if we ignore for the moment that morphological measurements are only missing for Adelie penguins for which the value for *sex* is also missing, we can take the `adelie` tibble and use the `replace_na()` function to replace missing values for *body_mass_g* with its median value, which is basically the inverse of `na_if()`.
 
-> To replace NAs for *length_1_mm* with the median value in a new tibble, run the following code block:
+> To replace NAs for *body_mass_mm* with the median value in a new tibble, run the following code block:
 
 
-```r
-nolengthNAs <- mutate(vertebrates, length_1_mm = replace_na(length_1_mm, median(length_1_mm, na.rm = TRUE)))
+``` r
+nolengthNAs <- mutate(adelie, body_mass_g = replace_na(body_mass_g, median(body_mass_g, na.rm = TRUE)))
+head(nolengthNAs)
 ```
 
-In this case, we have created a new tibble, as we probably don't want to overwrite the original data, in case we want to undo the conversion of missing data to the median value. Notice, as with earlier use of summary statistics functions, we include the ```na.rm=TRUE``` statement. Otherwise, we would be replacing NA with NA, as applying ```median()``` to a vector containing NAs returns NA as its value! Of course, the calculation we just performed doesn't make much actual biological sense, because we are taking the median of *length_1_mm" across all species in the tibble, when what we should really do is a more complex operation (which we won't do right now), which would be to replace NAs for any species with a median calculated only from values for that species.
+```
+## # A tibble: 6 × 8
+##   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##   <fct>   <fct>              <dbl>         <dbl>             <int>       <int>
+## 1 Adelie  Torgersen           39.1          18.7               181        3750
+## 2 Adelie  Torgersen           39.5          17.4               186        3800
+## 3 Adelie  Torgersen           40.3          18                 195        3250
+## 4 Adelie  Torgersen           NA            NA                  NA        3700
+## 5 Adelie  Torgersen           36.7          19.3               193        3450
+## 6 Adelie  Torgersen           39.3          20.6               190        3650
+## # ℹ 2 more variables: sex <fct>, year <int>
+```
 
-Let's try to create a new variable that represents a Z score, i.e. a transformation of a set of measurements that represents the number of standard deviations it is away from the mean (and in what direction). Above, we have seen the ```mean()``` and ```sd()``` functions. A Z-score for an observation is simply (observation - mean of observations) / standard deviation of observations, with the distribution of Z being standard normal, i.e. mean == 0 and standard deviation == 1. Using the *coastal* tibble, we can create a new variable *length_1_mm_Z* that represents a Z-transformation of snout-vent length for the Coastal giant salamander. We will write the output to a new tibble *coastalZ*. There are really three  ways to generate the new Z-score variable. The first, is to write the calculation of the Z-score from inside of the ```mutate()``` function. To do this ...
+In this case, we have created a new tibble, as we probably don't want to overwrite the original data, in case we want to undo the conversion of missing data to the median value. Notice, as with earlier use of summary statistics functions, we include the `na.rm=TRUE` statement. Otherwise, we would be replacing NA with NA, as applying `median()` to a vector containing NAs returns NA as its value! Of course, the calculation we just performed doesn't make much actual biological sense, because we are taking the median of \*body_mass_g" across both sexes in the tibble. In other contexts where other group-labeling variables such as sex aren't missing, one can perform more complex operations, e.g. if sex wasn't missing we could replace missing values with sex-specific median values. We will get into such more complex operations a bit later in the workshop.
+
+Let's try to create a new variable that represents a Z score, i.e. a transformation of a set of measurements that represents the number of standard deviations it is away from the mean (and in what direction). Above, we have seen the `mean()` and `sd()` functions. A Z-score for an observation is simply (observation - mean of observations) / standard deviation of observations, with the distribution of Z being standard normal, i.e. mean == 0 and standard deviation == 1. Using the *adelie* tibble, we can create a new variable *body_mass_Z* that represents a Z-transformation of body mass for male Adelie penguins. We will write the output to a new tibble *adelie_Z*. There are really three ways to generate the new Z-score variable. The first, is to write the calculation of the Z-score from inside of the `mutate()` function. To do this ...
 
 > Run the code block below to create the Z-score variable:
 
 
-```r
-coastalZ <- mutate(coastal, length_1_mm_Z = (length_1_mm - mean(length_1_mm, na.rm=TRUE)) / sd(length_1_mm, na.rm=TRUE))
+``` r
+adelie_Z <- mutate(adelie, body_mass_Z = (body_mass_g - mean(body_mass_g, na.rm=TRUE)) / sd(body_mass_g, na.rm=TRUE))
 ```
 
-So, we are calculating the mean and sd of *length_1_mm* once, and using those values to apply the Z-score equation to each row of the *length_1_mm* vector and storing the output in the new variable *length_1_mm_Z*.
+So, we are calculating the mean and sd of *body_mass_g* once, and using those values to apply the Z-score equation to each row of the *body_mass_g* vector and storing the output in the new variable *body_mass_Z*. Remember, unless you are certain there are no missing values in the variable vectors being used for calculations, when the option is available, it is best to invoke `na.rm=TRUE`.
 
-To convince yourself that Z is in fact a standard normal distribution, check the mean and standard deviation of this new variable. Also, remember, statistical operations need to filter out missing values otherwise they will return *NA*.
+To convince yourself that Z is in fact a standard normal distribution (mean=0, sd=1), check the mean and standard deviation of this new variable. Also, remember, statistical operations need to filter out missing values otherwise they will return *NA*.
 
 > To get those summary statistics, run the code block below. Note that due to floating point errors, 0 may instead show up as a very small number.
 
 
-```r
-mean(coastalZ$length_1_mm_Z, na.rm=TRUE)
+``` r
+mean(adelie_Z$body_mass_Z, na.rm=TRUE)
 ```
 
 ```
-## [1] -1.457851e-16
+## [1] 2.845406e-16
 ```
 
-```r
-sd(coastalZ$length_1_mm_Z, na.rm=TRUE)
+``` r
+sd(adelie_Z$body_mass_Z, na.rm=TRUE)
 ```
 
 ```
 ## [1] 1
 ```
 
-> **New variables creation exercise 2:**
-> Can you think of another way to generate the Z-score column? Hint: you can create new variables for the constituent parts of the Z-score function, and then perform the calculation using those constituent parts. Try doing that, updating *coastalZ* with the new variables. It should take three separate mutate commands. Write the Z-score to the new variable *z2*
 
 
-```r
-coastalZ <- mutate(coastalZ, meanlength =  mean(length_1_mm, na.rm=TRUE))
-coastalZ <- mutate(coastalZ, sdlength =  sd(length_1_mm, na.rm=TRUE))
-coastalZ <- mutate(coastalZ, z2 = (length_1_mm - meanlength) / sdlength)
+> **New variables creation exercise 2:** Can you think of another way to generate the Z-score column? Hint: you can create new variables for the constituent parts of the Z-score function, and then perform the calculation using those constituent parts. Try doing that, updating *adelie_Z* with the new variables. It should take three separate mutate commands. Write the Z-score to the new variable *z2*
+
+
+``` r
+adelie_Z <- mutate(adelie_Z, meanmass =  mean(body_mass_g, na.rm=TRUE))
+adelie_Z <- mutate(adelie_Z, sdmass =  sd(body_mass_g, na.rm=TRUE))
+adelie_Z <- mutate(adelie_Z, z2 = (body_mass_g - meanmass) / sdmass)
 ```
- 
+
 To confirm this produces the same output as the first implementation, calculate the mean and standard deviation of *z2* (these should also be 0 and 1, respectively).
- 
 
-```r
-mean(coastalZ$z2, na.rm=TRUE)
+
+``` r
+mean(adelie_Z$z2, na.rm=TRUE)
 ```
 
 ```
-## [1] -1.457851e-16
+## [1] 2.845406e-16
 ```
 
-```r
-sd(coastalZ$z2, na.rm=TRUE)
+``` r
+sd(adelie_Z$z2, na.rm=TRUE)
 ```
 
 ```
 ## [1] 1
 ```
 
-The distinction between these two approaches is that, in the first case, one is recycling the mean and standard deviation values (effectively vectors of size 1 each) in applying them to every element of *length_1_mm* in calculating the Z-score values in the respective rows. In the second case, because we have constructed mean and standard deviation variables of equal length to *length_1_mm*, we are doing mathematical operations on same-sized vectors. Of course, one might not want to store the same (e.g.mean) value over thousands of rows. The point here is to reinforce the idea that the same result can be achieved by constructing vectors of different lengths.
+The distinction between these two approaches is that, in the first case, one is recycling the mean and standard deviation values (effectively vectors of size 1 each) in applying them to every element of *body_mass_g* in calculating the Z-score values in the respective rows. In the second case, because we have constructed mean and standard deviation variables of equal length to *body_mass_g*, we are doing mathematical operations on same-sized vectors. Of course, one might not want to store the same (e.g.mean) value over thousands of rows. The point here is to reinforce the idea that the same result can be achieved by constructing vectors of different lengths.
 
-### Tibbles won't recycle vectors of length > 1 
+### Tibbles won't recycle vectors of length \> 1
 
 As a side note to this, it is important to know that mutate requires that the object passed to the new column name argument is a vector of length 1 or a vector of length equal to the number of rows in the tibble. If you try to recycle a vector of length 2 in a mutate command, you'll get an error:
 
 
-```r
-mutate(vertebrates, error = c(1,2))
+``` r
+mutate(adelie, error = c(1,2))
 ```
 
 ## Using variable names to merge tables
@@ -889,19 +873,19 @@ Often at the beginning of a project, you have data from multiple sources that yo
 
 ### Left joins
 
-Left joins are a common operation, where given tables x and y, you only want to retain all rows in x, regardless if there is matching data in y: missing data in y will get returned as NAs in the new table. This sort of join is called left join, because the 1st table (the one on your left) is having data added to it from the table on the right. Before we try a join, we need to tweak the vertebrates table, because it currently does not have any unique identifier per row. To fix this:
+Left joins are a common operation, where given tables x and y, you only want to retain all rows in x, regardless if there is matching data in y: missing data in y will get returned as NAs in the new table. This sort of join is called left join, because the 1st table (the one on your left) is having data added to it from the table on the right. 
 
 
-```r
-vertebrates <- mutate(vertebrates, obs_number=row.names(vertebrates))
+``` r
+penguins <- mutate(penguins, obs_number=row.names(penguins))
 ```
 
 Now, we'll create some sub-tables with *select*
 
 
-```r
-x <- select(vertebrates, obs_number, year)
-y <- select(vertebrates, obs_number, species, length_1_mm)
+``` r
+x <- select(penguins, obs_number,body_mass_g)
+y <- select(penguins, obs_number, species, sex)
 xy <- left_join(x,y)
 ```
 
@@ -909,95 +893,51 @@ xy <- left_join(x,y)
 ## Joining with `by = join_by(obs_number)`
 ```
 
-```r
+``` r
 glimpse(xy)
 ```
 
 ```
-## Rows: 32,209
+## Rows: 344
 ## Columns: 4
-## $ obs_number  <chr> "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "~
-## $ year        <dbl> 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987~
-## $ species     <chr> "Cutthroat trout", "Cutthroat trout", "Cutthroat trout", "~
-## $ length_1_mm <dbl> 58, 61, 89, 58, 93, 86, 107, 131, 103, 117, 100, 127, 99, ~
+## $ obs_number  <chr> "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "…
+## $ body_mass_g <int> 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, 4250, …
+## $ species     <fct> Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Ad…
+## $ sex         <fct> male, female, female, NA, female, male, female, male, NA, …
 ```
 
 Tidyverse determines on the fly that the two tables share a column name, and assumes that they contain the same data. If your collaborator used a different column name for *observation_number*, one will need to tell the join function which columns match. So, if we change the column name for the observation in table x, we can still perform the join as follows:
 
 
-```r
+``` r
 x <- rename(x,obs = obs_number)
 xy <- left_join(x, y, by = join_by(obs == obs_number))
 glimpse(xy)
 ```
 
 ```
-## Rows: 32,209
+## Rows: 344
 ## Columns: 4
-## $ obs         <chr> "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "~
-## $ year        <dbl> 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987, 1987~
-## $ species     <chr> "Cutthroat trout", "Cutthroat trout", "Cutthroat trout", "~
-## $ length_1_mm <dbl> 58, 61, 89, 58, 93, 86, 107, 131, 103, 117, 100, 127, 99, ~
+## $ obs         <chr> "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "…
+## $ body_mass_g <int> 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, 4250, …
+## $ species     <fct> Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Ad…
+## $ sex         <fct> male, female, female, NA, female, male, female, male, NA, …
 ```
 
 Other useful flavors of join are *inner_join*, which only keep observations observed in both tables, and *full_join*, which keeps all observations in both tables: data in x, but missing in y; data in y, but missing in x, data in both x and y.
 
 ## Converting wide to long format
 
-It can often be the case that a data table was created with different column variables that represent different types of the same class of measurement. For example, repeated weight measurements of a laboratory organism undergoing an experimental treatment might be recorded with a separate column for each measurement date. From a statistical and plotting perspective, date is a factor, and it can be more convenient to have all the weights in a single column, and a separate column for measurement date. In addition, it can make it easier to inspect data if there are fewer columns to look at ... otherwise, you are panning back and forth.
+While converting from wide to long is often a step for tidying untidy data. While the `penguins` data.frame object was already tidy, it can often be the case that a data table was created with different column variables that represent different types of the same class of measurement. For example, repeated weight measurements of a laboratory organism undergoing an experimental treatment might be recorded with a separate column for each measurement date. From a statistical and plotting perspective, date is a factor, and it can be more convenient to have all the weights in a single column, and a separate column for measurement date. In addition, it can make it easier to inspect data if there are fewer columns to look at ... otherwise, you are panning back and forth.
 
-While converting from wide to long is often a step for tidying untidy data, we will show how to do this with some already tidied data on ... wait for it ... penguins!  The [Palmer penguins :octicons-link-external-24:](https://allisonhorst.github.io/palmerpenguins/){:target="_blank"} data set contains measurement data for 3 species of penguins collected on three islands at the LTER site in the Palmer Archipelago, Antarctica. 
-
-While the data are available as an R package, we have converted the data to a tsv file that can be easily loaded into Rstudio:
+As we shall see in Part 3 of this workshop, having the actual measurements aggregated into a single column can make for easier plotting, if we also have an additional column that consists of a factor that describes which measurement it is. So, we are going to combine the three morphological measurements on bill length, bill depth, and flipper length into one column, making the table less wide and more long. Admittedly, with three columns converted to two, it isn't a big gain in ease of viewing, but it demonstrates the principles that can be applied when far more columns need to be merged.
 
 
-```r
-penguins <- read_table(file="https://harvardinformatics.github.io/workshops/2023-fall/r/data/palmerpenguins.tsv")
-```
-
-```
-## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   species = col_character(),
-##   island = col_character(),
-##   bill_length_mm = col_double(),
-##   bill_depth_mm = col_double(),
-##   flipper_length_mm = col_double(),
-##   body_mass_g = col_double(),
-##   sex = col_character(),
-##   year = col_double()
-## )
-```
-
-Let's take a quick look at the data:
-
-
-```r
-glimpse(penguins)
-```
-
-```
-## Rows: 344
-## Columns: 8
-## $ species           <chr> "Adelie", "Adelie", "Adelie", "Adelie", "Adelie", "A~
-## $ island            <chr> "Torgersen", "Torgersen", "Torgersen", "Torgersen", ~
-## $ bill_length_mm    <dbl> 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34.1, ~
-## $ bill_depth_mm     <dbl> 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18.1, ~
-## $ flipper_length_mm <dbl> 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, 186~
-## $ body_mass_g       <dbl> 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, ~
-## $ sex               <chr> "male", "female", "female", NA, "female", "male", "f~
-## $ year              <dbl> 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007~
-```
-
-As we can see, each row is an observation of a single penguin, with information on sex, the island on which it was observed, the species, the year it was observed, as well as three morphological measurements. As we shall see in Part 3 of this workshop, having the actual measurements aggregated into a single column can make for easier plotting, if we also have an additional column that consists of a factor that describes which measurement it is. So, we are going to combine those 3 columns into one column, making the table less wide and more long. Admittedly, with three columns converted to two, it isn't a big gain in ease of viewing, but it demonstrates the principles that can be applied when far more columns need to be merged.
-
-
-```r
+``` r
 # First, we need to make each row have a unique ID. This is another way to do it
 penguins <- mutate(penguins, id = row_number())
 # Then, we use the function pivot_longer() to merge columns together
-penguins_long <- pivot_longer(penguins, c(bill_length_mm, bill_depth_mm, flipper_length_mm), names_to="morphtype", values_to="mm")
+penguins_long <- pivot_longer(penguins,c(bill_length_mm,bill_depth_mm,flipper_length_mm),names_to="morphtype",values_to="mm")
 ```
 
 In this operation, we specify the data frame being transformed, as well as a vector of column names for the columns we wish to merge. *names_to* is the new column that we are creating that will contain the old column name (of those column names merged), while *values_to* is the name of the new column that will store the actual measurement data.
@@ -1005,288 +945,339 @@ In this operation, we specify the data frame being transformed, as well as a vec
 Again, let's take a look and see that it worked!
 
 
-```r
+``` r
 glimpse(penguins_long)
 ```
 
 ```
 ## Rows: 1,032
-## Columns: 8
-## $ species     <chr> "Adelie", "Adelie", "Adelie", "Adelie", "Adelie", "Adelie"~
-## $ island      <chr> "Torgersen", "Torgersen", "Torgersen", "Torgersen", "Torge~
-## $ body_mass_g <dbl> 3750, 3750, 3750, 3800, 3800, 3800, 3250, 3250, 3250, NA, ~
-## $ sex         <chr> "male", "male", "male", "female", "female", "female", "fem~
-## $ year        <dbl> 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007~
-## $ id          <int> 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7~
-## $ morphtype   <chr> "bill_length_mm", "bill_depth_mm", "flipper_length_mm", "b~
-## $ mm          <dbl> 39.1, 18.7, 181.0, 39.5, 17.4, 186.0, 40.3, 18.0, 195.0, N~
+## Columns: 10
+## $ species       <fct> Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, …
+## $ island        <fct> Torgersen, Torgersen, Torgersen, Torgersen, Torgersen, T…
+## $ body_mass_g   <int> 3750, 3750, 3750, 3800, 3800, 3800, 3250, 3250, 3250, NA…
+## $ sex           <fct> male, male, male, female, female, female, female, female…
+## $ year          <int> 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 20…
+## $ depth_sizeadj <dbl> 0.4782609, 0.4782609, 0.4782609, 0.4405063, 0.4405063, 0…
+## $ obs_number    <chr> "1", "1", "1", "2", "2", "2", "3", "3", "3", "4", "4", "…
+## $ id            <int> 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7,…
+## $ morphtype     <chr> "bill_length_mm", "bill_depth_mm", "flipper_length_mm", …
+## $ mm            <dbl> 39.1, 18.7, 181.0, 39.5, 17.4, 186.0, 40.3, 18.0, 195.0,…
 ```
 
-One thing we can see is that the new values in *morphtype* are unnecessarily long, because they all contain "_mm" embedded in the label ... but we know the data are measured in millimeters, hence the name of the new column *mm*. So, we can use `mutate()` and `str_replace()` to strip that suffix off of the values:            
+One thing we can see is that the new values in *morphtype* are unnecessarily long, because they all contain "\_mm" embedded in the label ... but we know the data are measured in millimeters, hence the name of the new column *mm*. So, we can use `mutate()` and `str_replace()` to strip that suffix off of the values:
 
 
-```r
+``` r
 penguins_long <- mutate(penguins_long, morphtype = str_replace(morphtype, "_mm", ""))
 ```
 
-It should be noted, that there are other, more complicated ways of performing wide-to-long operations. For more information, see the tidyverse documentation for [pivot_longer :octicons-link-external-24:](https://tidyr.tidyverse.org/reference/pivot_longer.html){:target="_blank"}, or use R help to get more information displayed inside Rstudio.
+In other scenarios, converting to long format is important for tidying data. A good example is the `USPersonalExpenditure` base R dataset.
+
+``` r
+head(USPersonalExpenditure)
+```
+
+```
+##                       1940   1945  1950 1955  1960
+## Food and Tobacco    22.200 44.500 59.60 73.2 86.80
+## Household Operation 10.500 15.500 29.00 36.5 46.20
+## Medical and Health   3.530  5.760  9.71 14.0 21.10
+## Personal Care        1.040  1.980  2.45  3.4  5.40
+## Private Education    0.341  0.974  1.80  2.6  3.64
+```
+
+This dataset is stored as a matrix object, in which the type of household expense is a row name, and there are columns for each year. Ideally, all the expense amounts would be in the same column and year would be a separate variable. To clean up this data, we can do this:
+
+
+``` r
+myUSPersonalExpenditure <- as.data.frame(USPersonalExpenditure)
+myUSPersonalExpenditure$expenditure <- row.names(myUSPersonalExpenditure)
+USPersonalExpenditure_long  <- as_tibble(myUSPersonalExpenditure) %>%
+                               pivot_longer(cols=starts_with("19"),names_to="year",values_to="amount")
+
+USPersonalExpenditure_long
+```
+
+```
+## # A tibble: 25 × 3
+##    expenditure         year  amount
+##    <chr>               <chr>  <dbl>
+##  1 Food and Tobacco    1940    22.2
+##  2 Food and Tobacco    1945    44.5
+##  3 Food and Tobacco    1950    59.6
+##  4 Food and Tobacco    1955    73.2
+##  5 Food and Tobacco    1960    86.8
+##  6 Household Operation 1940    10.5
+##  7 Household Operation 1945    15.5
+##  8 Household Operation 1950    29  
+##  9 Household Operation 1955    36.5
+## 10 Household Operation 1960    46.2
+## # ℹ 15 more rows
+```
+
+
+It should be noted, that there are other, more complicated ways of performing wide-to-long operations. For more information, see the tidyverse documentation for [pivot_longer :octicons-link-external-24:](https://tidyr.tidyverse.org/reference/pivot_longer.html){:target="\_blank"}, or use R help to get more information displayed inside Rstudio.
 
 ## Multi-step data processing with pipes
 
-Thus far, we have demonstrated how to execute particular *tidyverse* functions as distinct data-processing steps. However, most of the time one wants to perform a sequence of data-processing operations that require more than one R function. Without a means to chain these steps together, one would have to deploy a particular R function on a tibble, redirect the output to a new (or the same input) tibble, then deploy the next R function on the new tibble, etc. Or, one could try to nest sequential function executions within other function executions, e.g. ```new_tibble <-(function2(function1(original_tibble)))``` which can get unwieldy and error-prone very quickly. The good news is, *tidyverse* had a way of chaining together data processing steps that is analogous to pipes in the bash shell ... and guess what? They are also called pipes. The general syntax of using pipes is:
+Thus far, we have demonstrated how to execute particular *tidyverse* functions as distinct data-processing steps. However, most of the time one wants to perform a sequence of data-processing operations that require more than one R function. Without a means to chain these steps together, one would have to deploy a particular R function on a tibble, redirect the output to a new (or the same input) tibble, then deploy the next R function on the new tibble, etc. Or, one could try to nest sequential function executions within other function executions, e.g. `new_tibble <-(function2(function1(original_tibble)))` which can get unwieldy and error-prone very quickly. The good news is, *tidyverse* had a way of chaining together data processing steps that is analogous to pipes in the bash shell ... and guess what? They are also called pipes. The general syntax of using pipes is:
 
-
-```
+```         
 tidy_data <- function1(data, args) %>% function2(args)
 ```
 
-The ```%>%``` is the pipe, and it redirects the output of function1 to function2. 
+The `%>%` is the pipe, and it redirects the output of function1 to function2.
 
-The pipe implicitly fills the first unnamed argument of the right hand function with the output of the left hand function. So in this case, the output of function1 is implicitly assigned to the first argument of function2. Because tidyverse functions always take the input data as their first argument, this is very convenient. 
+The pipe implicitly fills the first unnamed argument of the right hand function with the output of the left hand function. So in this case, the output of function1 is implicitly assigned to the first argument of function2. Because tidyverse functions always take the input data as their first argument, this is very convenient.
 
-In the above command structure the final output of data processing with ```function1``` and ```function2``` gets directed to *tidy_data*, a new cleaned tibble.
+In the above command structure the final output of data processing with `function1` and `function2` gets directed to *tidy_data*, a new cleaned tibble.
 
-Now, as a more concrete example, let's see how we can use ```select()``` and ```filter()``` together with a pipe.
+Now, as a more concrete example, let's see how we can use `select()` and `filter()` together with a pipe.
 
-> To combine ```select()``` and  ```filter()``` operations to creata new tibble called *new_data*, run the code block below:
+> To combine `select()` and `filter()` operations to creata new tibble called *new_data*, run the code block below:
 
 
-```r
-new_data <- select(vertebrates, year, section, species, length_1_mm, weight_g) %>% filter(species=="Cutthroat trout", year < 2000, section =="OG")
+``` r
+new_data <- select(penguins, year, species, sex, body_mass_g) %>% filter(species=="Adelie", year == 2008)
 ```
 
 In this example, we pipe together the two function calls we executed earlier, but all in one command line.
 
 > **pipe exercise:**
 >
-> 1. Try creating a more complex piped workflow, calling in sequence the ```filter()``` and ```select()``` commands above, followed by using ```mutate()``` to normalize all weights by the maximum value of all cutthroat trout weights.
+> 1.  Try creating a more complex piped workflow, calling in sequence the `filter()` and `select()` commands above, followed by using `mutate()` to extract Adelie penguins and then calculate a body size (i.e. mass) normalized flipper_length.
 
 
-```r
-wnorm <- select(vertebrates, year, section, species, length_1_mm, weight_g) %>% filter(species=="Cutthroat trout", year < 2000, section =="OG") %>% mutate(normalized_weight = weight_g / max(weight_g, na.rm=TRUE))
+``` r
+flipper_norm <- select(penguins, species, flipper_length_mm, body_mass_g) %>% filter(species=="Adelie") %>% mutate(norm_flipper_length = flipper_length_mm /body_mass_g)
 ```
 
-> 2. Try experimenting with different row and column selections, and new variable creations with these three functions. You can even switch the order, e.g. create a new synthetic variable then applying ```filter()``` to it.
+> 2.  Try experimenting with different row and column selections, and new variable creations with these three functions. You can even switch the order, e.g. create a new synthetic variable then applying `filter()` to it.
 
 As a side note, you sometimes want to pipe the output of one function to the input of another function when the second function DOESN'T use the first argument for data. A common example of this is the function `lm()`, which is used to fit a linear model to data. The first argument to lm is the formula you want to fit, and the second argument is the data. There are two common options to still use a pipe here:
 
-Because the output of the left hand function is piped to the first *unnamed* argument, if you name every argument before data, you'll be okay:
-`vertebrates %>% filter_command() %>% lm(formula = x ~ y)`
+Because the output of the left hand function is piped to the first *unnamed* argument, if you name every argument before data, you'll be okay: `penguins %>% filter_command() %>% lm(formula = x ~ y)`
 
-You can reference the piped output via the special variable `.` in the right hand function: 
-`vertebrates %>% filter_command() %>% lm(x ~ y, data = .)
+You can reference the piped output via the special variable `.` in the right hand function: \`penguins %\>% filter_command() %\>% lm(x \~ y, data = .)
 
 ## Finding unique values
-There are *tidyverse* flavors of standard R functions. For example, to get the unique values for a column, instead of using ```unique()```, we can use the ```dplyr``` function ``` distinct()```.
+
+There are *tidyverse* flavors of standard R functions. For example, to get the unique values for a column, instead of using `unique()`, we can use the `dplyr` function `distinct()`.
 
 > To get the unique values for year, run the command below:
 
 
-```r
-distinct(vertebrates, year)
+``` r
+distinct(penguins, year)
 ```
 
 ```
-## # A tibble: 33 x 1
-##     year
-##    <dbl>
-##  1  1987
-##  2  1988
-##  3  1989
-##  4  1990
-##  5  1991
-##  6  1992
-##  7  1993
-##  8  1994
-##  9  1995
-## 10  1996
-## # i 23 more rows
+## # A tibble: 3 × 1
+##    year
+##   <int>
+## 1  2007
+## 2  2008
+## 3  2009
 ```
 
-This function requires that you supply a tibble and column name for which you want to get the unique values. It does not behave as you would like if you simply supply the vector ```vertebrates$year```.
+This function requires that you supply a tibble and column name for which you want to get the unique values. It does not behave as you would like if you simply supply the vector `penguins$year`.
 
 ## *Tidyverse* functions for getting data summaries
 
-Yesterday, we showed you how the ```summary``` function will print out basic summary statistics for all columns in a data frame. Today, we introduce the ```dyplr``` function ```summarize()``` for generating specific statistics on one or more variables. For example, to get the number of individuals for which unique, individual ids are available (derived from pit tagging that started only in 2007).
+Yesterday, we showed you how the `summary` function will print out basic summary statistics for all columns in a data frame. Today, we introduce the `dyplr` function `summarize()` for generating specific statistics on one or more variables. For example, to get the number of individuals for which unique, individual ids are available (derived from pit tagging that started only in 2007).
 
 > To generate this data summary, run the command below:
 
 
-```r
-summarize(vertebrates, n=n_distinct(pitnumber))
+``` r
+summarize(penguins, n=n_distinct(species))
 ```
 
 ```
-## # A tibble: 1 x 1
+## # A tibble: 1 × 1
 ##       n
 ##   <int>
-## 1  4531
+## 1     3
 ```
 
 This function call returns a 1x1 tibble *n*.
 
 Ignoring the fact for the moment that the data set is comprised of three different species, one could also obtain a summary statistic on variables, for example, mean size and weight.
 
-> To generate a summary of mean weight and size, run the command below:
+> To generate a summary of mean bill length and body mass for Adelie penguins, run the command below:
 
 
-```r
-summarize(vertebrates, meanweight=mean(weight_g, na.rm=TRUE), meansize=mean(length_1_mm, na.rm=TRUE))
+``` r
+summarize(adelie, meanbill=mean(bill_length_mm, na.rm=TRUE), meanmass=mean(body_mass_g, na.rm=TRUE))
 ```
 
 ```
-## # A tibble: 1 x 2
-##   meanweight meansize
-##        <dbl>    <dbl>
-## 1       8.90     73.8
+## # A tibble: 1 × 2
+##   meanbill meanmass
+##      <dbl>    <dbl>
+## 1     38.8    3701.
 ```
 
-Perhaps we are getting tired of always typing `na.rm = TRUE`, and instead want to first filter our dataset to remove rows that contain missing values. Tidyverse contains a nice function, called `drop_na()`, that does just this. By default it looks for missing values in *every* column in in our tibble, but if you look at `?drop_na` you'll see it has one of those `...` arguments, so we can pass it column names to check. 
+Perhaps we are getting tired of always typing `na.rm = TRUE`, and instead want to first filter our dataset to remove rows that contain missing values. Tidyverse contains a nice function, called `drop_na()`, that does just this. By default it looks for missing values in *every* column in in our tibble, but if you look at `?drop_na` you'll see it has one of those `...` arguments, so we can pass it column names to check.
 
 As an exercise, can you rewrite the summarize function above, but remove missing values before piping to summarize. Leave off the `na.rm=TRUE` to make sure it worked!
 
 
-```r
-drop_na(vertebrates) %>% summarize(meanweight=mean(weight_g), meansize=mean(length_1_mm))
+``` r
+drop_na(adelie) %>% summarize(meanbill=mean(bill_length_mm), meanmass=mean(body_mass_g))
 ```
 
 ```
-## # A tibble: 1 x 2
-##   meanweight meansize
-##        <dbl>    <dbl>
-## 1       21.0     93.5
+## # A tibble: 1 × 2
+##   meanbill meanmass
+##      <dbl>    <dbl>
+## 1     38.8    3706.
 ```
 
-You may have noticed that these two ways of handling NAs lead to different results from summarize. This is due to the fact that the first approach will compute statistics from all values that aren't NAs, regardless if other variables for that observation have missing data. In the second, we drop all observations that have missing data for any variable. Depending upon the particular data set and planned downstream analyses, there may be good reasons for choosing one approach over the other. 
+You may have noticed that these two ways of handling NAs lead to different results from summarize. This is due to the fact that the first approach will compute statistics from all values that aren't NAs, regardless if other variables for that observation have missing data. In the second, we drop all observations that have missing data for any variable. Depending upon the particular data set and planned downstream analyses, there may be good reasons for choosing one approach over the other.
 
-### Using ```group_by()``` with ```summarize()```
+### Using `group_by()` with `summarize()`
 
-In most data sets, summarizing across all observations (rows) may not be particularly informative, because what one usually wants to do is to get information specific to different groups of observations, e.g. those in different habitats, exposed to different experimental treatments, etc. Thus, in most circumstances one will want to define those groups for a tibble. One can do this using the ```group_by()``` function, which takes as it's first argument the name of the data frame, and the following arguments are variables to group by; these can then be followed by other keyword arguments). An obvious grouping for the *vertebrates* tibble is species.
+In most data sets, summarizing across all observations (rows) may not be particularly informative, because what one usually wants to do is to get information specific to different groups of observations, e.g. those in different habitats, exposed to different experimental treatments, etc. Thus, in most circumstances one will want to define those groups for a tibble. One can do this using the `group_by()` function, which takes as it's first argument the name of the data frame, and the following arguments are variables to group by; these can then be followed by other keyword arguments). An obvious grouping for the *penguins* tibble is species.
 
 > To obtain this grouping, run the command block below:
 
 
-```r
-by_species <- group_by(vertebrates, species)
+``` r
+by_species <- group_by(penguins, species)
 by_species
 ```
 
 ```
-## # A tibble: 32,209 x 18
-## # Groups:   species [4]
-##     year sitecode section reach  pass unitnum unittype vert_index pitnumber
-##    <dbl> <chr>    <chr>   <chr> <dbl>   <dbl> <chr>         <dbl>     <dbl>
-##  1  1987 MACKCC-L CC      L         1       1 R                 1        NA
-##  2  1987 MACKCC-L CC      L         1       1 R                 2        NA
-##  3  1987 MACKCC-L CC      L         1       1 R                 3        NA
-##  4  1987 MACKCC-L CC      L         1       1 R                 4        NA
-##  5  1987 MACKCC-L CC      L         1       1 R                 5        NA
-##  6  1987 MACKCC-L CC      L         1       1 R                 6        NA
-##  7  1987 MACKCC-L CC      L         1       1 R                 7        NA
-##  8  1987 MACKCC-L CC      L         1       1 R                 8        NA
-##  9  1987 MACKCC-L CC      L         1       1 R                 9        NA
-## 10  1987 MACKCC-L CC      L         1       1 R                10        NA
-## # i 32,199 more rows
-## # i 9 more variables: species <chr>, length_1_mm <dbl>, length_2_mm <dbl>,
-## #   weight_g <dbl>, clip <chr>, sampledate <date>, notes <chr>,
-## #   body_condition <dbl>, obs_number <chr>
-```
-
-Notice that in the header of the *by_species* tibble there is now an indication that there are four groups. It is important to note that ```group_by()``` does not change the data in the tibble: there is no column that specifies the groups. But wait, we know there are only three species in the data set. Let's check to see what the values are for species.
-
-> To get the unique values for species, run the command below:
-
-
-```r
-distinct(vertebrates, species)
-```
-
-```
-## # A tibble: 4 x 1
-##   species                   
-##   <chr>                     
-## 1 Cutthroat trout           
-## 2 <NA>                      
-## 3 Coastal giant salamander  
-## 4 Cascade torrent salamander
-```
-
-It seems that there are some entries for which the species is unknown. So, let's discard those entries with filter and regroup our data. 
-
-> To generate grouped data after removing rows with no species information, run the following code block:
-
-
-```r
-by_species <- filter(vertebrates, is.na(species)==FALSE) %>% group_by(species)
-by_species
-```
-
-```
-## # A tibble: 32,206 x 18
+## # A tibble: 344 × 11
 ## # Groups:   species [3]
-##     year sitecode section reach  pass unitnum unittype vert_index pitnumber
-##    <dbl> <chr>    <chr>   <chr> <dbl>   <dbl> <chr>         <dbl>     <dbl>
-##  1  1987 MACKCC-L CC      L         1       1 R                 1        NA
-##  2  1987 MACKCC-L CC      L         1       1 R                 2        NA
-##  3  1987 MACKCC-L CC      L         1       1 R                 3        NA
-##  4  1987 MACKCC-L CC      L         1       1 R                 4        NA
-##  5  1987 MACKCC-L CC      L         1       1 R                 5        NA
-##  6  1987 MACKCC-L CC      L         1       1 R                 6        NA
-##  7  1987 MACKCC-L CC      L         1       1 R                 7        NA
-##  8  1987 MACKCC-L CC      L         1       1 R                 8        NA
-##  9  1987 MACKCC-L CC      L         1       1 R                 9        NA
-## 10  1987 MACKCC-L CC      L         1       1 R                10        NA
-## # i 32,196 more rows
-## # i 9 more variables: species <chr>, length_1_mm <dbl>, length_2_mm <dbl>,
-## #   weight_g <dbl>, clip <chr>, sampledate <date>, notes <chr>,
-## #   body_condition <dbl>, obs_number <chr>
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    <fct>   <fct>              <dbl>         <dbl>             <int>       <int>
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           NA            NA                  NA          NA
+##  5 Adelie  Torgersen           36.7          19.3               193        3450
+##  6 Adelie  Torgersen           39.3          20.6               190        3650
+##  7 Adelie  Torgersen           38.9          17.8               181        3625
+##  8 Adelie  Torgersen           39.2          19.6               195        4675
+##  9 Adelie  Torgersen           34.1          18.1               193        3475
+## 10 Adelie  Torgersen           42            20.2               190        4250
+## # ℹ 334 more rows
+## # ℹ 5 more variables: sex <fct>, year <int>, depth_sizeadj <dbl>,
+## #   obs_number <chr>, id <int>
 ```
 
-Now, let's calculate the mean by species for *weight* and *length_1_mm*. If you're unsure whether there are NA values in these two columns, you can use the `drop_na()` function to remove rows which contain ANY NA values. To see how you might do this in one command using pipes, we'll start from vertebrates.
+Notice that in the header of the *by_species* tibble there is now an indication that there are four groups. It is important to note that `group_by()` does not change the data in the tibble: there is no column that specifies the groups. But wait, we know there are only three species in the data set. Let's check to see what the values are for species.
+
+A feature of the penguins data is that there are a number of entries for which the sex and other measurements were not taken, i.e. are missing. While in this data set, if sex is missing the other measurements tend to be missing as well, there are cases where individual measurements might be missing and using the omnibus `drop_na` function might discard useful data. In which case one can filter on a particular missing column.
+
+So, if we look at the sex variable:
+
+
+``` r
+distinct(adelie,sex)
+```
+
+```
+## # A tibble: 3 × 1
+##   sex   
+##   <fct> 
+## 1 male  
+## 2 female
+## 3 <NA>
+```
+
+we see that *NA* is one of the values. We can fix this, so that, were we to group by sex, we won't create a group for *NA*.
+
+> To generate grouped data for Adelie penguins by sex after removing rows with no sex information, run the following code block:
+
+
+``` r
+adelie_by_sex <- filter(adelie, is.na(sex)==FALSE) %>% group_by(sex)
+adelie_by_sex
+```
+
+```
+## # A tibble: 146 × 8
+## # Groups:   sex [2]
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    <fct>   <fct>              <dbl>         <dbl>             <int>       <int>
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           36.7          19.3               193        3450
+##  5 Adelie  Torgersen           39.3          20.6               190        3650
+##  6 Adelie  Torgersen           38.9          17.8               181        3625
+##  7 Adelie  Torgersen           39.2          19.6               195        4675
+##  8 Adelie  Torgersen           41.1          17.6               182        3200
+##  9 Adelie  Torgersen           38.6          21.2               191        3800
+## 10 Adelie  Torgersen           34.6          21.1               198        4400
+## # ℹ 136 more rows
+## # ℹ 2 more variables: sex <fct>, year <int>
+```
+... and, as a sanity check:
+
+
+``` r
+distinct(adelie_by_sex,sex)
+```
+
+```
+## # A tibble: 2 × 1
+## # Groups:   sex [2]
+##   sex   
+##   <fct> 
+## 1 male  
+## 2 female
+```
+
+
+Now, let's calculate the mean by species for *body_mass_g* and *bill_length_mm*. If you're unsure whether there are NA values in these two columns, you can use the `drop_na()` function to remove rows which contain ANY NA values. To see how you might do this in one command using pipes, we'll start from *penguins*.
 
 > Run the following code block:
 
 
-```r
-# starting with the vertebrates table
-vertebrates %>% 
+``` r
+# starting with the penguins table
+penguins %>% 
   # select only the columns we want
-  select(species, weight_g, length_1_mm) %>%
+  select(species, body_mass_g, bill_length_mm) %>%
   # drop the rows with NA in ANY selected column
   drop_na() %>%
   # group table by species
   group_by(species) %>%
-  # summarize the mean weight, size, and number of observations in each group
-  summarize(mean_weight=mean(weight_g), mean_size=mean(length_1_mm), num=n())
+  # summarize the mean body mass, bill length, and number of observations in each group
+  summarize(mean_weight=mean(body_mass_g), mean_bill_length=mean(bill_length_mm), num=n())
 ```
 
 ```
-## # A tibble: 3 x 4
-##   species                    mean_weight mean_size   num
-##   <chr>                            <dbl>     <dbl> <int>
-## 1 Cascade torrent salamander        1.08      34.1     9
-## 2 Coastal giant salamander          9.01      56.1  6329
-## 3 Cutthroat trout                   8.84      83.0 12592
+## # A tibble: 3 × 4
+##   species   mean_weight mean_bill_length   num
+##   <fct>           <dbl>            <dbl> <int>
+## 1 Adelie          3701.             38.8   151
+## 2 Chinstrap       3733.             48.8    68
+## 3 Gentoo          5076.             47.5   123
 ```
 
-We have now produced mean statistic by species. 
+We have now produced mean statistic by species.
 
-> ```group_by()``` **exercise:**
+> `group_by()` **exercise:**
 >
-> Try building a tibble grouped by *species* and  *section*, then use summarize to get the mean and standard deviation of weight. But first, get rid of missing values for both of these variables (hint: use `drop_na()`) and **DON'T** make changes to the *vertebrates* tibble.
+> Try building a tibble grouped by *species* and *sex*, then use summarize to get the mean and standard deviation of body mass. But first, get rid of missing values for both of these variables (hint: use `drop_na()`) and **DON'T** make changes to the *penguins* tibble.
 
 
-```r
-# start with the vertebrates table
-vertebrates %>%
+``` r
+# start with the penguins table
+penguins %>%
   # we only want the columns species, section, and weight_g
-  select(species, section, weight_g) %>%
+  select(species, sex, body_mass_g) %>%
   # remove NAs
   drop_na() %>%
   # group by species and section
-  group_by(species, section) %>%
+  group_by(species, sex) %>%
   # summarize mean weight, standard deviation of weight, and number of observations in each group
-  summarize(mean_weight=mean(weight_g), std_weight=sd(weight_g), num=n())
+  summarize(mean_mass=mean(body_mass_g), std_weight=sd(body_mass_g), num=n())
 ```
 
 ```
@@ -1295,20 +1286,20 @@ vertebrates %>%
 ```
 
 ```
-## # A tibble: 6 x 5
+## # A tibble: 6 × 5
 ## # Groups:   species [3]
-##   species                    section mean_weight std_weight   num
-##   <chr>                      <chr>         <dbl>      <dbl> <int>
-## 1 Cascade torrent salamander CC            1.32       0.472     5
-## 2 Cascade torrent salamander OG            0.788      0.301     4
-## 3 Coastal giant salamander   CC            9.81      11.5    3028
-## 4 Coastal giant salamander   OG            8.32      12.6    3310
-## 5 Cutthroat trout            CC            9.38      10.5    6798
-## 6 Cutthroat trout            OG            8.21       9.08   5796
+##   species   sex    mean_mass std_weight   num
+##   <fct>     <fct>      <dbl>      <dbl> <int>
+## 1 Adelie    female     3369.       269.    73
+## 2 Adelie    male       4043.       347.    73
+## 3 Chinstrap female     3527.       285.    34
+## 4 Chinstrap male       3939.       362.    34
+## 5 Gentoo    female     4680.       282.    58
+## 6 Gentoo    male       5485.       313.    61
 ```
 
-You will notice that this has produced a warning message : `summarize()` has grouped output by 'species'. You can override using the `.groups` argument. The output of summarize is itself a tibble, which is grouped. However, we can't group it by both species and section, since these are now unique combinations with only one row per pair. So summarize() is telling us it has chosen to group the output tibble by the `species` variable not the `section` variable. 
+You will notice that this has produced a warning message : `summarize()` has grouped output by 'species'. You can override using the `.groups` argument. The output of summarize is itself a tibble, which is grouped. However, we can't group it by both species and sex, since these are now unique combinations with only one row per pair. So summarize() is telling us it has chosen to group the output tibble by the `species` variable not the `section` variable.
 
 ## End of Part 2
 
----
+------------------------------------------------------------------------
