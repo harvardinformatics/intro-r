@@ -1,7 +1,7 @@
 ---
 title: "[Workshop] Introduction to R Part 1: R Basics"
 description: "Introduction to R basics including the RStudio interface, R commands from the console, R scripts, and data types."
-date: "October 06, 2025"
+date: "October 13, 2025"
 authors: 
   - Adam Freedman
   - Danielle Khost
@@ -212,7 +212,7 @@ Other basic algebraic operators include `-` for subtraction, `*` for multiplicat
 
 > In the **Console** below, run the following command:
 
-```{r}
+```
 my_char + 10
 ```
 
@@ -636,11 +636,11 @@ We can extract portions of vectors that we've created using the square brackets,
 
 > Run the following code block to see different ways to extract elements by **index**:
 
-```{r, eval=F}
+```{r}
 
 nums[1]
 nums[1:5]
-nums[c(1,4,5)]
+nums[c(1, 4, 5)]
 
 ```
 
@@ -649,7 +649,7 @@ nums[c(1,4,5)]
 ```{r}
 
 ### 2. Subtract 10 from nums and print the last element of a vector
-new_nums = nums - 10
+new_nums <- nums - 10
 new_nums[length(new_nums)]
 
 ### 2. Subtract 10 from nums and print the last element of a vector
@@ -664,7 +664,7 @@ Let's take a look at both of these vectors again.
 
 > Run the following code block to view the previously created vectors, `nums` and `big_nums`:
 
-```{r, eval=F}
+```{r}
 
 nums
 big_nums
@@ -675,7 +675,7 @@ Let's say we actually want to extract all of the numbers that are bigger than th
 
 > Run the following code block to extract values from a vector based on a logical vector of the same length:
 
-```{r, eval=F}
+```{r}
 
 nums[big_nums]
 
@@ -685,7 +685,7 @@ We don't necessarily have to define this vector ahead of time, but can put the r
 
 > Run the following code block to extract values from a vector based on a logical test statement:
 
-```{r, eval=F} 
+```{r} 
 
 nums[nums > mean(nums)]
 
@@ -747,7 +747,7 @@ We can use the function `head()` to look at part of a data frame (or any R objec
 ```{r}
 
 head(df1)
-head(df1, n=2)
+head(df1, n = 2)
 
 ```
 
@@ -769,7 +769,7 @@ Much like elements in a vector can be accessed using square brackets `[]` and in
 
 ```{r}
 
-df1[1,2]
+df1[1, 2]
 
 ```
 
@@ -779,7 +779,7 @@ This displays the element in the first row and second column of the data frame, 
 
 ```{r}
 
-df1[2,1]
+df1[2, 1]
 
 ```
 
@@ -791,8 +791,8 @@ By leaving one index off, we can retrieve entire rows or columns from the data f
 
 ```{r}
 
-df1[1,]
-df1[,2]
+df1[1, ]
+df1[, 2]
 
 ```
 
@@ -811,7 +811,7 @@ df1$data
 ```{r}
 
 ### 1. Create new vector based on column in a data frame
-my_product <-df1$data*10
+my_product <- df1$data * 10
 ### 1. Create new vector based on column in a data frame
 
 ```
@@ -820,13 +820,13 @@ my_product <-df1$data*10
 
 So far we have been working with small objects we created by hand. A more common way to create **data frames** is by **reading tables from a file**. There are a few functions to do this in R. The old school way of doing this it by using the `read.table()` and `read.csv()` functions, with the latter being a generic file loader for which you can specify what delimits the columns: comma, space, tab, or some other character.
 
-For this workshop, our data set comes from... wait for it ... penguins! The [palmer penguins](https://allisonhorst.github.io/palmerpenguins/ )data set contains measurement data for 3 species of penguins collected on three islands at the LTER site in the Palmer Archipelago, Antarctica. *palmerpenguins* is itself an R package. We can actually load the csv-formatted `penguins` data usin the `read_csv` function, and can take advantage of the ability to read tables from remote repositories using the weblink the file:
+For this workshop, our data set comes from... wait for it ... penguins! The [palmer penguins](https://allisonhorst.github.io/palmerpenguins/) data set contains measurement data for 3 species of penguins collected on three islands at the LTER site in the Palmer Archipelago, Antarctica. *palmerpenguins* is itself an R package, but we can also read in the raw CSV file from a URL using the `read_csv` function.
 
-
-> Run the following code block to create an object called `mypenguins` to which the data in *mypenguins.csv* is assigned.
+> Run the following code block to create an object called `mypenguins` to which the data in *penguins.csv* is assigned.
 
 ```{r}
-read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2020/2020-07-28/penguins.csv")
+library(readr)
+mypenguins <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2020/2020-07-28/penguins.csv")
 ```
 
 
@@ -849,7 +849,7 @@ Loaded in this manner, if you type `mypenguins` in the R console, it will return
 
 ```{r}
 
-head(mypenguins,10)
+head(mypenguins, 10)
 
 ```
 
@@ -868,7 +868,7 @@ A word of caution with `View()`: be careful `View`ing large datasets, since they
 ```{r}
 
 ### 1. View last 10 lines of the data frame with tail()
-tail(mypenguins,n=10)
+tail(mypenguins, n = 10)
 ### 1. View last 10 lines of the data frame with tail()
 
 ```
@@ -879,12 +879,11 @@ Another useful function is `summary()` which provides basic summary statistics o
 
 ```{r}
 
-### 2. Use any method to get the average weight of the animals
+### 2. Use any method to get the average body mass of the penguins
 summary(mypenguins)
 # or
-mean(mypenguins$body_mass_g,na.rm=TRUE)
-### 2. Use any method to get the average weight of the animals
-
+mean(mypenguins$body_mass_g, na.rm = TRUE)
+### 2. Use any method to get the average body mass of the penguins
 ```
 
 ## End of Part 1

@@ -1,9 +1,10 @@
 ---
 title: "[Workshop] Introduction to R Part 1: R Basics"
 description: "Introduction to R basics including the RStudio interface, R commands from the console, R scripts, and data types."
-date: "October 18, 2023"
+date: "October 13, 2025"
 authors: 
   - Adam Freedman
+  - Danielle Khost
   - Gregg Thomas
   - Lei Ma
 output: 
@@ -13,7 +14,7 @@ output:
 
 # Introduction to R Part 1: R Basics
 
-Welcome to the first part of the [FAS Informatics :material-arrow-top-right:](https://informatics.fas.harvard.edu/){:target="_blank"} Intro to R workshop! 
+Welcome to the first part of the [FAS Informatics :material-arrow-top-right:](https://informatics.fas.harvard.edu/){:target="_blank"} Intro to R workshop!
 
 If you're viewing this file on the website, you are viewing the final, formatted version of the workshop. The workshop itself will take place in the RStudio program and you will *edit and execute the code in this file*. Please download the raw file [here  :octicons-download-24:](R-workshop-Part1-student.Rmd)
 
@@ -88,7 +89,7 @@ If you are not exactly sure of the function name, you can perform a search with 
 
 ## A note on terminology
 
-So in the section above and throughout this workshop we use a lot of context dependent terms. For instance, you probably know what the word "command" means in general usage, but in the context of programming it has a specific meaning that may not be obvious. This brings up an important point I try to remember when teaching. When learning a new skill or set of skills there's usually a whole new vocabulary to learn that goes along with it. What makes it difficult is that those teaching the new skill will use this vocabulary, and since they are so familiar with it they oftentimes won't even realize people don't know what the words they're using mean in the context of the new skillset. 
+So in the section above and throughout this workshop we use a lot of context dependent terms. For instance, you probably know what the word "command" means in general usage, but in the context of programming it has a specific meaning that may not be obvious. This brings up an important point I try to remember when teaching. When learning a new skill or set of skills there's usually a whole new vocabulary to learn that goes along with it. What makes it difficult is that those teaching the new skill will use this vocabulary, and since they are so familiar with it they oftentimes won't even realize people don't know what the words they're using mean in the context of the new skill set. 
 
 In an attempt to offset this unintentional language barrier we provide tables with some contextual definitions of terms we may use throughout the workshop at the following link: 
 
@@ -360,15 +361,15 @@ This file, and the other files we'll be using in this workshop, are **R Markdown
 Code is written and executed in R Markdown with **code blocks**, which are delineated by the backtick character (\`). Each code block can have a language specified (in our case we will exclusively use `r`) as well as options specific to that block. Here is an example of an R code block in this R Markdown file:
 
 
-```r
+``` r
 getwd()
 ```
 
 ```
-## [1] "C:/bin/fasifx/informatics-website/docs/workshops/intro-r"
+## [1] "/Users/username/intro-r"
 ```
 
-```r
+``` r
 x<-10
 class(x)
 ```
@@ -377,7 +378,7 @@ class(x)
 ## [1] "numeric"
 ```
 
-```r
+``` r
 x
 ```
 
@@ -385,7 +386,7 @@ x
 ## [1] 10
 ```
 
-```r
+``` r
 x+5
 ```
 
@@ -393,7 +394,7 @@ x+5
 ## [1] 15
 ```
 
-```r
+``` r
 x*2
 ```
 
@@ -401,7 +402,7 @@ x*2
 ## [1] 20
 ```
 
-```r
+``` r
 x
 ```
 
@@ -409,7 +410,7 @@ x
 ## [1] 10
 ```
 
-```r
+``` r
 x<-x+5
 x
 ```
@@ -418,7 +419,7 @@ x
 ## [1] 15
 ```
 
-```r
+``` r
 v1<-c(1,2,3,4,5)
 class(v1)
 ```
@@ -427,7 +428,7 @@ class(v1)
 ## [1] "numeric"
 ```
 
-```r
+``` r
 print(v1)
 ```
 
@@ -460,7 +461,7 @@ When constructing objects, it is important to remember, as we have demonstrated 
 > What happens when you try to run the code blocks below?
 
 
-```r
+``` r
 a <- "A"
 a * x
 ```
@@ -468,7 +469,7 @@ a * x
 nor can we perform addition **character** types.
 
 
-```r
+``` r
 b <- "B"
 a + b
 ```
@@ -484,7 +485,7 @@ Let's create a few objects objects to demonstrate this.
 > Run the code in the block below to store several pieces of data as objects:
 
 
-```r
+``` r
 x <- 10
 x
 ```
@@ -493,7 +494,7 @@ x
 ## [1] 10
 ```
 
-```r
+``` r
 w <- c(1,2,3,4)
 w
 ```
@@ -511,7 +512,7 @@ One can easily perform mathematical operations with *numeric* objects.
 > Run the code block below to do some math between a single number (`x`), referred to as a "scalar", and a vector:
 
 
-```r
+``` r
 vector_plus_scalar <- w + x
 vector_plus_scalar
 ```
@@ -520,7 +521,7 @@ vector_plus_scalar
 ## [1] 11 12 13 14
 ```
 
-```r
+``` r
 vector_times_scalar <- w * x
 vector_times_scalar
 ```
@@ -534,16 +535,12 @@ Notice what happens when performing operations with objects of different **lengt
 > In the code block below, create a new vector, `q`, such that the result of the operation `q * w` will be `c(-1, 2, -3, 4)`:
 
 
-```r
+``` r
 ### Create a new vector with c()
 q <- c(-1,1)
 ### Create a new vector with c()  
   
 q * w
-```
-
-```
-## [1] -1  2 -3  4
 ```
 
 In this case, q is being recycled, first being multiplied element-wise to the first two elements in w, then to the second two. 
@@ -553,7 +550,7 @@ If the length of the longer vector isn't a factor of the shorter vector, this ty
 > Run the code block below to demonstrate the error that arises when operations on vectors of lengths that are not factors of one another is attempted
 
 
-```r
+``` r
 i <- c(1, 1, 1)
 length(w)
 length(i)
@@ -567,21 +564,14 @@ When the vectors are of the same length, element-wise operations are **performed
 > 2. Then add `w` and `w2` together.
 
 
-```r
+``` r
 ### 1. Create a new vector with c()
 w2 <- c(1,1,1,1)
-### 1. Create a new vector with c()
+### 1. Create a new vector with c()  
+  
 
-
-### 2. Add the w and w2 vectors together  
+### 2. Add the w and w2 vectors together
 w + w2
-```
-
-```
-## [1] 2 3 4 5
-```
-
-```r
 ### 2. Add the w and w2 vectors together
 ```
 
@@ -592,7 +582,7 @@ We can also produce vectors of **characters**.
 > Run the code block below to define a vector of characters:
 
 
-```r
+``` r
 some_letters <- c("a", "b", "c", "d")
 ```
 
@@ -601,8 +591,8 @@ With this last variable, we had to use double quotes, `""`, to specify that we w
 > What happens when you run the code block below? Why?
 
 
-```r
-some_letters <- c(a,b,c,d)
+``` r
+not_some_letters <- c(a,b,c,d)
 ```
 
 Note that such vectors are of the type **character**.
@@ -610,7 +600,7 @@ Note that such vectors are of the type **character**.
 > Run the code block below to display the **class** of the object `some_letters`:
 
 
-```r
+``` r
 class(some_letters)
 ```
 
@@ -629,7 +619,7 @@ There are a number of functions that operate on vectors, including `length()`, `
 > 2. In the code block below, use these functions to get the minimum, maximum, and mean value for the `nums` vector you created.
 
 
-```r
+``` r
 ### 1. create a new vector, called `nums` that contains any 5 numbers you like
 nums <- c(33, 22, 41, 54, 91)
 ### 1. create a new vector, called `nums` that contains any 5 numbers you like
@@ -643,7 +633,7 @@ length(nums)
 ## [1] 5
 ```
 
-```r
+``` r
 min(nums)
 ```
 
@@ -651,7 +641,7 @@ min(nums)
 ## [1] 22
 ```
 
-```r
+``` r
 max(nums)
 ```
 
@@ -659,7 +649,7 @@ max(nums)
 ## [1] 91
 ```
 
-```r
+``` r
 mean(nums)
 ```
 
@@ -667,7 +657,7 @@ mean(nums)
 ## [1] 48.2
 ```
 
-```r
+``` r
 ### 2. Pass the nums object to the length, min, max, and mean functions
 ```
 
@@ -680,7 +670,7 @@ Like **numeric** or **character** data, we can create objects of type **logical*
 > Run the code block below to create a logical vector:
 
 
-```r
+``` r
 logic1 <- c(TRUE, TRUE, FALSE, FALSE)
 logic1
 ```
@@ -689,7 +679,7 @@ logic1
 ## [1]  TRUE  TRUE FALSE FALSE
 ```
 
-```r
+``` r
 class(logic1)
 ```
 
@@ -702,7 +692,7 @@ As we did above with **numeric vectors** when we performed mathematical operatio
 > Run the code block below to **test a condition** of a vector we previously defined:
 
 
-```r
+``` r
 v1
 ```
 
@@ -710,7 +700,7 @@ v1
 ## [1] 1 2 3 4 5
 ```
 
-```r
+``` r
 logic2 <- v1 > 2
 logic2
 ```
@@ -726,7 +716,7 @@ Another important feature of logical data is that the numeric values of `1` and 
 > Run the code block below to count how many elements in vector V1 meet the condition we tested for above:
 
 
-```r
+``` r
 v1
 ```
 
@@ -734,7 +724,7 @@ v1
 ## [1] 1 2 3 4 5
 ```
 
-```r
+``` r
 sum(logic2)
 ```
 
@@ -755,10 +745,10 @@ Here is a brief summary of the logical operators in R:
 <=           |less than or equal to |
 !=           |not equal to          |
 
-> 1. In the code block below, construct a logical vector with the same number of elements as the vector nums `nums <- c(33, 22, 41, 54, 91)` that is TRUE if the corresponding element in the nums vector is GREATER THAN the mean of the nums vector, and FALSE otherwise. Call this vector big_nums
+> 1. In the code block below, construct a logical vector with the same number of elements as the vector nums `nums <- c(33, 22, 41, 54, 91)` that is TRUE if the corresponding element in the nums vector is GREATER THAN the mean of the nums vector, and FALSE otherwise. Call this vector `big_nums`:
 
 
-```r
+``` r
 ### 1. Create logical vector
 big_nums <- nums > mean(nums)
 ### 1. Create logical vector
@@ -774,7 +764,7 @@ We can extract portions of vectors that we've created using the square brackets,
 > Run the following code block to see different ways to extract elements by **index**:
 
 
-```r
+``` r
 nums[1]
 ```
 
@@ -782,7 +772,7 @@ nums[1]
 ## [1] 33
 ```
 
-```r
+``` r
 nums[1:5]
 ```
 
@@ -790,8 +780,8 @@ nums[1:5]
 ## [1] 33 22 41 54 91
 ```
 
-```r
-nums[c(1,4,5)]
+``` r
+nums[c(1, 4, 5)]
 ```
 
 ```
@@ -801,9 +791,9 @@ nums[c(1,4,5)]
 > 2. In the code block below, subtract 10 from each element of the `nums` vector and then display only the last element of the vector.
 
 
-```r
+``` r
 ### 2. Subtract 10 from nums and print the last element of a vector
-new_nums = nums - 10
+new_nums <- nums - 10
 new_nums[length(new_nums)]
 ```
 
@@ -811,7 +801,7 @@ new_nums[length(new_nums)]
 ## [1] 81
 ```
 
-```r
+``` r
 ### 2. Subtract 10 from nums and print the last element of a vector
 ```
 
@@ -824,7 +814,7 @@ Let's take a look at both of these vectors again.
 > Run the following code block to view the previously created vectors, `nums` and `big_nums`:
 
 
-```r
+``` r
 nums
 ```
 
@@ -832,7 +822,7 @@ nums
 ## [1] 33 22 41 54 91
 ```
 
-```r
+``` r
 big_nums
 ```
 
@@ -845,7 +835,7 @@ Let's say we actually want to extract all of the numbers that are bigger than th
 > Run the following code block to extract values from a vector based on a logical vector of the same length:
 
 
-```r
+``` r
 nums[big_nums]
 ```
 
@@ -858,7 +848,7 @@ We don't necessarily have to define this vector ahead of time, but can put the r
 > Run the following code block to extract values from a vector based on a logical test statement:
 
 
-```r
+``` r
 nums[nums > mean(nums)]
 ```
 
@@ -884,7 +874,7 @@ One way to do this is to manually initialize and object with the `data.frame()` 
 > Run the code block below to create a data frame from scratch with the `data.frame()` function:
 
 
-```r
+``` r
 df1 <- data.frame(label=c("rep1", "rep2", "rep3", "rep4"), data=c(23, 34, 15, 19))
 df1
 ```
@@ -897,7 +887,7 @@ df1
 ## 4  rep4   19
 ```
 
-```r
+``` r
 class(df1)
 ```
 
@@ -914,7 +904,7 @@ The `str()` gives lots of information about the data type of the constituent par
 > Run the code block below to print information about the object types in the data frame:
 
 
-```r
+``` r
 str(df1)
 ```
 
@@ -929,7 +919,7 @@ A related function, to see the actual dimensions of your data frame (the number 
 > Run the code block below to view the dimensions of the data fram with `dim()`:
 
 
-```r
+``` r
 dim(df1)
 ```
 
@@ -942,7 +932,7 @@ We can use the function `head()` to look at part of a data frame (or any R objec
 > Run the code block below to view the top of the data frame with `head()`:
 
 
-```r
+``` r
 head(df1)
 ```
 
@@ -954,8 +944,8 @@ head(df1)
 ## 4  rep4   19
 ```
 
-```r
-head(df1, n=2)
+``` r
+head(df1, n = 2)
 ```
 
 ```
@@ -969,7 +959,7 @@ The `summary()` function can also be very useful to get a snapshot of the data i
 > Run the code block below to see the `summary()` of the data frame:
 
 
-```r
+``` r
 summary(df1)
 ```
 
@@ -990,8 +980,8 @@ Much like elements in a vector can be accessed using square brackets `[]` and in
 > Run the code block below to display different elements of the data frame by index:
 
 
-```r
-df1[1,2]
+``` r
+df1[1, 2]
 ```
 
 ```
@@ -1003,8 +993,8 @@ This displays the element in the first row and second column of the data frame, 
 > Run the code block below to display different elements of the data frame by index:
 
 
-```r
-df1[2,1]
+``` r
+df1[2, 1]
 ```
 
 ```
@@ -1018,8 +1008,8 @@ By leaving one index off, we can retrieve entire rows or columns from the data f
 > Run the code block below to display the whole first row of the data frame and the whole second column of the data frame:
 
 
-```r
-df1[1,]
+``` r
+df1[1, ]
 ```
 
 ```
@@ -1027,8 +1017,8 @@ df1[1,]
 ## 1  rep1   23
 ```
 
-```r
-df1[,2]
+``` r
+df1[, 2]
 ```
 
 ```
@@ -1037,10 +1027,10 @@ df1[,2]
 
 **Columns** can also be accessed by their *name* and the dollar sign operator, `$`.
 
-> Run the code block below to display the whole second column of the data frame with the `$` operatoe:
+> Run the code block below to display the whole second column of the data frame with the `$` operator:
 
 
-```r
+``` r
 df1$data
 ```
 
@@ -1051,9 +1041,9 @@ df1$data
 >1. Create a new vector, (called `my_product`), that consists of the `data` column of `df1` multiplied by `10`.
 
 
-```r
+``` r
 ### 1. Create new vector based on column in a data frame
-my_product <-df1$data*10
+my_product <- df1$data * 10
 ### 1. Create new vector based on column in a data frame
 ```
 
@@ -1061,64 +1051,68 @@ my_product <-df1$data*10
 
 So far we have been working with small objects we created by hand. A more common way to create **data frames** is by **reading tables from a file**. There are a few functions to do this in R. The old school way of doing this it by using the `read.table()` and `read.csv()` functions, with the latter being a generic file loader for which you can specify what delimits the columns: comma, space, tab, or some other character.
 
-For this workshop, we are going to read the [and_vertebrates :octicons-link-external-24:](https://lter.github.io/lterdatasampler/reference/and_vertebrates.html){:target="_blank"} data set from LTER, which stands for Long Term Ecological Research network. This data set is comprised of sampling data for cutthroat trout and two salamander species in different habitats, for different years, with weight and body size measurements, as well as unique individual identifiers. It is a rather large data set, consisting of over 32,209 rows and 16 columns.
+For this workshop, our data set comes from... wait for it ... penguins! The [palmer penguins](https://allisonhorst.github.io/palmerpenguins/) data set contains measurement data for 3 species of penguins collected on three islands at the LTER site in the Palmer Archipelago, Antarctica. *palmerpenguins* is itself an R package, but we can also read in the raw CSV file from a URL using the `read_csv` function.
 
-Today, we will load files into **data frames** in the standard, older way. In tomorrow's workshop, we will introduce you to *tidyverse* and teach you how loading files as **tibbles** can offer a number of advantages. For now, let's try the standard way:
-
-> Run the following code block to read data from a file into an object in R (in this case, as a **data frame**) with the `read.csv()` function:
+> Run the following code block to create an object called `mypenguins` to which the data in *penguins.csv* is assigned.
 
 
-```r
-vertebrates <- read.csv(file="https://harvardinformatics.github.io/workshops/2023-fall/r/data/LTER_andvertebrates.csv", sep=",", header=TRUE)
+``` r
+library(readr)
+mypenguins <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2020/2020-07-28/penguins.csv")
 ```
+
+```
+## Rows: 344 Columns: 8
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: ","
+## chr (3): species, island, sex
+## dbl (5): bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g, year
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+```
+
+
 
 As with manually constructed data frames, we can access *rows* and *columns* within it. 
 
-Let's see how many unique sampling dates there are, regardless of species. The `sampledate` column is the date variable. We can use the `length()` and `unique()` function, where the latter returns unique values as a vector, and the former returns the length of that vector.
+Let's see how many unique penguins species are in the data set. The `species` column is the date variable. We can use the `length()` and `unique()` function, where the latter returns unique values as a vector, and the former returns the length of that vector.
 
 > Run the code block below to count the sampling dates in the data set:
 
 
-```r
-length(unique(vertebrates$sampledate))
+``` r
+length(unique(mypenguins$species))
 ```
 
 ```
-## [1] 99
+## [1] 3
 ```
 
-Loaded in this manner, if you type `vertebrates` in the R console, it will return a large number of columns before print a "reached max" statement and telling you how many columns it didn't print. But for a quick view, analogous to unix, you can use the head function, as above.
+Loaded in this manner, if you type `mypenguins` in the R console, it will return a large number of columns before print a "reached max" statement and telling you how many columns it didn't print. But for a quick view, analogous to unix, you can use the head function, as above.
 
 > Run the code block below to view the first 10 lines of the data set:
 
 
-```r
-head(vertebrates,10)
+``` r
+head(mypenguins, 10)
 ```
 
 ```
-##    year sitecode section reach pass unitnum unittype vert_index pitnumber
-## 1  1987 MACKCC-L      CC     L    1       1        R          1        NA
-## 2  1987 MACKCC-L      CC     L    1       1        R          2        NA
-## 3  1987 MACKCC-L      CC     L    1       1        R          3        NA
-## 4  1987 MACKCC-L      CC     L    1       1        R          4        NA
-## 5  1987 MACKCC-L      CC     L    1       1        R          5        NA
-## 6  1987 MACKCC-L      CC     L    1       1        R          6        NA
-## 7  1987 MACKCC-L      CC     L    1       1        R          7        NA
-## 8  1987 MACKCC-L      CC     L    1       1        R          8        NA
-## 9  1987 MACKCC-L      CC     L    1       1        R          9        NA
-## 10 1987 MACKCC-L      CC     L    1       1        R         10        NA
-##            species length_1_mm length_2_mm weight_g clip sampledate notes
-## 1  Cutthroat trout          58          NA     1.75 NONE 1987-10-07  <NA>
-## 2  Cutthroat trout          61          NA     1.95 NONE 1987-10-07  <NA>
-## 3  Cutthroat trout          89          NA     5.60 NONE 1987-10-07  <NA>
-## 4  Cutthroat trout          58          NA     2.15 NONE 1987-10-07  <NA>
-## 5  Cutthroat trout          93          NA     6.90 NONE 1987-10-07  <NA>
-## 6  Cutthroat trout          86          NA     5.90 NONE 1987-10-07  <NA>
-## 7  Cutthroat trout         107          NA    10.50 NONE 1987-10-07  <NA>
-## 8  Cutthroat trout         131          NA    20.60 NONE 1987-10-07  <NA>
-## 9  Cutthroat trout         103          NA     9.55 NONE 1987-10-07  <NA>
-## 10 Cutthroat trout         117          NA    13.00 NONE 1987-10-07  <NA>
+## # A tibble: 10 × 8
+##    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    <chr>   <chr>              <dbl>         <dbl>             <dbl>       <dbl>
+##  1 Adelie  Torgersen           39.1          18.7               181        3750
+##  2 Adelie  Torgersen           39.5          17.4               186        3800
+##  3 Adelie  Torgersen           40.3          18                 195        3250
+##  4 Adelie  Torgersen           NA            NA                  NA          NA
+##  5 Adelie  Torgersen           36.7          19.3               193        3450
+##  6 Adelie  Torgersen           39.3          20.6               190        3650
+##  7 Adelie  Torgersen           38.9          17.8               181        3625
+##  8 Adelie  Torgersen           39.2          19.6               195        4675
+##  9 Adelie  Torgersen           34.1          18.1               193        3475
+## 10 Adelie  Torgersen           42            20.2               190        4250
+## # ℹ 2 more variables: sex <chr>, year <dbl>
 ```
 
 In Rstudio, we can also use the `View()` (notice the capital "V") function to open the whole dataset in another tab of the *text editor*. RStudio nicely formats **data frames** as human-readable tables.
@@ -1126,88 +1120,86 @@ In Rstudio, we can also use the `View()` (notice the capital "V") function to op
 > Run the following command in the R **Console** below to open the data set in a new tab in the text editor:
 
 ```
-View(vertebrates)
+View(mypenguins)
 ```
 
 A word of caution with `View()`: be careful `View`ing large datasets, since they can be difficult for RStudio to display and may slow down the program.
 
-> 1. Can you guess what the R function is to see the last n columns? Try `tail()` to get the last 10 columns of the *vertebrates* data frame:
+> 1. Can you guess what the R function is to see the last n rows? Try `tail()` to get the last 10 columns of the *mypenguins* data frame:
 
 
-```r
+``` r
 ### 1. View last 10 lines of the data frame with tail()
-tail(vertebrates, n=10)
+tail(mypenguins, n = 10)
 ```
 
 ```
-##       year sitecode section reach pass unitnum unittype vert_index pitnumber
-## 32200 2019 MACKOG-U      OG     U    2      16        C         17        NA
-## 32201 2019 MACKOG-U      OG     U    2      16        C         18        NA
-## 32202 2019 MACKOG-U      OG     U    2      16        C         19        NA
-## 32203 2019 MACKOG-U      OG     U    2      16        C         20        NA
-## 32204 2019 MACKOG-U      OG     U    2      16        C         21        NA
-## 32205 2019 MACKOG-U      OG     U    2      16        C         22        NA
-## 32206 2019 MACKOG-U      OG     U    2      16        C         23   1043503
-## 32207 2019 MACKOG-U      OG     U    2      16        C         24   1043547
-## 32208 2019 MACKOG-U      OG     U    2      16        C         25   1043583
-## 32209 2019 MACKOG-U      OG     U    2      16        C         26   1043500
-##                        species length_1_mm length_2_mm weight_g clip sampledate
-## 32200 Coastal giant salamander          33          63      1.6 NONE 2019-09-05
-## 32201 Coastal giant salamander          38          68      1.6 NONE 2019-09-05
-## 32202 Coastal giant salamander          51          98      5.0 NONE 2019-09-05
-## 32203 Coastal giant salamander          50          93      5.3 NONE 2019-09-05
-## 32204 Coastal giant salamander          58         101      6.4 NONE 2019-09-05
-## 32205 Coastal giant salamander          58         108      7.9 NONE 2019-09-05
-## 32206 Coastal giant salamander          65         115      8.7 NONE 2019-09-05
-## 32207 Coastal giant salamander          67         120      9.6 NONE 2019-09-05
-## 32208 Coastal giant salamander          74         131     14.3 NONE 2019-09-05
-## 32209 Coastal giant salamander          73         128     11.6 NONE 2019-09-05
-##             notes
-## 32200        <NA>
-## 32201        <NA>
-## 32202        <NA>
-## 32203        <NA>
-## 32204        <NA>
-## 32205        <NA>
-## 32206        <NA>
-## 32207        <NA>
-## 32208        <NA>
-## 32209 Terrestrial
+## # A tibble: 10 × 8
+##    species   island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+##    <chr>     <chr>           <dbl>         <dbl>             <dbl>       <dbl>
+##  1 Chinstrap Dream            50.2          18.8               202        3800
+##  2 Chinstrap Dream            45.6          19.4               194        3525
+##  3 Chinstrap Dream            51.9          19.5               206        3950
+##  4 Chinstrap Dream            46.8          16.5               189        3650
+##  5 Chinstrap Dream            45.7          17                 195        3650
+##  6 Chinstrap Dream            55.8          19.8               207        4000
+##  7 Chinstrap Dream            43.5          18.1               202        3400
+##  8 Chinstrap Dream            49.6          18.2               193        3775
+##  9 Chinstrap Dream            50.8          19                 210        4100
+## 10 Chinstrap Dream            50.2          18.7               198        3775
+## # ℹ 2 more variables: sex <chr>, year <dbl>
 ```
 
-```r
+``` r
 ### 1. View last 10 lines of the data frame with tail()
 ```
 
 Another useful function is `summary()` which provides basic summary statistics on the values of each column.
 
-> 2. What is the average weight in grams of the observed animals?
+> 2. What is the average body mass in grams of the observed animals?
 
 
-```r
-### 2. Use any method to get the average weight of the animals
-summary(vertebrates$weight_g)
+``` r
+### 2. Use any method to get the average body mass of the penguins
+summary(mypenguins)
 ```
 
 ```
-##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##   0.090   1.510   6.050   8.903  11.660 134.590   13268
+##    species             island          bill_length_mm  bill_depth_mm  
+##  Length:344         Length:344         Min.   :32.10   Min.   :13.10  
+##  Class :character   Class :character   1st Qu.:39.23   1st Qu.:15.60  
+##  Mode  :character   Mode  :character   Median :44.45   Median :17.30  
+##                                        Mean   :43.92   Mean   :17.15  
+##                                        3rd Qu.:48.50   3rd Qu.:18.70  
+##                                        Max.   :59.60   Max.   :21.50  
+##                                        NA's   :2       NA's   :2      
+##  flipper_length_mm  body_mass_g       sex                 year     
+##  Min.   :172.0     Min.   :2700   Length:344         Min.   :2007  
+##  1st Qu.:190.0     1st Qu.:3550   Class :character   1st Qu.:2007  
+##  Median :197.0     Median :4050   Mode  :character   Median :2008  
+##  Mean   :200.9     Mean   :4202                      Mean   :2008  
+##  3rd Qu.:213.0     3rd Qu.:4750                      3rd Qu.:2009  
+##  Max.   :231.0     Max.   :6300                      Max.   :2009  
+##  NA's   :2         NA's   :2
 ```
 
-```r
-mean(vertebrates$weight_g, na.rm=T)
+``` r
+# or
+mean(mypenguins$body_mass_g, na.rm = TRUE)
 ```
 
 ```
-## [1] 8.902859
+## [1] 4201.754
 ```
 
-```r
-### 2. Use any method to get the average weight of the animals
+``` r
+### 2. Use any method to get the average body mass of the penguins
 ```
 
 ## End of Part 1
 
-In tomorrow's workshop, we will teach you how to load data in the [tidyverse :octicons-link-external-24:](https://www.tidyverse.org/){:target="_blank"} way, how to select and filter a data set using certain criteria, how to construct new variables, and how to write the resulting outputs to new files.
+In tomorrow's workshop, we will teach you how to manipulate data in the [tidyverse :octicons-link-external-24:](https://www.tidyverse.org/){:target="_blank"} way, including how to select and filter a data set using certain criteria, how to construct new variables, and how to write the resulting outputs to new files. 
+
+What you probably didn't realize is that we used a *tidyverse* file loading function `read_csv` which created a data frame object that is actually a *tibble* , a fancy *tidyverse* version of a data frame that we will discuss in more detail in our next workshop session.
 
 ---

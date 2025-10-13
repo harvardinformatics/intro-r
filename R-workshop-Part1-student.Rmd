@@ -1,7 +1,7 @@
 ---
 title: "[Workshop] Introduction to R Part 1: R Basics"
 description: "Introduction to R basics including the RStudio interface, R commands from the console, R scripts, and data types."
-date: "October 06, 2025"
+date: "October 13, 2025"
 authors: 
   - Adam Freedman
   - Danielle Khost
@@ -212,7 +212,7 @@ Other basic algebraic operators include `-` for subtraction, `*` for multiplicat
 
 > In the **Console** below, run the following command:
 
-```{r}
+```
 my_char + 10
 ```
 
@@ -356,7 +356,7 @@ Congratulations on writing your first R script (of this workshop, at least)!
 
 The above file is a pure R script. It will only take R commands and execute them all at once.
 
-This file, and the other files we'll be using in this workshop, are **R Markdown** files. You'll notice several things about this file that differ from the R script we just made. First, the file extension is **.Rmd** rather than **.r**. You'll also see that this text has some different formatting and coloring that the R script. This is because an **R Markdown** file is capable of formatting plain text for viewing and writing and executing code. This makes it a great file format for keeping a lab notebook for reproducible science or even for teaching a workshop! **R Markdown** files can also be **knit**, meaning the text will be formatted and the code will be run and output displayed and formatted and everything will be compiled into a single file, either HTML, PDF, or LaTeX. Conceivably, one could write a whole paper or book with **RMarkdown**. Check out more about R Markdown formatting [here :octicons-link-external-24:](https://r02pro.github.io/rmd-text-formating.html){:target="_blank"}.
+This file, and the other files we'll be using in this workshop, are **R Markdown** files. You'll notice several things about this file that differ from the R script we just made. First, the file extension is **.Rmd** rather than **.r**. You'll also see that this text has some different formatting and coloring that the R script. This is because an **R Markdown** file is capable of formatting plain text for viewing and writing and executing code. This makes it a great file format for keeping a lab notebook for reproducible science or even for teaching a workshop! **R Markdown** files can also be **knit**, meaning the text will be formatted and the code will be run and output displayed and formatted and everything will be compiled into a single file, either HTML, PDF, or LaTeX. Conceivably, one could write a whole paper or book with **RMarkdown**. Check out more about R Markdown formatting [here](https://r02pro.github.io/rmd-text-formating.html){:target="_blank"}.
 
 Code is written and executed in R Markdown with **code blocks**, which are delineated by the backtick character (\`). Each code block can have a language specified (in our case we will exclusively use `r`) as well as options specific to that block. Here is an example of an R code block in this R Markdown file:
 
@@ -639,7 +639,7 @@ We can extract portions of vectors that we've created using the square brackets,
 
 nums[1]
 nums[1:5]
-nums[c(1,4,5)]
+nums[c(1, 4, 5)]
 
 ```
 
@@ -745,7 +745,7 @@ We can use the function `head()` to look at part of a data frame (or any R objec
 ```{r}
 
 head(df1)
-head(df1, n=2)
+head(df1, n = 2)
 
 ```
 
@@ -767,7 +767,7 @@ Much like elements in a vector can be accessed using square brackets `[]` and in
 
 ```{r}
 
-df1[1,2]
+df1[1, 2]
 
 ```
 
@@ -777,7 +777,7 @@ This displays the element in the first row and second column of the data frame, 
 
 ```{r}
 
-df1[2,1]
+df1[2, 1]
 
 ```
 
@@ -789,8 +789,8 @@ By leaving one index off, we can retrieve entire rows or columns from the data f
 
 ```{r}
 
-df1[1,]
-df1[,2]
+df1[1, ]
+df1[, 2]
 
 ```
 
@@ -818,12 +818,12 @@ df1$data
 
 So far we have been working with small objects we created by hand. A more common way to create **data frames** is by **reading tables from a file**. There are a few functions to do this in R. The old school way of doing this it by using the `read.table()` and `read.csv()` functions, with the latter being a generic file loader for which you can specify what delimits the columns: comma, space, tab, or some other character.
 
-For this workshop, our data set comes from... wait for it ... penguins! The [palmer penguins](https://allisonhorst.github.io/palmerpenguins/ )data set contains measurement data for 3 species of penguins collected on three islands at the LTER site in the Palmer Archipelago, Antarctica. *palmerpenguins* is itself an R package. We can actually load the csv-formatted `penguins` data usin the `read_csv` function, and can take advantage of the ability to read tables from remote repositories using the weblink the file:
+For this workshop, our data set comes from... wait for it ... penguins! The [palmer penguins](https://allisonhorst.github.io/palmerpenguins/) data set contains measurement data for 3 species of penguins collected on three islands at the LTER site in the Palmer Archipelago, Antarctica. *palmerpenguins* is itself an R package, but we can also read in the raw CSV file from a URL using the `read_csv` function.
 
-
-> Run the following code block to create an object called `mypenguins` to which the data in *mypenguins.csv* is assigned.
+> Run the following code block to create an object called `mypenguins` to which the data in *penguins.csv* is assigned.
 
 ```{r}
+library(readr)
 mypenguins <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2020/2020-07-28/penguins.csv")
 ```
 
@@ -847,7 +847,7 @@ Loaded in this manner, if you type `mypenguins` in the R console, it will return
 
 ```{r}
 
-head(mypenguins,10)
+head(mypenguins, 10)
 
 ```
 
