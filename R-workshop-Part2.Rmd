@@ -101,8 +101,8 @@ Because the data set we are using today already comes built into the *palmerpeng
 
 ```{r}
 library(palmerpenguins)
-write.csv(penguins,file="penguins.csv")
-mypenguins<-read_csv("penguins.csv")
+write.csv(penguins,file = "penguins.csv")
+mypenguins <- read_csv("penguins.csv")
 ```
 
 Tidyverse file loading functions assume the first row of your data contains column names, while the base R functions (e.g. `read.csv` and `read.table`) do not. Tidyverse file loaders return a tibble rather than a standard dataframe. One of the first things you will notice is that upon loading you will get a brief summary of the tibble contents, such as the tibble dimensions, the column separator, and the names of variables (columns) belonging to each type: *dbl* for numeric and *chr* for character. We can also take a quick peek at the first few rows by simply calling the tibble.
@@ -185,7 +185,7 @@ arrange(penguins, desc(year),sex)
 
 Note that so far we haven't stored the sorted data. Let's try that now.
 
-> \*\*Sorting exercise\*. Sort your `penguins` tibble by species, then by year, then by body mass, and store the output in a new tibble called `sorted_penguins`.
+> **Sorting exercise**. Sort your `penguins` tibble by species, then by year, then by body mass, and store the output in a new tibble called `sorted_penguins`.
 
 ```{r}
 
@@ -336,7 +336,7 @@ To clarify what we mean by this, imagine the following vector:
 
 ```{r}
 
-test <- c(1,2,3)
+test <- c(1, 2, 3)
 
 ```
 
@@ -367,7 +367,7 @@ filter(penguins, (species == "Adelie" | species == "Gentoo"), (sex == "male" &  
 
 ```{r}
 
-filter(penguins,year< 2009, sex=="male", (species=="Adelie" & body_mass_g > 4043) | (species=="Gentoo" & body_mass_g > 5485)) 
+filter(penguins,year< 2009, sex == "male", (species == "Adelie" & body_mass_g > 4043) | (species == "Gentoo" & body_mass_g > 5485)) 
 
 ```
 
@@ -400,19 +400,19 @@ adelie_males <- filter(penguins, species=="Adelie", sex =="male")
 > Create a new variable called mass_mean that stores the mean of the body_mass_g column; remember that you need to include the argument `na.rm = TRUE` to tell the mean function to remove missing values first
 
 ```{r}
-mass_mean <- mean(adelie_males$body_mass_g, na.rm=TRUE)
+mass_mean <- mean(adelie_males$body_mass_g, na.rm = TRUE)
 ```
 
 > Create a new variable called tail_sd that stores the standard deviation of the mass column. The function for this is sd(); like mean() you need to include the argument na.rm = TRUE to tell the sd function to remove missing values first
 
 ```{r}
-mass_sd <- sd(adelie_males$body_mass_g, na.rm=TRUE)
+mass_sd <- sd(adelie_males$body_mass_g, na.rm = TRUE)
 ```
 
 > Create a new column in the adelie_males tibble that is TRUE if body mass is more than two standard deviations from the mean
 
 ```{r}
-adelie_males <- mutate(adelie_males, mass_outlier=((body_mass_g > (mass_mean+2*mass_sd)) | (body_mass_g < (mass_mean-2*mass_sd))))
+adelie_males <- mutate(adelie_males, mass_outlier = ((body_mass_g > (mass_mean + 2 * mass_sd)) | (body_mass_g < (mass_mean-2 * mass_sd))))
 ```
 
 > Filter the adelie_males tibble to keep only rows where mass_outlier is TRUE
@@ -454,7 +454,7 @@ Let's try to create a new variable that represents a Z score, i.e. a transformat
 
 ```{r}
 
-adelie_Z <- mutate(adelie, body_mass_Z = (body_mass_g - mean(body_mass_g, na.rm=TRUE)) / sd(body_mass_g, na.rm=TRUE))
+adelie_Z <- mutate(adelie, body_mass_Z = (body_mass_g - mean(body_mass_g, na.rm = TRUE)) / sd(body_mass_g, na.rm = TRUE))
 
 ```
 
@@ -466,8 +466,8 @@ To convince yourself that Z is in fact a standard normal distribution (mean=0, s
 
 ```{r}
 
-mean(adelie_Z$body_mass_Z, na.rm=TRUE)
-sd(adelie_Z$body_mass_Z, na.rm=TRUE)
+mean(adelie_Z$body_mass_Z, na.rm = TRUE)
+sd(adelie_Z$body_mass_Z, na.rm = TRUE)
 
 ```
 
@@ -475,8 +475,8 @@ sd(adelie_Z$body_mass_Z, na.rm=TRUE)
 
 ```{r}
 
-adelie_Z <- mutate(adelie_Z, meanmass =  mean(body_mass_g, na.rm=TRUE))
-adelie_Z <- mutate(adelie_Z, sdmass =  sd(body_mass_g, na.rm=TRUE))
+adelie_Z <- mutate(adelie_Z, meanmass =  mean(body_mass_g, na.rm = TRUE))
+adelie_Z <- mutate(adelie_Z, sdmass =  sd(body_mass_g, na.rm = TRUE))
 adelie_Z <- mutate(adelie_Z, z2 = (body_mass_g - meanmass) / sdmass)
 
 ```
@@ -485,20 +485,20 @@ To confirm this produces the same output as the first implementation, calculate 
 
 ```{r}
 
-mean(adelie_Z$z2, na.rm=TRUE)
-sd(adelie_Z$z2, na.rm=TRUE)
+mean(adelie_Z$z2, na.rm = TRUE)
+sd(adelie_Z$z2, na.rm = TRUE)
 
 ```
 
 The distinction between these two approaches is that, in the first case, one is recycling the mean and standard deviation values (effectively vectors of size 1 each) in applying them to every element of *body_mass_g* in calculating the Z-score values in the respective rows. In the second case, because we have constructed mean and standard deviation variables of equal length to *body_mass_g*, we are doing mathematical operations on same-sized vectors. Of course, one might not want to store the same (e.g.mean) value over thousands of rows. The point here is to reinforce the idea that the same result can be achieved by constructing vectors of different lengths.
 
-### Tibbles won't recycle vectors of length \> 1
+### Tibbles won't recycle vectors of length > 1
 
 As a side note to this, it is important to know that mutate requires that the object passed to the new column name argument is a vector of length 1 or a vector of length equal to the number of rows in the tibble. If you try to recycle a vector of length 2 in a mutate command, you'll get an error:
 
 ```{r, eval=F}
 
-mutate(adelie, error = c(1,2))
+mutate(adelie, error = c(1, 2))
 
 ```
 
@@ -512,7 +512,7 @@ Left joins are a common operation, where given tables x and y, you only want to 
 
 ```{r}
 
-penguins <- mutate(penguins, obs_number=row.names(penguins))
+penguins <- mutate(penguins, obs_number = row.names(penguins))
 
 ```
 
@@ -520,9 +520,9 @@ Now, we'll create some sub-tables with *select*
 
 ```{r}
 
-x <- select(penguins, obs_number,body_mass_g)
+x <- select(penguins, obs_number, body_mass_g)
 y <- select(penguins, obs_number, species, sex)
-xy <- left_join(x,y)
+xy <- left_join(x, y)
 glimpse(xy)
 
 ```
@@ -531,7 +531,7 @@ Tidyverse determines on the fly that the two tables share a column name, and ass
 
 ```{r}
 
-x <- rename(x,obs = obs_number)
+x <- rename(x, obs = obs_number)
 xy <- left_join(x, y, by = join_by(obs == obs_number))
 glimpse(xy)
 
@@ -550,7 +550,7 @@ As we shall see in Part 3 of this workshop, having the actual measurements aggre
 # First, we need to make each row have a unique ID. This is another way to do it
 penguins <- mutate(penguins, id = row_number())
 # Then, we use the function pivot_longer() to merge columns together
-penguins_long <- pivot_longer(penguins,c(bill_length_mm,bill_depth_mm,flipper_length_mm),names_to="morphtype",values_to="mm")
+penguins_long <- pivot_longer(penguins, c(bill_length_mm, bill_depth_mm, flipper_length_mm), names_to = "morphtype", values_to = "mm")
 
 ```
 
@@ -584,7 +584,7 @@ This dataset is stored as a matrix object, in which the type of household expens
 myUSPersonalExpenditure <- as.data.frame(USPersonalExpenditure)
 myUSPersonalExpenditure$expenditure <- row.names(myUSPersonalExpenditure)
 USPersonalExpenditure_long  <- as_tibble(myUSPersonalExpenditure) %>%
-                               pivot_longer(cols=starts_with("19"),names_to="year",values_to="amount")
+                               pivot_longer(cols = starts_with("19"),names_to = "year", values_to = "amount")
 
 USPersonalExpenditure_long
 ```
@@ -607,11 +607,11 @@ In the above command structure the final output of data processing with `functio
 
 Now, as a more concrete example, let's see how we can use `select()` and `filter()` together with a pipe.
 
-> To combine `select()` and `filter()` operations to creata new tibble called *new_data*, run the code block below:
+> To combine `select()` and `filter()` operations to create a new tibble called `new_data`, run the code block below:
 
 ```{r}
 
-new_data <- select(penguins, year, species, sex, body_mass_g) %>% filter(species=="Adelie", year == 2008)
+new_data <- select(penguins, year, species, sex, body_mass_g) %>% filter(species == "Adelie", year == 2008)
 
 ```
 
@@ -623,7 +623,7 @@ In this example, we pipe together the two function calls we executed earlier, bu
 
 ```{r}
 
-flipper_norm <- select(penguins, species, flipper_length_mm, body_mass_g) %>% filter(species=="Adelie") %>% mutate(norm_flipper_length = flipper_length_mm /body_mass_g)
+flipper_norm <- select(penguins, species, flipper_length_mm, body_mass_g) %>% filter(species == "Adelie") %>% mutate(norm_flipper_length = flipper_length_mm /body_mass_g)
 
 ```
 
@@ -633,7 +633,7 @@ As a side note, you sometimes want to pipe the output of one function to the inp
 
 Because the output of the left hand function is piped to the first *unnamed* argument, if you name every argument before data, you'll be okay: `penguins %>% filter_command() %>% lm(formula = x ~ y)`
 
-You can reference the piped output via the special variable `.` in the right hand function: \`penguins %\>% filter_command() %\>% lm(x \~ y, data = .)
+You can reference the piped output via the special variable `.` in the right hand function: `penguins %>% filter_command() %>% lm(x ~ y, data = .)`
 
 ## Finding unique values
 
@@ -657,7 +657,7 @@ Yesterday, we showed you how the `summary` function will print out basic summary
 
 ```{r}
 
-summarize(penguins, n=n_distinct(species))
+summarize(penguins, n = n_distinct(species))
 
 ```
 
@@ -669,17 +669,17 @@ Ignoring the fact for the moment that the data set is comprised of three differe
 
 ```{r}
 
-summarize(adelie, meanbill=mean(bill_length_mm, na.rm=TRUE), meanmass=mean(body_mass_g, na.rm=TRUE))
+summarize(adelie, meanbill = mean(bill_length_mm, na.rm = TRUE), meanmass = mean(body_mass_g, na.rm = TRUE))
 
 ```
 
 Perhaps we are getting tired of always typing `na.rm = TRUE`, and instead want to first filter our dataset to remove rows that contain missing values. Tidyverse contains a nice function, called `drop_na()`, that does just this. By default it looks for missing values in *every* column in in our tibble, but if you look at `?drop_na` you'll see it has one of those `...` arguments, so we can pass it column names to check.
 
-As an exercise, can you rewrite the summarize function above, but remove missing values before piping to summarize. Leave off the `na.rm=TRUE` to make sure it worked!
+>**Exercise:** Rewrite the summarize function above, but remove missing values before piping to summarize. Leave off the `na.rm=TRUE` to make sure it worked!
 
 ```{r}
 
-drop_na(adelie) %>% summarize(meanbill=mean(bill_length_mm), meanmass=mean(body_mass_g))
+drop_na(adelie) %>% summarize(meanbill = mean(bill_length_mm), meanmass = mean(body_mass_g))
 
 ```
 
@@ -687,7 +687,7 @@ You may have noticed that these two ways of handling NAs lead to different resul
 
 ### Using `group_by()` with `summarize()`
 
-In most data sets, summarizing across all observations (rows) may not be particularly informative, because what one usually wants to do is to get information specific to different groups of observations, e.g. those in different habitats, exposed to different experimental treatments, etc. Thus, in most circumstances one will want to define those groups for a tibble. One can do this using the `group_by()` function, which takes as it's first argument the name of the data frame, and the following arguments are variables to group by; these can then be followed by other keyword arguments). An obvious grouping for the *penguins* tibble is species.
+In most data sets, summarizing across all observations (rows) may not be particularly informative, because what one usually wants to do is to get information specific to different groups of observations, e.g. those in different habitats, exposed to different experimental treatments, etc. Thus, in most circumstances one will want to define those groups for a tibble. One can do this using the `group_by()` function, which takes as it's first argument the name of the data frame, and the following arguments are variables to group by; these can then be followed by other keyword arguments. An obvious grouping for the *penguins* tibble is species.
 
 > To obtain this grouping, run the command block below:
 
@@ -705,7 +705,7 @@ A feature of the penguins data is that there are a number of entries for which t
 So, if we look at the sex variable:
 
 ```{r}
-distinct(adelie,sex)
+distinct(adelie, sex)
 ```
 
 we see that *NA* is one of the values. We can fix this, so that, were we to group by sex, we won't create a group for *NA*.
@@ -721,7 +721,7 @@ adelie_by_sex
 ... and, as a sanity check:
 
 ```{r}
-distinct(adelie_by_sex,sex)
+distinct(adelie_by_sex, sex)
 ```
 
 Now, let's calculate the mean by species for *body_mass_g* and *bill_length_mm*. If you're unsure whether there are NA values in these two columns, you can use the `drop_na()` function to remove rows which contain ANY NA values. To see how you might do this in one command using pipes, we'll start from *penguins*.
@@ -731,7 +731,7 @@ Now, let's calculate the mean by species for *body_mass_g* and *bill_length_mm*.
 ```{r}
 
 # starting with the penguins table
-penguins %>% 
+penguins %>%
   # select only the columns we want
   select(species, body_mass_g, bill_length_mm) %>%
   # drop the rows with NA in ANY selected column
@@ -739,7 +739,7 @@ penguins %>%
   # group table by species
   group_by(species) %>%
   # summarize the mean body mass, bill length, and number of observations in each group
-  summarize(mean_weight=mean(body_mass_g), mean_bill_length=mean(bill_length_mm), num=n())
+  summarize(mean_weight = mean(body_mass_g), mean_bill_length = mean(bill_length_mm), num=n())
 
 ```
 
@@ -760,7 +760,7 @@ penguins %>%
   # group by species and section
   group_by(species, sex) %>%
   # summarize mean weight, standard deviation of weight, and number of observations in each group
-  summarize(mean_mass=mean(body_mass_g), std_weight=sd(body_mass_g), num=n())
+  summarize(mean_mass = mean(body_mass_g), std_weight = sd(body_mass_g), num=n())
 
 ```
 
