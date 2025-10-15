@@ -1,7 +1,7 @@
 ---
 title: "[Workshop] Introduction to R Part 2: tidyverse"
 description: "An introduction to 'tidy' data and how to manipulate data with the tidyverse family of R packages."
-date: "September 24, 2025"
+date: "October 16, 2025"
 authors: 
   - Adam Freedman
   - Lei Ma
@@ -14,15 +14,6 @@ output:
 # Introduction to R Part 2: Data manipulation with tidyverse
 
 Welcome to Day 2 of our Introduction to R workshop! If you're viewing this file on the website, you are viewing the final, formatted version of the workshop. The workshop itself will take place in the RStudio program and you will *edit and execute the code in this file*. Please download the raw file [here :octicons-download-24:](R-workshop-Part2-student.Rmd)
-
-## What is tidy data?
-
-The notion of tidy data has been around in various incarnations for a while but has more recently been formalized in this [paper :octicons-download-24:](https://vita.had.co.nz/papers/tidy-data.pdf){:target="\_blank"} by Hadley Wickham, the developer of *tidyverse*. Tidy data are, in short, data that have been organized in a consistent way that makes data exploration and visualization easier. Two key principles are that:
-
--   Each variable forms a column
--   Each observation forms a row
-
-Organized this way, for analysis with software such as R, values for different variables can be linked within observations, e.g. rows of our example data from day 1 are observations of individual penguins, and columns contain information about each individual (species, sex, island where recorded, body mass, etc.) such that one could explore how the weight or flipper length varies by sex and species. Often times data that one pulls down from a repository (or that is provided by a collaborator) are not tidy! For example, multiple variables may be stored in the same column, such as when two different treatment types are concatenated into a single string. Tidying such data would require separating each treatment into a separate column.
 
 ## What is *tidyverse*?
 
@@ -41,7 +32,7 @@ Some packages are included with the base R installation. You can see the package
 
 How you install packages will depend on where you are getting the package from. For *CRAN*, you can use the R function `install.packages()` or the Rstudio Tools -\> Install Packages menu. For example, if you wanted to install the *abc* package for doing Approximate Bayesian Computation, in the R console you would simply type: *install.packages("abc")*.
 
-To install *Bioconductor* packages, you will need to first install the Bioconductor package manager (BUT DON"T DO THIS NOW!): `if (!require("BiocManager", quietly = TRUE)) install.packages("BiocManager") BiocManager::install(version = "3.16")`
+To install *Bioconductor* packages, you will need to first install the Bioconductor package manager (BUT DON'T DO THIS NOW!): `if (!require("BiocManager", quietly = TRUE)) install.packages("BiocManager") BiocManager::install(version = "3.16")`
 
 Once the package manager is installed, you can install a Bioconductor project packages with the following syntax: `BiocManager::install(<name of Bioconductor R package>)`. We won't discuss Bioconductor more in this workshop, but it is a useful resource to be aware of.
 
@@ -49,11 +40,11 @@ Packages frequently have other R packages as dependencies, and so you will often
 
 So we mentioned that *tidyverse* is a collection of R packages. You can conveniently install all these related packages with one install command.
 
-> If you haven't already installed *tidyverse* and the *palmerpenguins" dataset, do that now by executing the following code block.
+> If you haven't already installed *tidyverse* and the *palmerpenguins* dataset, do that now by executing the following code block.
 
 
 ``` r
-install.packages("tidyverse")
+install.packages("tidyverse", "palmerpenguins")
 ```
 
 Note that installing a package is not the same thing as loading it into your current R session. Once the package is installed, you have the functions on your computer, but in order to use them in your R session, you need to load the package, which we usually do with the `library` function.
@@ -68,14 +59,18 @@ library(tidyverse)
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.2
-## ✔ ggplot2   4.0.0     ✔ tibble    3.3.0
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.1.0     
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+## ✔ purrr     1.0.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+```
+
+``` r
+library(palmerpenguins)
 ```
 
 For more information, go to [tidyverse :octicons-link-external-24:](https://www.tidyverse.org/){:target="\_blank"}.
@@ -90,60 +85,55 @@ browseVignettes(package = "dplyr")
 ```
 
 ## Our data
+
 Today's data set comes from... wait for it ... penguins! In particular, we are using the [Palmer penguins :octicons-link-external-24:](https://allisonhorst.github.io/palmerpenguins/){:target="\_blank"} data set contains measurement data for 3 species of penguins collected on three islands at the LTER site in the Palmer Archipelago, Antarctica.
 
-This data is available as an R package which we can install as follows:
+You can view the data by typing
 
 
 ``` r
-install.packages("palmerpenguins")
+View(penguins)
 ```
 
+This should open up a new window tab that will allow you to browse the penguins dataset. We chose this dataset because it is a well organized, comprised of both numerical and categorical observations, and of manageable size. It is also a great exemplar of *tidy data*.
+
+## What is tidy data?
+
+The notion of tidy data has been around in various incarnations for a while but has more recently been formalized in this [paper :octicons-download-24:](https://vita.had.co.nz/papers/tidy-data.pdf){:target="\_blank"} by Hadley Wickham, the developer of *tidyverse*. Tidy data are, in short, data that have been organized in a consistent way that makes data exploration and visualization easier. Two key principles are that:
+
+-   Each variable forms a column
+-   Each observation forms a row
+
+Organized this way, for analysis with software such as R, values for different variables can be linked within observations, e.g. rows of our example data are observations of individual penguins, and columns contain information about each individual (species, sex, island where recorded, body mass, etc.) such that one could explore how the weight or flipper length varies by sex and species. Often times data that one pulls down from a repository (or that is provided by a collaborator) are not tidy! For example, multiple variables may be stored in the same column, such as when two different treatment types are concatenated into a single string. Tidying such data would require separating each treatment into a separate column.
+
 ## An introduction to data frames and "tibbles"
-In most cases, tabular data are represented as a "data.frame", where the expectation is that, in line with the notion of "tidy" data, rows are observations and columns are variables for which there are values recorded for each observation, including the absence of an observation, i.e. missing data. Historically in R and prior to tidyverse,one would load a data frame from a file with a file reading function such as `read.csv()` or `read.table()`, and one would have to explicitly specify whether or not the first row represented the variable names for each column, whether there were row names, etc. Tidyverse has its own data load functions, `read_csv()` and `read_table()` which load tabular data as "tibbles". *tibbles* are effectively just *data.frames* with some improvements to how they are displayed, how variables can be accessed and a few other minor, subtle differences. But you can think of them as pretty data.frames.
+
+In most cases, tabular data are represented as a "data.frame", where the expectation is that, in line with the notion of "tidy" data, rows are observations and columns are variables for which there are values recorded for each observation, including the absence of an observation, i.e. missing data. Historically in R and prior to tidyverse,one would load a data frame from a file with a file reading function such as `read.csv()` or `read.table()`, and one would have to explicitly specify whether or not the first row represented the variable names for each column, whether there were row names, etc. Tidyverse has its own data load functions, `read_csv()` and `read_table()` - *note the underscore rather than the period* - which load tabular data as "tibbles". *tibbles* are effectively just *data.frames* with some improvements to how they are displayed, how variables can be accessed and a few other minor, subtle differences. But you can think of them as pretty data.frames.
 
 Because the data set we are using today already comes built into the *palmerpenguins* package, the *penguins* dataframe is immediately available after loading the `palmerpenguins` R package. In most use cases, your data are stored as a text file in some sort of tabular format--space, tab or comma separated--and tidyverse has file loading functions. To show how loading works, we will write the `penguins` dataframe from *palmerpenguins* to a csv file, the use the tidyverse `read_csv` function to load it.
 
-> Run the following code block to write the peguins data frame to a file then load it as a tibble
+> Run the following code block to write the penguins data frame to a file then load it as a tibble
 
 
 ``` r
 library(palmerpenguins)
-```
-
-```
-## 
-## Attaching package: 'palmerpenguins'
-```
-
-```
-## The following objects are masked from 'package:datasets':
-## 
-##     penguins, penguins_raw
-```
-
-``` r
-write.csv(penguins,file="penguins.csv")
-mypenguins<-read_csv("penguins.csv")
+write.csv(penguins,file = "penguins.csv")
+mypenguins <- read_csv("penguins.csv")
 ```
 
 ```
 ## New names:
+## Rows: 344 Columns: 9
+## ── Column specification
+## ──────────────────────────────────────────────────────── Delimiter: "," chr
+## (3): species, island, sex dbl (6): ...1, bill_length_mm, bill_depth_mm,
+## flipper_length_mm, body_mass_g...
+## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+## Specify the column types or set `show_col_types = FALSE` to quiet this message.
 ## • `` -> `...1`
 ```
 
-```
-## Rows: 344 Columns: 9
-## ── Column specification ────────────────────────────────────────────────────────
-## Delimiter: ","
-## chr (3): species, island, sex
-## dbl (6): ...1, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g...
-## 
-## ℹ Use `spec()` to retrieve the full column specification for this data.
-## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-```
-
-Tidyverse file loading functions assume the first row of your data contains column names, while the base R functions (e.g. `read.csv` and `read.table`) do not. Tidyverse file loaders return a tibble rather than a standard dataframe.  One of the first things you will notice is that upon loading you will get a brief summary of the tibble contents, such as the tibble dimensions, the column separator, and the names of variables (columns) belonging to each type: *dbl* for numeric and *chr* for character. We can also take a quick peek at the first few rows by simply calling the tibble. 
+Tidyverse file loading functions assume the first row of your data contains column names, while the base R functions (e.g. `read.csv` and `read.table`) do not. Tidyverse file loaders return a tibble rather than a standard dataframe. One of the first things you will notice is that upon loading you will get a brief summary of the tibble contents, such as the tibble dimensions, the column separator, and the names of variables (columns) belonging to each type: *dbl* for numeric and *chr* for character. We can also take a quick peek at the first few rows by simply calling the tibble.
 
 > Run the following code block to see some basic information about this data.
 
@@ -170,7 +160,7 @@ mypenguins
 ## # ℹ 3 more variables: body_mass_g <dbl>, sex <chr>, year <dbl>
 ```
 
-In the R markdown, you will notice that in this view there are tabs at the bottom right for advancing to additional sets of rows. If there were too many columns to be displayed in the window, there would also be an arrow at the top right allowing you to advance to the "right" to see additional columns.sa
+In the R markdown, you will notice that in this view there are tabs at the bottom right for advancing to additional sets of rows. If there were too many columns to be displayed in the window, there would also be an arrow at the top right allowing you to advance to the "right" to see additional columns.
 
 One theme of tidyverse is that it provides replacements for a lot of base R functions with better formatting. A tibble is one example of this; the `glimpse()` function is another; it is basically a pretty version of `str()`.
 
@@ -221,7 +211,7 @@ head(mypenguins, 10)
 ## # ℹ 3 more variables: body_mass_g <dbl>, sex <chr>, year <dbl>
 ```
 
-For the rest of the workshop, we will just use the `penguins` tibble provided with *palmerpenguins* rather than our newly created `mypenguins` tibble, as they are identical. It is also worth noting that, if you are using other tools in R that produce data frames, you can use the `as_tibble` function to convert the dataframe to a tibble on the fly. Similarly,if your collaborator has provided you with messy data that is not immediately amenable to loading as a tibble, you can use a standard data load, do some relevant manipulations, then use the `as_tibble` function. 
+For the rest of the workshop, we will just use the `penguins` tibble provided with *palmerpenguins* rather than our newly created `mypenguins` tibble, as they are identical. It is also worth noting that, if you are using other tools in R that produce data frames, you can use the `as_tibble` function to convert the dataframe to a tibble on the fly. Similarly,if your collaborator has provided you with messy data that is not immediately amenable to loading as a tibble, you can use a standard data load, do some relevant manipulations, then use the `as_tibble` function.
 
 ## A simple tidyverse function: sorting a tibble on a column value
 
@@ -256,7 +246,7 @@ arrange(penguins, species)
 ## # ℹ 2 more variables: sex <fct>, year <int>
 ```
 
-All tidyverse functions take the tibble or data frame to operate on as their first argument. The second argument ('species') is what makes tidyverse special. Note that we are using the syntax we've used before to refer to objects, here: a simple unquoted word or variable name. 
+All tidyverse functions take the tibble or data frame to operate on as their first argument. The second argument ('species') is what makes tidyverse special. Note that we are using the syntax we've used before to refer to objects, here: a simple unquoted word or variable name.
 
 What happens if we just type `species` in the **Console**?
 
@@ -318,11 +308,11 @@ arrange(penguins, desc(year),sex)
 ## # ℹ 2 more variables: sex <fct>, year <int>
 ```
 
-`desc()` here is a helper function that turns year into a descending sort instead of ascending. Tidyverse has a lot of these, although not many are applicable to `arrange()` we'll introduce more as we work through today.
+`desc()` here is a helper function that turns year into a descending sort instead of ascending. Tidyverse has a lot of these, although not many are applicable to `arrange()`. We'll introduce more as we work through today.
 
 Note that so far we haven't stored the sorted data. Let's try that now.
 
-> \*\*Sorting exercise\*. Sort your `penguins` tibble by species, then by year, then by body mass, and store the output in a new tibble called `sorted_penguins`.
+> **Sorting exercise**. Sort your `penguins` tibble by species, then by year, then by body mass, and store the output in a new tibble called `sorted_penguins`.
 
 
 ``` r
@@ -440,7 +430,6 @@ Again, in this example we have NOT yet created a new tibble for downstream data 
 noyear_bill_island <- select(penguins, !c(island, bill_length_mm, bill_depth_mm))
 ```
 
-
 > **Column selection exercise:**
 >
 > 1.  As a prelude to quantifying the relationship within species between bill traits, construct a new tibble called *bill_data* that includes the following variables: *species*, *sex*, *bill_length_mm*, and *bill_depth_mm*:
@@ -480,11 +469,11 @@ There are lots more of these: `?select` is your friend here.
 
 ## Selecting a subset of rows based upon values of variables
 
-Up until now, we have been selecting columns to remove or keep. Often times, one wants to restrict analysis and visualization to a subset of the observations, that is, to select particular **rows**. In the case of our data set, perhaps you are only interested in cutthroat trout, and only those that occur in old growth forest. The `filter()` function allows you to select **rows** based upon values in multiple columns, similar to how we talked about logical vectors yesterday. This function works by only returning values where the condition is true. It not only excludes those for which it is FALSE, it also filters out rows where there is missing data (i.e. NA) for the column evaluated (because any logical test evaluates to false when given NA).
+Up until now, we have been selecting columns to remove or keep. Often times, one wants to restrict analysis and visualization to a subset of the observations, that is, to select particular **rows**. In the case of our data set, perhaps you are only interested in Adelie penguins, or perhaps only males. The `filter()` function allows you to select **rows** based upon values in multiple columns, similar to how we talked about logical vectors yesterday. This function works by only returning values where the condition is true. It not only excludes those for which it is FALSE, it also filters out rows where there is missing data (i.e. NA) for the column evaluated (because any logical test evaluates to false when given NA).
 
 Let us try creating a new tibble, with data restricted to Adelie penguins.
 
-> Create a new tibble, with data restricted to trout by running the code block below:
+> Create a new tibble, with data restricted to Adelie penguins by running the code block below:
 
 
 ``` r
@@ -512,7 +501,7 @@ adelie
 
 Note the `==`, as we discussed yesterday for logical operations. We can add additional logical conditions for other variables if we want to make more complex selections. For example, we might only want to look at male Adelie penguins. Let's do this:
 
-> To select rows for trout in old growth forest, run the following code block:
+> To select rows for male Adelie penguins, run the following code block:
 
 
 ``` r
@@ -540,7 +529,7 @@ adelie_males
 
 When we provide more than one filtering criterion, the commas between those criteria are equivalent of *AND* in a logical statement. The filter command above effectively says: return rows where species == "Adelie" AND sex == "male".
 
-Similarly, we can use "\|" to specify either  in a logical filtering step. For example if we wanted records for either Adelie OR Gentoo penguins,  we can specify two acceptable values for *species*.
+Similarly, we can use `|` to specify either in a logical filtering step. For example if we wanted records for either Adelie OR Gentoo penguins, we can specify two acceptable values for *species*.
 
 > To make this type of *OR* selection, run the code block below:
 
@@ -629,7 +618,7 @@ To clarify what we mean by this, imagine the following vector:
 
 
 ``` r
-test <- c(1,2,3)
+test <- c(1, 2, 3)
 ```
 
 Now look at the result of the following two logical operations:
@@ -651,7 +640,7 @@ Now look at the result of the following two logical operations:
 ## [1] FALSE
 ```
 
-In the first statement, the part after the "\|" , i.e the *AND* gets done first, and it is FALSE. The part before, evaluting whether 3 is in *test* is TRUE. So, the logical statement is saying TRUE \| FALSE, and in logical statments, if one of the options in an OR statment is TRUE, the statement returns TRUE. In the second statment, the condition before the "\|" has an AND, so it is evaluated first. Both numbers aren't in *test* so it is FALSE. The part to the right of the "\|" is also FALSE, thus FALSE OR FALSE returns FALSE.
+In the first statement, the part after the `|` , i.e the *AND* gets done first, and it is FALSE. The part before, evaluting whether 3 is in *test* is TRUE. So, the logical statement is saying `TRUE | FALSE`, and in logical statments, if one of the options in an OR statement is TRUE, the statement returns TRUE. In the second statement, the condition before the `|` has an AND, so it is evaluated first. Both numbers aren't in *test* so it is FALSE. The part to the right of the `|` is also FALSE, thus FALSE OR FALSE returns FALSE.
 
 For purposes of making our R code clearer -- and it is a good idea to do this in your R code -- when writing complex tibble filtering operations, we put the criteria joined by *AND* inside parentheses. Thus the statement is saying: "select rows for which species is in the vector of names that only include Adelie, and for which island equals BISCO *AND* sex equals male... *OR* ... island equals Torgersen and sex equals female.
 
@@ -682,11 +671,11 @@ filter(penguins, (species == "Adelie" | species == "Gentoo"), (sex == "male" &  
 ## # ℹ 2 more variables: sex <fct>, year <int>
 ```
 
-> **Complex row selection exercise** Can you select only observations for males from before 2009, including Adelie penguins with a body mass greater than 4043 and Gentoo penguins with a body mass greater than 5485. These values are the mean mass for males of each species.
+> **Complex row selection exercise** Select only observations for males from before 2009, including Adelie penguins with a body mass greater than 4043 and Gentoo penguins with a body mass greater than 5485. These values are the mean mass for males of each species.
 
 
 ``` r
-filter(penguins,year< 2009, sex=="male", (species=="Adelie" & body_mass_g > 4043) | (species=="Gentoo" & body_mass_g > 5485)) 
+filter(penguins,year< 2009, sex == "male", (species == "Adelie" & body_mass_g > 4043) | (species == "Gentoo" & body_mass_g > 5485)) 
 ```
 
 ```
@@ -720,41 +709,48 @@ In this data set, we have bill length (bill_length_mm) and bill depth (bill_dept
 penguins <- mutate(penguins, depth_sizeadj = bill_depth_mm/bill_length_mm)
 ```
 
-In redirecting back to the *penguins* tibble, we are changing the input data rather than writing a new tibble with this variable added. Note also that this command will **overwrite** the body condition column, if it exists. This is often what is desired, but be aware of this behavior.
+In redirecting back to the *penguins* tibble, we are changing the input data rather than writing a new tibble with this variable added. One should be aware (and careful!) when redirecting back to the original tibble, because if you create a new variable or transform an old variable, and assign a name to the new variable that already exists, it will overwrite the old variable.
 
 > **New variables creation exercise 1:** For male adelie penguins, we want to flag outlier observations where body mass is unusually large or small relative to the mean value. To do this, you will need to use the `mean()` and `sd()` functions to calculate mean and standard deviation of body mass. Once you've done that, create a new column that is the variable *mass_outlier* which is a boolean variable that indicates whether body mass is greater than or less than 2 standard deviations away from the mean, and add this to the *adelie_males* tibble. Finally, creat e a new tibble called *outliers* that only contains male Adelie penguins with outlier-classified body mass values.
 
 This is a complicated exercise, but there are hints in the comments below. Note there are many ways to do this exercise, and the hints are just one way. You might find ways to combined steps, for example.
 
-## Extract the mean body mass of male Adelie penguins from the `adelie_males` tibble
-Create a new variable called mass_mean that stores the mean of the body_mass_g column; remember that you need to include the argument na.rm = TRUE to tell the mean function to remove missing values first
+If you missed the creation of the `adelie_males` table, here's the code to reproduce it:
 
 
 ``` r
-mass_mean <- mean(adelie_males$body_mass_g, na.rm=TRUE)
+adelie_males <- filter(penguins, species=="Adelie", sex =="male")
 ```
 
-## Create a new variable called tail_sd that stores the standard deviation of the mass column. The function for this is sd(); like mean() you need to include the argument na.rm = TRUE to tell the sd function to remove missing values first
+> Create a new variable called mass_mean that stores the mean of the body_mass_g column; remember that you need to include the argument `na.rm = TRUE` to tell the mean function to remove missing values first
 
 
 ``` r
-mass_sd <- sd(adelie_males$body_mass_g, na.rm=TRUE)
+mass_mean <- mean(adelie_males$body_mass_g, na.rm = TRUE)
 ```
 
-## Create a new column in the adelie_males tibble that is TRUE if body mass is more than two standard deviations from the mean
+> Create a new variable called tail_sd that stores the standard deviation of the mass column. The function for this is sd(); like mean() you need to include the argument na.rm = TRUE to tell the sd function to remove missing values first
 
 
 ``` r
-adelie_males <- mutate(adelie_males, mass_outlier=((body_mass_g > (mass_mean+2*mass_sd)) | (body_mass_g < (mass_mean-2*mass_sd))))
+mass_sd <- sd(adelie_males$body_mass_g, na.rm = TRUE)
 ```
 
-## Filter the adelie_males tibble to keep only rows where mass_outlier is TRUE
+> Create a new column in the adelie_males tibble that is TRUE if body mass is more than two standard deviations from the mean
+
+
+``` r
+adelie_males <- mutate(adelie_males, mass_outlier = ((body_mass_g > (mass_mean + 2 * mass_sd)) | (body_mass_g < (mass_mean-2 * mass_sd))))
+```
+
+> Filter the adelie_males tibble to keep only rows where mass_outlier is TRUE
 
 
 ``` r
 outliers <- filter(adelie_males, mass_outlier == TRUE)
 ```
-## You should have two observations in your outliers tibble. If you don't and you aren't sure what went wrong, put up your red sticky.
+
+You should have two observations in your outliers tibble.
 
 ### Using `mutate()` to reformat missing values
 
@@ -792,15 +788,15 @@ head(nolengthNAs)
 ## # ℹ 2 more variables: sex <fct>, year <int>
 ```
 
-In this case, we have created a new tibble, as we probably don't want to overwrite the original data, in case we want to undo the conversion of missing data to the median value. Notice, as with earlier use of summary statistics functions, we include the `na.rm=TRUE` statement. Otherwise, we would be replacing NA with NA, as applying `median()` to a vector containing NAs returns NA as its value! Of course, the calculation we just performed doesn't make much actual biological sense, because we are taking the median of \*body_mass_g" across both sexes in the tibble. In other contexts where other group-labeling variables such as sex aren't missing, one can perform more complex operations, e.g. if sex wasn't missing we could replace missing values with sex-specific median values. We will get into such more complex operations a bit later in the workshop.
+In this case, we have created a new tibble, as we probably don't want to overwrite the original data, in case we want to undo the conversion of missing data to the median value. Notice, as with earlier use of summary statistics functions, we include the `na.rm=TRUE` statement. Otherwise, we would be replacing NA with NA, as applying `median()` to a vector containing NAs returns NA as its value! Of course, the calculation we just performed doesn't make much actual biological sense, because we are taking the median of `body_mass_g` across both sexes in the tibble. In other contexts where other group-labeling variables such as sex aren't missing, one can perform more complex operations, e.g. if sex wasn't missing we could replace missing values with sex-specific median values. We will get into such more complex operations a bit later in the workshop.
 
-Let's try to create a new variable that represents a Z score, i.e. a transformation of a set of measurements that represents the number of standard deviations it is away from the mean (and in what direction). Above, we have seen the `mean()` and `sd()` functions. A Z-score for an observation is simply (observation - mean of observations) / standard deviation of observations, with the distribution of Z being standard normal, i.e. mean == 0 and standard deviation == 1. Using the *adelie* tibble, we can create a new variable *body_mass_Z* that represents a Z-transformation of body mass for male Adelie penguins. We will write the output to a new tibble *adelie_Z*. There are really three ways to generate the new Z-score variable. The first, is to write the calculation of the Z-score from inside of the `mutate()` function. To do this ...
+Let's try to create a new variable that represents a Z score, i.e. a transformation of a set of measurements that represents the number of standard deviations it is away from the mean (and in what direction). Above, we have seen the `mean()` and `sd()` functions. A Z-score for an observation is simply (observation - mean of observations) / standard deviation of observations, with the distribution of Z being standard normal, i.e. mean == 0 and standard deviation == 1. Using the *adelie* tibble, we can create a new variable `body_mass_Z` that represents a Z-transformation of body mass for male Adelie penguins. We will write the output to a new tibble `adelie_Z`. There are really three ways to generate the new Z-score variable. The first, is to write the calculation of the Z-score from inside of the `mutate()` function. To do this ...
 
 > Run the code block below to create the Z-score variable:
 
 
 ``` r
-adelie_Z <- mutate(adelie, body_mass_Z = (body_mass_g - mean(body_mass_g, na.rm=TRUE)) / sd(body_mass_g, na.rm=TRUE))
+adelie_Z <- mutate(adelie, body_mass_Z = (body_mass_g - mean(body_mass_g, na.rm = TRUE)) / sd(body_mass_g, na.rm = TRUE))
 ```
 
 So, we are calculating the mean and sd of *body_mass_g* once, and using those values to apply the Z-score equation to each row of the *body_mass_g* vector and storing the output in the new variable *body_mass_Z*. Remember, unless you are certain there are no missing values in the variable vectors being used for calculations, when the option is available, it is best to invoke `na.rm=TRUE`.
@@ -811,29 +807,27 @@ To convince yourself that Z is in fact a standard normal distribution (mean=0, s
 
 
 ``` r
-mean(adelie_Z$body_mass_Z, na.rm=TRUE)
+mean(adelie_Z$body_mass_Z, na.rm = TRUE)
 ```
 
 ```
-## [1] 2.845406e-16
+## [1] 3.190972e-16
 ```
 
 ``` r
-sd(adelie_Z$body_mass_Z, na.rm=TRUE)
+sd(adelie_Z$body_mass_Z, na.rm = TRUE)
 ```
 
 ```
 ## [1] 1
 ```
 
-
-
 > **New variables creation exercise 2:** Can you think of another way to generate the Z-score column? Hint: you can create new variables for the constituent parts of the Z-score function, and then perform the calculation using those constituent parts. Try doing that, updating *adelie_Z* with the new variables. It should take three separate mutate commands. Write the Z-score to the new variable *z2*
 
 
 ``` r
-adelie_Z <- mutate(adelie_Z, meanmass =  mean(body_mass_g, na.rm=TRUE))
-adelie_Z <- mutate(adelie_Z, sdmass =  sd(body_mass_g, na.rm=TRUE))
+adelie_Z <- mutate(adelie_Z, meanmass =  mean(body_mass_g, na.rm = TRUE))
+adelie_Z <- mutate(adelie_Z, sdmass =  sd(body_mass_g, na.rm = TRUE))
 adelie_Z <- mutate(adelie_Z, z2 = (body_mass_g - meanmass) / sdmass)
 ```
 
@@ -841,15 +835,15 @@ To confirm this produces the same output as the first implementation, calculate 
 
 
 ``` r
-mean(adelie_Z$z2, na.rm=TRUE)
+mean(adelie_Z$z2, na.rm = TRUE)
 ```
 
 ```
-## [1] 2.845406e-16
+## [1] 3.190972e-16
 ```
 
 ``` r
-sd(adelie_Z$z2, na.rm=TRUE)
+sd(adelie_Z$z2, na.rm = TRUE)
 ```
 
 ```
@@ -858,13 +852,13 @@ sd(adelie_Z$z2, na.rm=TRUE)
 
 The distinction between these two approaches is that, in the first case, one is recycling the mean and standard deviation values (effectively vectors of size 1 each) in applying them to every element of *body_mass_g* in calculating the Z-score values in the respective rows. In the second case, because we have constructed mean and standard deviation variables of equal length to *body_mass_g*, we are doing mathematical operations on same-sized vectors. Of course, one might not want to store the same (e.g.mean) value over thousands of rows. The point here is to reinforce the idea that the same result can be achieved by constructing vectors of different lengths.
 
-### Tibbles won't recycle vectors of length \> 1
+### Tibbles won't recycle vectors of length > 1
 
 As a side note to this, it is important to know that mutate requires that the object passed to the new column name argument is a vector of length 1 or a vector of length equal to the number of rows in the tibble. If you try to recycle a vector of length 2 in a mutate command, you'll get an error:
 
 
 ``` r
-mutate(adelie, error = c(1,2))
+mutate(adelie, error = c(1, 2))
 ```
 
 ## Using variable names to merge tables
@@ -873,20 +867,20 @@ Often at the beginning of a project, you have data from multiple sources that yo
 
 ### Left joins
 
-Left joins are a common operation, where given tables x and y, you only want to retain all rows in x, regardless if there is matching data in y: missing data in y will get returned as NAs in the new table. This sort of join is called left join, because the 1st table (the one on your left) is having data added to it from the table on the right. 
+Left joins are a common operation, where given tables x and y, you only want to retain all rows in x, regardless if there is matching data in y: missing data in y will get returned as NAs in the new table. This sort of join is called left join, because the 1st table (the one on your left) is having data added to it from the table on the right.
 
 
 ``` r
-penguins <- mutate(penguins, obs_number=row.names(penguins))
+penguins <- mutate(penguins, obs_number = row.names(penguins))
 ```
 
 Now, we'll create some sub-tables with *select*
 
 
 ``` r
-x <- select(penguins, obs_number,body_mass_g)
+x <- select(penguins, obs_number, body_mass_g)
 y <- select(penguins, obs_number, species, sex)
-xy <- left_join(x,y)
+xy <- left_join(x, y)
 ```
 
 ```
@@ -910,7 +904,7 @@ Tidyverse determines on the fly that the two tables share a column name, and ass
 
 
 ``` r
-x <- rename(x,obs = obs_number)
+x <- rename(x, obs = obs_number)
 xy <- left_join(x, y, by = join_by(obs == obs_number))
 glimpse(xy)
 ```
@@ -937,7 +931,7 @@ As we shall see in Part 3 of this workshop, having the actual measurements aggre
 # First, we need to make each row have a unique ID. This is another way to do it
 penguins <- mutate(penguins, id = row_number())
 # Then, we use the function pivot_longer() to merge columns together
-penguins_long <- pivot_longer(penguins,c(bill_length_mm,bill_depth_mm,flipper_length_mm),names_to="morphtype",values_to="mm")
+penguins_long <- pivot_longer(penguins, c(bill_length_mm, bill_depth_mm, flipper_length_mm), names_to = "morphtype", values_to = "mm")
 ```
 
 In this operation, we specify the data frame being transformed, as well as a vector of column names for the columns we wish to merge. *names_to* is the new column that we are creating that will contain the old column name (of those column names merged), while *values_to* is the name of the new column that will store the actual measurement data.
@@ -973,6 +967,7 @@ penguins_long <- mutate(penguins_long, morphtype = str_replace(morphtype, "_mm",
 
 In other scenarios, converting to long format is important for tidying data. A good example is the `USPersonalExpenditure` base R dataset.
 
+
 ``` r
 head(USPersonalExpenditure)
 ```
@@ -992,8 +987,8 @@ This dataset is stored as a matrix object, in which the type of household expens
 ``` r
 myUSPersonalExpenditure <- as.data.frame(USPersonalExpenditure)
 myUSPersonalExpenditure$expenditure <- row.names(myUSPersonalExpenditure)
-USPersonalExpenditure_long  <- as_tibble(myUSPersonalExpenditure) %>%
-                               pivot_longer(cols=starts_with("19"),names_to="year",values_to="amount")
+myUSPersonalExpenditure  <- as_tibble(myUSPersonalExpenditure)
+USPersonalExpenditure_long <-  pivot_longer(myUSPersonalExpenditure,cols = starts_with("19"), names_to = "year", values_to = "amount")
 
 USPersonalExpenditure_long
 ```
@@ -1015,7 +1010,6 @@ USPersonalExpenditure_long
 ## # ℹ 15 more rows
 ```
 
-
 It should be noted, that there are other, more complicated ways of performing wide-to-long operations. For more information, see the tidyverse documentation for [pivot_longer :octicons-link-external-24:](https://tidyr.tidyverse.org/reference/pivot_longer.html){:target="\_blank"}, or use R help to get more information displayed inside Rstudio.
 
 ## Multi-step data processing with pipes
@@ -1034,11 +1028,11 @@ In the above command structure the final output of data processing with `functio
 
 Now, as a more concrete example, let's see how we can use `select()` and `filter()` together with a pipe.
 
-> To combine `select()` and `filter()` operations to creata new tibble called *new_data*, run the code block below:
+> To combine `select()` and `filter()` operations to create a new tibble called `new_data`, run the code block below:
 
 
 ``` r
-new_data <- select(penguins, year, species, sex, body_mass_g) %>% filter(species=="Adelie", year == 2008)
+new_data <- select(penguins, year, species, sex, body_mass_g) %>% filter(species == "Adelie", year == 2008)
 ```
 
 In this example, we pipe together the two function calls we executed earlier, but all in one command line.
@@ -1049,7 +1043,7 @@ In this example, we pipe together the two function calls we executed earlier, bu
 
 
 ``` r
-flipper_norm <- select(penguins, species, flipper_length_mm, body_mass_g) %>% filter(species=="Adelie") %>% mutate(norm_flipper_length = flipper_length_mm /body_mass_g)
+flipper_norm <- select(penguins, species, flipper_length_mm, body_mass_g) %>% filter(species == "Adelie") %>% mutate(norm_flipper_length = flipper_length_mm /body_mass_g)
 ```
 
 > 2.  Try experimenting with different row and column selections, and new variable creations with these three functions. You can even switch the order, e.g. create a new synthetic variable then applying `filter()` to it.
@@ -1058,7 +1052,21 @@ As a side note, you sometimes want to pipe the output of one function to the inp
 
 Because the output of the left hand function is piped to the first *unnamed* argument, if you name every argument before data, you'll be okay: `penguins %>% filter_command() %>% lm(formula = x ~ y)`
 
-You can reference the piped output via the special variable `.` in the right hand function: \`penguins %\>% filter_command() %\>% lm(x \~ y, data = .)
+You can reference the piped output via the special variable `.` in the right hand function: `penguins %>% filter_command() %>% lm(x ~ y, data = .)`
+
+Note that the way we have implemented pipes with `%>%` is specific to tidyverse. If there are cases where you need to use pipes in R outside of tidyverse, you would use `|>`. A trivial example of such a pipe would be to calculate the sum of a vector of numbers:
+
+
+``` r
+1:10 |> sum()
+```
+
+```
+## [1] 55
+```
+
+In this case the vector of numbers 1 through 10 is piped to the sum function. 
+
 
 ## Finding unique values
 
@@ -1090,7 +1098,7 @@ Yesterday, we showed you how the `summary` function will print out basic summary
 
 
 ``` r
-summarize(penguins, n=n_distinct(species))
+summarize(penguins, n = n_distinct(species))
 ```
 
 ```
@@ -1108,7 +1116,7 @@ Ignoring the fact for the moment that the data set is comprised of three differe
 
 
 ``` r
-summarize(adelie, meanbill=mean(bill_length_mm, na.rm=TRUE), meanmass=mean(body_mass_g, na.rm=TRUE))
+summarize(adelie, meanbill = mean(bill_length_mm, na.rm = TRUE), meanmass = mean(body_mass_g, na.rm = TRUE))
 ```
 
 ```
@@ -1120,11 +1128,11 @@ summarize(adelie, meanbill=mean(bill_length_mm, na.rm=TRUE), meanmass=mean(body_
 
 Perhaps we are getting tired of always typing `na.rm = TRUE`, and instead want to first filter our dataset to remove rows that contain missing values. Tidyverse contains a nice function, called `drop_na()`, that does just this. By default it looks for missing values in *every* column in in our tibble, but if you look at `?drop_na` you'll see it has one of those `...` arguments, so we can pass it column names to check.
 
-As an exercise, can you rewrite the summarize function above, but remove missing values before piping to summarize. Leave off the `na.rm=TRUE` to make sure it worked!
+>**Exercise:** Rewrite the summarize function above, but remove missing values before piping to summarize. Leave off the `na.rm=TRUE` to make sure it worked!
 
 
 ``` r
-drop_na(adelie) %>% summarize(meanbill=mean(bill_length_mm), meanmass=mean(body_mass_g))
+drop_na(adelie) %>% summarize(meanbill = mean(bill_length_mm), meanmass = mean(body_mass_g))
 ```
 
 ```
@@ -1138,7 +1146,7 @@ You may have noticed that these two ways of handling NAs lead to different resul
 
 ### Using `group_by()` with `summarize()`
 
-In most data sets, summarizing across all observations (rows) may not be particularly informative, because what one usually wants to do is to get information specific to different groups of observations, e.g. those in different habitats, exposed to different experimental treatments, etc. Thus, in most circumstances one will want to define those groups for a tibble. One can do this using the `group_by()` function, which takes as it's first argument the name of the data frame, and the following arguments are variables to group by; these can then be followed by other keyword arguments). An obvious grouping for the *penguins* tibble is species.
+In most data sets, summarizing across all observations (rows) may not be particularly informative, because what one usually wants to do is to get information specific to different groups of observations, e.g. those in different habitats, exposed to different experimental treatments, etc. Thus, in most circumstances one will want to define those groups for a tibble. One can do this using the `group_by()` function, which takes as it's first argument the name of the data frame, and the following arguments are variables to group by; these can then be followed by other keyword arguments. An obvious grouping for the *penguins* tibble is species.
 
 > To obtain this grouping, run the command block below:
 
@@ -1176,7 +1184,7 @@ So, if we look at the sex variable:
 
 
 ``` r
-distinct(adelie,sex)
+distinct(adelie, sex)
 ```
 
 ```
@@ -1216,11 +1224,12 @@ adelie_by_sex
 ## # ℹ 136 more rows
 ## # ℹ 2 more variables: sex <fct>, year <int>
 ```
+
 ... and, as a sanity check:
 
 
 ``` r
-distinct(adelie_by_sex,sex)
+distinct(adelie_by_sex, sex)
 ```
 
 ```
@@ -1232,7 +1241,6 @@ distinct(adelie_by_sex,sex)
 ## 2 female
 ```
 
-
 Now, let's calculate the mean by species for *body_mass_g* and *bill_length_mm*. If you're unsure whether there are NA values in these two columns, you can use the `drop_na()` function to remove rows which contain ANY NA values. To see how you might do this in one command using pipes, we'll start from *penguins*.
 
 > Run the following code block:
@@ -1240,7 +1248,7 @@ Now, let's calculate the mean by species for *body_mass_g* and *bill_length_mm*.
 
 ``` r
 # starting with the penguins table
-penguins %>% 
+penguins %>%
   # select only the columns we want
   select(species, body_mass_g, bill_length_mm) %>%
   # drop the rows with NA in ANY selected column
@@ -1248,7 +1256,7 @@ penguins %>%
   # group table by species
   group_by(species) %>%
   # summarize the mean body mass, bill length, and number of observations in each group
-  summarize(mean_weight=mean(body_mass_g), mean_bill_length=mean(bill_length_mm), num=n())
+  summarize(mean_weight = mean(body_mass_g), mean_bill_length = mean(bill_length_mm), num=n())
 ```
 
 ```
@@ -1277,7 +1285,7 @@ penguins %>%
   # group by species and section
   group_by(species, sex) %>%
   # summarize mean weight, standard deviation of weight, and number of observations in each group
-  summarize(mean_mass=mean(body_mass_g), std_weight=sd(body_mass_g), num=n())
+  summarize(mean_mass = mean(body_mass_g), std_weight = sd(body_mass_g), num=n())
 ```
 
 ```
