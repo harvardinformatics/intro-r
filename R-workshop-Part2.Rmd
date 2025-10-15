@@ -635,6 +635,15 @@ Because the output of the left hand function is piped to the first *unnamed* arg
 
 You can reference the piped output via the special variable `.` in the right hand function: `penguins %>% filter_command() %>% lm(x ~ y, data = .)`
 
+Note that the way we have implemented pipes with `%>%` is specific to tidyverse. If there are cases where you need to use pipes in R outside of tidyverse, you would use `|>`. A trivial example of such a pipe would be to calculate the sum of a vector of numbers:
+
+```{r}
+1:10 |> sum()
+```
+
+In this case the vector of numbers 1 through 10 is piped to the sum function. 
+
+
 ## Finding unique values
 
 There are *tidyverse* flavors of standard R functions. For example, to get the unique values for a column, instead of using `unique()`, we can use the `dplyr` function `distinct()`.
