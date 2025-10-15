@@ -583,8 +583,8 @@ This dataset is stored as a matrix object, in which the type of household expens
 ```{r}
 myUSPersonalExpenditure <- as.data.frame(USPersonalExpenditure)
 myUSPersonalExpenditure$expenditure <- row.names(myUSPersonalExpenditure)
-USPersonalExpenditure_long  <- as_tibble(myUSPersonalExpenditure) %>%
-                               pivot_longer(cols=starts_with("19"),names_to="year",values_to="amount")
+myUSPersonalExpenditure$expenditure  <- as_tibble(myUSPersonalExpenditure)
+ USPersonalExpenditure_long <- pivot_longer(cols=starts_with("19"),names_to="year",values_to="amount")
 
 USPersonalExpenditure_long
 ```
@@ -675,7 +675,7 @@ summarize(adelie, meanbill=mean(bill_length_mm, na.rm=TRUE), meanmass=mean(body_
 
 Perhaps we are getting tired of always typing `na.rm = TRUE`, and instead want to first filter our dataset to remove rows that contain missing values. Tidyverse contains a nice function, called `drop_na()`, that does just this. By default it looks for missing values in *every* column in in our tibble, but if you look at `?drop_na` you'll see it has one of those `...` arguments, so we can pass it column names to check.
 
-As an exercise, can you rewrite the summarize function above, but remove missing values before piping to summarize. Leave off the `na.rm=TRUE` to make sure it worked!
+> **As an exercise**, can you rewrite the summarize function above, but remove missing values before piping to summarize. Leave off the `na.rm=TRUE` to make sure it worked!
 
 ```{r}
 
