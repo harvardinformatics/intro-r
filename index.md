@@ -32,12 +32,12 @@ Click on the button below to go the R project website to download and install R:
 
 Briefly, once on the R site, click the link for your operating system to bring up a list of files to download.
 
-For **Windows** you will want to download the **base** install files.
+For **Windows** you will want to download the **base** install files (**R-4.5.1-win.exe**).
 
 For **Macs**, the file you download will depend on the processor in your computer.
 
-* If you have an **M1 Mac** or higher, you will want the file **R-4.2.2-arm64.pkg**.
-* If you have an **Intel Mac**, you will want the file **R-4.2.2.pkg**.
+* If you have an **M1 Mac** or higher, you will want the file **R-4.5.1-arm64.pkg**.
+* If you have an older **Intel Mac**, you will want the file **R-4.5.1-x86_64.pkg**.
 
 For **Linux**, please download the package appropriate for your distro.
 
@@ -86,8 +86,7 @@ Part 2 (days 2 & 3):
 Part 3 (days 3 & 4):
 
 * [`tidyverse` :octicons-link-external-24:](https://www.tidyverse.org/){:target="_blank"}
-* [`cowplot` :octicons-link-external-24:](https://wilkelab.org/cowplot/articles/introduction.html){:target="_blank"}
-* [`viridis` :octicons-link-external-24:](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html){:target="_blank"}
+* [`ggsignif` :octicons-link-external-24:](https://cran.r-project.org/web/packages/ggsignif/index.html){:target="_blank"}
 
 #### Package installation - Common problems
 
@@ -107,7 +106,7 @@ Workshop content is available below. Download the R Markdown (.Rmd) files for ea
 
 ### Day 1: Introduction to R (Part 1)
 
-Wednesday October 18th, 9:30 am - 12:30 pm, Location: [Biolabs :octicons-link-external-24:](https://goo.gl/maps/7ngpNbkWEM5uZuap8){:target="_blank"} room 2062/2064 
+Tuesday October 14th, 9:30 am - 12:30 pm, Location: [Northwest Labs :octicons-link-external-24:](https://chsi.harvard.edu/nw_labs){:target="_blank"} room NWB 453 
 
 * Opening RStudio and learning about its interface
 * Executing R commands in the console
@@ -116,7 +115,7 @@ Wednesday October 18th, 9:30 am - 12:30 pm, Location: [Biolabs :octicons-link-ex
 
 ### Day 2: Introduction to data manipulation with the tidyverse (Part 2)
 
-Friday October 20th, 9:30 am - 12:30 pm, Location: [Biolabs :octicons-link-external-24:](https://goo.gl/maps/7ngpNbkWEM5uZuap8){:target="_blank"} room 2062/2064 
+Thursday October 16th, 9:30 am - 12:30 pm, Location: [Northwest Labs :octicons-link-external-24:](https://chsi.harvard.edu/nw_labs){:target="_blank"} room NWB 453 
 
 * Installing and loading the tidyverse package
 * Tibbles
@@ -125,7 +124,7 @@ Friday October 20th, 9:30 am - 12:30 pm, Location: [Biolabs :octicons-link-exter
 
 ### Day 3: More tidyverse and introduction to data visualization with ggplot (Part 2 and Part 3)
 
-Wednesday October 25th, 9:30 am - 12:30 pm, Location: [Jefferson Building :octicons-link-external-24:](https://maps.app.goo.gl/2orhqJRo3djPfkCy6){:target="_blank"} room 453 
+Tuesday October 21st, 9:30 am - 12:30 pm, Location: [Northwest Labs :octicons-link-external-24:](https://chsi.harvard.edu/nw_labs){:target="_blank"} room NWB 453 
 
 * Grouping and summarizing data
 * Generating basic plots with ggplot
@@ -134,7 +133,7 @@ Wednesday October 25th, 9:30 am - 12:30 pm, Location: [Jefferson Building :octic
 
 ### Day 4: More on ggplot (Part 3)
 
-Friday October 27th, 9:30 am - 12:30 pm, Location: [CGIS South :octicons-link-external-24:](https://goo.gl/maps/n2FAUngGYj8vKVCo9){:target="_blank"}, S050 
+Thursday October 23rd, 9:30 am - 12:30 pm, Location: [Northwest Labs :octicons-link-external-24:](https://chsi.harvard.edu/nw_labs){:target="_blank"}, room NWB 453 
 
 * More plot types
 * Colors and grouping data

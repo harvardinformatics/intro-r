@@ -583,8 +583,8 @@ This dataset is stored as a matrix object, in which the type of household expens
 ```{r}
 myUSPersonalExpenditure <- as.data.frame(USPersonalExpenditure)
 myUSPersonalExpenditure$expenditure <- row.names(myUSPersonalExpenditure)
-USPersonalExpenditure_long  <- as_tibble(myUSPersonalExpenditure) %>%
-                               pivot_longer(cols = starts_with("19"),names_to = "year", values_to = "amount")
+myUSPersonalExpenditure$expenditure  <- as_tibble(myUSPersonalExpenditure)
+USPersonalExpenditure_long <- pivot_longer(cols = starts_with("19"),names_to = "year",values_to = "amount")
 
 USPersonalExpenditure_long
 ```

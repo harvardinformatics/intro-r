@@ -27,8 +27,8 @@ R packages are extensions to the base R environment. They typically contain code
 
 Some packages are included with the base R installation. You can see the packages that come with R by default (or that you may have installed) if you click over to the *Packages* tab in your Rstudio window. However, many packages you will want to use for data analysis need to be downloaded. R packages generally come from one of two places:
 
--   [CRAN :octicons-link-external-24:](https://cran.r-project.org/){:target="\_blank"}: default source for "official" R packages
--   [Bioconductor :octicons-link-external-24:](https://www.bioconductor.org/){:target="\_blank"}: specialized packages for analyses of biological data
+-   [CRAN](https://cran.r-project.org/): default source for "official" R packages
+-   [Bioconductor](https://www.bioconductor.org/): specialized packages for analyses of biological data
 
 How you install packages will depend on where you are getting the package from. For *CRAN*, you can use the R function `install.packages()` or the Rstudio Tools -\> Install Packages menu. For example, if you wanted to install the *abc* package for doing Approximate Bayesian Computation, in the R console you would simply type: *install.packages("abc")*.
 
@@ -58,7 +58,7 @@ library(tidyverse)
 library(palmerpenguins)
 ```
 
-For more information, go to [tidyverse :octicons-link-external-24:](https://www.tidyverse.org/){:target="\_blank"}.
+For more information, go to [tidyverse](https://www.tidyverse.org/).
 
 Packages usually come with *vignettes*, which give you short introductions and tutorials for their use. You can find these on the web, but you can also browse them in R.
 
@@ -188,6 +188,8 @@ Note that so far we haven't stored the sorted data. Let's try that now.
 > **Sorting exercise**. Sort your `penguins` tibble by species, then by year, then by body mass, and store the output in a new tibble called `sorted_penguins`.
 
 ```{r}
+
+
 
 ```
 
@@ -573,14 +575,13 @@ This dataset is stored as a matrix object, in which the type of household expens
 ```{r}
 myUSPersonalExpenditure <- as.data.frame(USPersonalExpenditure)
 myUSPersonalExpenditure$expenditure <- row.names(myUSPersonalExpenditure)
-USPersonalExpenditure_long  <- as_tibble(myUSPersonalExpenditure) %>%
-                               pivot_longer(cols = starts_with("19"),names_to = "year", values_to = "amount")
+myUSPersonalExpenditure$expenditure  <- as_tibble(myUSPersonalExpenditure)
+ USPersonalExpenditure_long <- pivot_longer(cols = starts_with("19"), names_to = "year", values_to = "amount")
 
 USPersonalExpenditure_long
 ```
 
-
-It should be noted, that there are other, more complicated ways of performing wide-to-long operations. For more information, see the tidyverse documentation for [pivot_longer](https://tidyr.tidyverse.org/reference/pivot_longer.html){:target="\_blank"}, or use R help to get more information displayed inside Rstudio.
+It should be noted, that there are other, more complicated ways of performing wide-to-long operations. For more information, see the tidyverse documentation for [pivot_longer](https://tidyr.tidyverse.org/reference/pivot_longer.html), or use R help to get more information displayed inside Rstudio.
 
 ## Multi-step data processing with pipes
 
