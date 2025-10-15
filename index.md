@@ -150,9 +150,9 @@ Thursday October 23rd, 9:30 am - 12:30 pm, Location: [Northwest Labs :octicons-l
 
 |     |     |     |
 | --- | --- | --- |
-| [Part 1 - Intro to R :material-arrow-right:](R-workshop-Part1.md){ .md-button } 
-
-<!--| [Part 2 - tidyverse :material-arrow-right:](R-workshop-Part2.md){ .md-button } | [Part 3 - ggplot :material-arrow-right:](R-workshop-Part3.md){ .md-button } |-->
+| [Part 1 - Intro to R :material-arrow-right:](R-workshop-Part1.md){ .md-button }
+| [Part 2 - tidyverse :material-arrow-right:](R-workshop-Part2.md){ .md-button }
+<!--| [Part 3 - ggplot :material-arrow-right:](R-workshop-Part3.md){ .md-button }-->
 
 ---
 
