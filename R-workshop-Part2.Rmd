@@ -76,7 +76,7 @@ Today's data set comes from... wait for it ... penguins! In particular, we are u
 
 You can view the data by typing
 
-```{r}
+```{r,eval=FALSE}
 View(penguins)
 ```
 
@@ -583,8 +583,8 @@ This dataset is stored as a matrix object, in which the type of household expens
 ```{r}
 myUSPersonalExpenditure <- as.data.frame(USPersonalExpenditure)
 myUSPersonalExpenditure$expenditure <- row.names(myUSPersonalExpenditure)
-myUSPersonalExpenditure$expenditure  <- as_tibble(myUSPersonalExpenditure)
-USPersonalExpenditure_long <- pivot_longer(cols = starts_with("19"), names_to = "year", values_to = "amount")
+myUSPersonalExpenditure  <- as_tibble(myUSPersonalExpenditure)
+USPersonalExpenditure_long <-  pivot_longer(myUSPersonalExpenditure,cols = starts_with("19"), names_to = "year", values_to = "amount")
 
 USPersonalExpenditure_long
 ```
