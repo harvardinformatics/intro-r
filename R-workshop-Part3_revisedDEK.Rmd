@@ -118,7 +118,7 @@ So far, we've only looked at a single type of plot, `geom_histogram`, but there 
 
 > In the code block below, using the same aesthetics we used for the histogram, use `geom_point` to draw a scatterplot of body_mass_g:
 
-```{r}
+```{r, error=TRUE}
 ggplot(penguins, aes(x = body_mass_g)) +
   geom_point()
 ```
@@ -677,7 +677,6 @@ penguins %>%
 ```
 
 
-
 Let's discuss some more advanced things you can do with `group_by/summarize` and `ggplot`. Often it is useful to add summary statistics to our plots, which we can accomplish using the methods just mentioned and *combining layers* in `ggplot`. First, let's make a histogram showing distribution of bill length, grouped by species:
 
 ```{r}
@@ -732,7 +731,7 @@ library(ggsignif)
 To estimate significance between two different grouping or conditions, we use the `comparisons` argument, which takes a `list` of pairwise character vectors with the labels of the groups we want to compare. For example, if we wanted to calculate whether the body masses of the birds are significantly different between sexes:
 
 ```{r}
-ggplot(penguins_cleaned, aes(x=sex, y=body_mass_g)) + 
+ggplot(penguins, aes(x=sex, y=body_mass_g)) + 
   geom_boxplot() +
   geom_signif(comparisons = list(c("male","female")))
 ```
@@ -742,24 +741,13 @@ ggplot(penguins_cleaned, aes(x=sex, y=body_mass_g)) +
 > Bonus: check the documentation of `geom_signif` and see if you can find an argument that minimizes the overlap between brackets and experiment to make the plot look nice.
 
 ```{r}
-ggplot(penguins_cleaned, aes(x=species, y=body_mass_g)) + 
+ggplot(penguins, aes(x=species, y=body_mass_g)) + 
   geom_boxplot() +
   geom_signif(comparisons = list(c("Adelie","Chinstrap"),c("Chinstrap","Gentoo"),c("Adelie","Gentoo")), step_increase = 0.15)
 ```
 
 
-In the above example we are manually specifying all pairwise comparisons, which is a little cumbersome and does not work well if we have a large number of comparisons to make. Here is an example of how we can automate the process. As the `comparisons` argument for `geom_signif` just wants a list, we can use the `combn` combinatorics function (which is part of base R) to create a list of all pairwise combination of the species names in our data frame:
-
-```{r}
-species_list <- combn(unique(penguins_cleaned$species), m=2, simplify = FALSE)
-
-ggplot(penguins_cleaned, aes(x=species, y=body_mass_g)) + 
-  geom_boxplot() +
-  geom_signif(comparisons = species_list, step_increase = 0.15)
-```
-
-
-## Cleaning untidy data
+## More tidyverse practice: cleaning untidy data
 So far, we've been working with a nice, clean dataset that is already in an ideal arrangement for visualization with `ggplot`. Unfortunately, out in the wild data usually does not look like this. Let's check out the seedy underbelly of the penguins dataset and look at the RAW data:
 
 ```{r}
@@ -768,23 +756,46 @@ view(penguins_raw)
 
 We can see this is much messier...we have columns we aren't interested in, inconsistent column naming (with spaces in the column labels!!), extra text in the species labels...
 
-Even though we technically already have the cleaned up version of the data, let's practice using tidyverse to take the raw dataset to a tidy, easy-to-plot version! First, let's break down what we need to do:
+Even though we technically already have the cleaned up version of the data, let's practice using tidyverse to take the raw dataset to a tidy, easy-to-plot version! First, let's break down what we need to do...since we have the untidy input and our desired tidy output, let's look at them:
 
-| 1. Only keep the 8 columns `Species`, `Island`, `Culmen Length [mm]`, `Culmen Depth [mm]`, `Flipper Length [mm]`, `Body Mass (g)`, `Sex`, `Date Egg`
-| 2. Standardize and clean up the column names: make all lowercase, replace spaces with `_`, change `Culmen Length [mm]` to `bill_length_mm`, `Culmen Depth (mm)` to `bill_depth_mm`, `Flipper Length (mm)` to `flipper_length_mm` and `Body Mass (g)` to `body_mass_g`
-| 3. Make sure all values in the `sex` column are lowercase
-| 4. Turn the `Date Egg` column into `year` and make human-readable
+```{r}
+glimpse(penguins_raw)
+glimpse(penguins)
+```
+
+So what we need to do is:
+
+| 1. Clean up and rename the column names: replace spaces with `_`, change `Culmen Length [mm]` to `bill_length_mm`, `Culmen Depth (mm)` to `bill_depth_mm`, `Flipper Length (mm)` to `flipper_length_mm`, `Body Mass (g)` to `body_mass_g` and `Island` with `island`
+| 2. Make sure all values in the `sex` column are lowercase
+| 3. Turn the `Date Egg` column into `year` and make human-readable
+| 4. Only keep the 8 columns `species`, `island`, `bill_length_mm`, `bill_depth_mm`, `flipper_length_mm`, `body_mass_g`, `sex`, `year`
 
 There are many ways you could accomplish each of these...some of the relevant functions we have covered in previous sessions, but others you will have to look up! Here are the functions you'll need:
 
 ```
+rename()
 mutate()
 tolower()
-rename()
-select()
 word()
 year()
+select()
 ```
+
+> We just made a list of the steps we need to do to make our data tidy, but as an exercise let's try to write out our logic closer to how we'd actually code it, but still in plain language. This is referred to as `pseudocode`, and is very helpful for planning out the structure of a script!
+
+```
+from penguins raw:
+
+  rename the columns
+  
+  mutate to add/change columns
+    species column from Species using word()
+    year column from Date Egg using year()
+    sex column from Sex using tolower()
+    
+  select the 8 columns to keep
+```
+
 
 One more thing: `tidyverse` (and `R` in general...) is very particular about column names containing certain special characters like **white spaces**. For instance, in your code if you had something like:
 
@@ -794,7 +805,9 @@ bill_length_mm = Culmen Length (mm)
 
 You would get an error if you tried running this, as `R` thinks you are *trying to access a function called `Length`*! Getting into exactly how `R` handles this is a bit too much detail, so **tl;dr if you are referring to a column with a white space in it, use the backtick marks (the ` character) around it, e.g.:
 
-``Column With Spaces``
+```
+bill_length_mm = `Culmen Length (mm)`
+```
 
 You can now also hopefully appreciate exactly why we are renaming the columns to remove white spaces! :)
 
@@ -805,11 +818,11 @@ You can now also hopefully appreciate exactly why we are renaming the columns to
 ```{r}
 penguins_cleaned <- penguins_raw %>%
   rename(
-    bill_length_mm = 'Culmen Length (mm)',
-    bill_depth_mm = 'Culmen Depth (mm)',
-    flipper_length_mm = 'Flipper Length (mm)',
-    body_mass_g = 'Body Mass (g)',
-    island = 'Island'
+    bill_length_mm = `Culmen Length (mm)`,
+    bill_depth_mm = `Culmen Depth (mm)`,
+    flipper_length_mm = `Flipper Length (mm)`,
+    body_mass_g = `Body Mass (g)`,
+    island = `Island`
   ) %>%
   mutate(species = word(Species, 1)) %>%
   mutate(year = year(`Date Egg`)) %>%
@@ -819,17 +832,3 @@ penguins_cleaned <- penguins_raw %>%
   drop_na()
 ```
 
-
-
-
-### Saving ggplots (FROM ORIGINAL)
-
-Now that we've made a pretty ggplot with tidy code, how do we save it to share with others? There are a few ways. 
-
-The first way - if you've been working on your project in an rmarkdown document - you don't have to do anything! You can `knit` the rmarkdown document into HTML and share all the text, code, and images, without changing a thing. 
-
-The second way is to use the RStudio GUI. Open the panel on the lower right containing the tabs Files/Plots/Packages/Help/ etc tabs and click on the plots tab. Then copy and paste the code you used to generate the plot (or in our case just the name of the object `iris_plot`) into the console, and the plot will show up there. Then, you can click the export button and save the plot. This is great if you want to throw something into powerpoint or share on slack/email with a collaborator your intermediate results. 
-
-However, if you want to save a plot for publication and then also intend to publish the code used to generate that plot, the best practice is to use an R Script, copy and paste all (and only) the code you used to generate the final plot, save it, and then use the `ggsave()` function to export your plot. Open a new R script now and copy ALL the code you used to generate the latest plot. This includes importing the tidyverse and datasets package, transforming the iris data, and of course the plotting code itself. Then, use `ggsave()` to save the plot using the default parameters.
-
-> **Exercise**: Open a new R script (should have a .R extension) to reproduce the final, beautiful penguin plot we just made in the last code chunk by copy and pasting the necessary code. Then, use `ggsave()` to save the plot using the default parameters. To really check that your code is standalone, **clear your environment** and run the script. If it works, you're good to go!
