@@ -145,7 +145,7 @@ Thursday October 23rd, 9:30 am - 12:30 pm, Location: [Northwest Labs :octicons-l
 | --- | --- | --- |
 | [Part 1 - Intro to R :octicons-download-24:](R-workshop-Part1-student.Rmd){ .md-button } 
 | [Part 2 - tidyverse :octicons-download-24:](R-workshop-Part2-student.Rmd){ .md-button } 
-<!--| [Part 3 - ggplot :octicons-download-24:](R-workshop-Part3-student.Rmd){ .md-button } |-->
+| [Part 3 - ggplot :octicons-download-24:](R-workshop-Part3-student.Rmd){ .md-button } |
 
 ### Completed notebooks
 
