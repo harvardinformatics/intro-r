@@ -4,6 +4,7 @@ description: "An introduction to 'tidy' data and how to manipulate data with the
 date: "October 16, 2025"
 authors: 
   - Adam Freedman
+  - Danielle Khost
   - Lei Ma
   - Gregg Thomas
 output: 
@@ -403,7 +404,7 @@ adelie_males <- filter(penguins, species=="Adelie", sex =="male")
 mass_mean <- mean(adelie_males$body_mass_g, na.rm = TRUE)
 ```
 
-> Create a new variable called tail_sd that stores the standard deviation of the mass column. The function for this is sd(); like mean() you need to include the argument na.rm = TRUE to tell the sd function to remove missing values first
+> Create a new variable called mass_sd that stores the standard deviation of the mass column. The function for this is sd(); like mean() you need to include the argument na.rm = TRUE to tell the sd function to remove missing values first
 
 ```{r}
 mass_sd <- sd(adelie_males$body_mass_g, na.rm = TRUE)

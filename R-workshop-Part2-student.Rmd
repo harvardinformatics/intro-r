@@ -1,9 +1,10 @@
 ---
 title: "[Workshop] Introduction to R Part 2: tidyverse"
 description: "An introduction to 'tidy' data and how to manipulate data with the tidyverse family of R packages."
-date: "September 24, 2025"
+date: "October 16, 2025"
 authors: 
   - Adam Freedman
+  - Danielle Knost
   - Lei Ma
   - Gregg Thomas
 output: 
@@ -378,7 +379,7 @@ In this data set, we have bill length (bill_length_mm) and bill depth (bill_dept
 ```{r}
 
 penguins <- mutate(penguins, depth_sizeadj = bill_depth_mm/bill_length_mm)
-
+glimpse(penguins)
 ```
 
 In redirecting back to the *penguins* tibble, we are changing the input data rather than writing a new tibble with this variable added. One should be aware (and careful!) when redirecting back to the original tibble, because if you create a new variable or transform an old variable, and assign a name to the new variable that already exists, it will overwrite the old variable.
@@ -396,24 +397,30 @@ adelie_males <- filter(penguins, species=="Adelie", sex =="male")
 > Create a new variable called mass_mean that stores the mean of the body_mass_g column; remember that you need to include the argument `na.rm = TRUE` to tell the mean function to remove missing values first
 
 ```{r}
-
+mass_mean <- mean(adelie_males$body_mass_g,na.rm=TRUE)
+print(mass_mean)
 ```
 
-> Create a new variable called tail_sd that stores the standard deviation of the mass column. The function for this is sd(); like mean() you need to include the argument na.rm = TRUE to tell the sd function to remove missing values first
+> Create a new variable called mass_sd that stores the standard deviation of the mass column. The function for this is sd(); like mean() you need to include the argument na.rm = TRUE to tell the sd function to remove missing values first
 
 ```{r}
-
+mass_sd <- sd(adelie_males$body_mass_g,na.rm=TRUE)
+mass_sd
 ```
 
 > Create a new column in the adelie_males tibble that is TRUE if body mass is more than two standard deviations from the mean
 
 ```{r}
-
+adelie_males <- mutate(adelie_males,mass_outlier=(body_mass_g > mass_mean+2*mass_sd) | (body_mass_g < mass_mean - 2* mass_sd))
+glimpse(adelie_males)
+print(sum(adelie_males$mass_outlier))
 ```
 
 > Filter the adelie_males tibble to keep only rows where mass_outlier is TRUE
 
 ```{r}
+adelie_male_outliers <- filter(adelie_males,mass_outlier==TRUE)
+adelie_male_outliers
 ```
 
 You should have two observations in your outliers tibble.
@@ -450,7 +457,7 @@ Let's try to create a new variable that represents a Z score, i.e. a transformat
 ```{r}
 
 adelie_Z <- mutate(adelie, body_mass_Z = (body_mass_g - mean(body_mass_g, na.rm = TRUE)) / sd(body_mass_g, na.rm = TRUE))
-
+glimpse(adelie_Z)
 ```
 
 So, we are calculating the mean and sd of *body_mass_g* once, and using those values to apply the Z-score equation to each row of the *body_mass_g* vector and storing the output in the new variable *body_mass_Z*. Remember, unless you are certain there are no missing values in the variable vectors being used for calculations, when the option is available, it is best to invoke `na.rm=TRUE`.
@@ -513,8 +520,10 @@ Now, we'll create some sub-tables with *select*
 ```{r}
 
 x <- select(penguins, obs_number, body_mass_g)
+print(x)
 y <- select(penguins, obs_number, species, sex)
-xy <- left_join(x, y)
+print(y)
+xy <- left_join(x, y,by="obs_number")
 glimpse(xy)
 
 ```
@@ -543,6 +552,7 @@ As we shall see in Part 3 of this workshop, having the actual measurements aggre
 penguins <- mutate(penguins, id = row_number())
 # Then, we use the function pivot_longer() to merge columns together
 penguins_long <- pivot_longer(penguins, c(bill_length_mm, bill_depth_mm, flipper_length_mm), names_to = "morphtype", values_to = "mm")
+glimpse(penguins_long)
 
 ```
 
@@ -561,6 +571,7 @@ One thing we can see is that the new values in *morphtype* are unnecessarily lon
 ```{r}
 
 penguins_long <- mutate(penguins_long, morphtype = str_replace(morphtype, "_mm", ""))
+glimpse(penguins_long)
 
 ```
 
@@ -588,7 +599,8 @@ It should be noted, that there are other, more complicated ways of performing wi
 Thus far, we have demonstrated how to execute particular *tidyverse* functions as distinct data-processing steps. However, most of the time one wants to perform a sequence of data-processing operations that require more than one R function. Without a means to chain these steps together, one would have to deploy a particular R function on a tibble, redirect the output to a new (or the same input) tibble, then deploy the next R function on the new tibble, etc. Or, one could try to nest sequential function executions within other function executions, e.g. `new_tibble <-(function2(function1(original_tibble)))` which can get unwieldy and error-prone very quickly. The good news is, *tidyverse* had a way of chaining together data processing steps that is analogous to pipes in the bash shell ... and guess what? They are also called pipes. The general syntax of using pipes is:
 
 ```         
-tidy_data <- function1(data, args) %>% function2(args)
+tidy_data <- data %>% function1(.,args) %>% 
+          function2(args)
 ```
 
 The `%>%` is the pipe, and it redirects the output of function1 to function2.
@@ -604,7 +616,7 @@ Now, as a more concrete example, let's see how we can use `select()` and `filter
 ```{r}
 
 new_data <- select(penguins, year, species, sex, body_mass_g) %>% filter(species == "Adelie", year == 2008)
-
+glimpse(new_data)
 ```
 
 In this example, we pipe together the two function calls we executed earlier, but all in one command line.
@@ -614,8 +626,11 @@ In this example, we pipe together the two function calls we executed earlier, bu
 > 1.  Try creating a more complex piped workflow, calling in sequence the `filter()` and `select()` commands above, followed by using `mutate()` to extract Adelie penguins and then calculate a body size (i.e. mass) normalized flipper_length.
 
 ```{r}
-
-
+adelie <- penguins %>%
+                select(species,body_mass_g,flipper_length_mm) %>%
+                filter(species == "Adelie") %>%
+                mutate(normalized_flipper = flipper_length_mm/body_mass_g)
+glimpse(adelie)
 ```
 
 > 2.  Try experimenting with different row and column selections, and new variable creations with these three functions. You can even switch the order, e.g. create a new synthetic variable then applying `filter()` to it.
@@ -645,7 +660,6 @@ There are *tidyverse* flavors of standard R functions. For example, to get the u
 ```{r}
 
 distinct(penguins, year)
-
 ```
 
 This function requires that you supply a tibble and column name for which you want to get the unique values. It does not behave as you would like if you simply supply the vector `penguins$year`.
@@ -669,7 +683,7 @@ Ignoring the fact for the moment that the data set is comprised of three differe
 > To generate a summary of mean bill length and body mass for Adelie penguins, run the command below:
 
 ```{r}
-
+adelie <- penguins %>% filter(species=="Adelie")
 summarize(adelie, meanbill = mean(bill_length_mm, na.rm = TRUE), meanmass = mean(body_mass_g, na.rm = TRUE))
 
 ```
