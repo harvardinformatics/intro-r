@@ -4,6 +4,7 @@ description: "An introduction to 'tidy' data and how to manipulate data with the
 date: "October 16, 2025"
 authors: 
   - Adam Freedman
+  - Danielle Khost
   - Lei Ma
   - Gregg Thomas
 output: 
@@ -59,10 +60,10 @@ library(tidyverse)
 ```
 ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
-## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-## ✔ purrr     1.0.2     
+## ✔ forcats   1.0.1     ✔ stringr   1.5.2
+## ✔ ggplot2   4.0.0     ✔ tibble    3.3.0
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+## ✔ purrr     1.1.0     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -71,6 +72,15 @@ library(tidyverse)
 
 ``` r
 library(palmerpenguins)
+```
+
+```
+## 
+## Attaching package: 'palmerpenguins'
+## 
+## The following objects are masked from 'package:datasets':
+## 
+##     penguins, penguins_raw
 ```
 
 For more information, go to [tidyverse :octicons-link-external-24:](https://www.tidyverse.org/){:target="\_blank"}.
@@ -729,7 +739,7 @@ adelie_males <- filter(penguins, species=="Adelie", sex =="male")
 mass_mean <- mean(adelie_males$body_mass_g, na.rm = TRUE)
 ```
 
-> Create a new variable called tail_sd that stores the standard deviation of the mass column. The function for this is sd(); like mean() you need to include the argument na.rm = TRUE to tell the sd function to remove missing values first
+> Create a new variable called mass_sd that stores the standard deviation of the mass column. The function for this is sd(); like mean() you need to include the argument na.rm = TRUE to tell the sd function to remove missing values first
 
 
 ``` r
@@ -811,7 +821,7 @@ mean(adelie_Z$body_mass_Z, na.rm = TRUE)
 ```
 
 ```
-## [1] 3.190972e-16
+## [1] 2.845406e-16
 ```
 
 ``` r
@@ -839,7 +849,7 @@ mean(adelie_Z$z2, na.rm = TRUE)
 ```
 
 ```
-## [1] 3.190972e-16
+## [1] 2.845406e-16
 ```
 
 ``` r
