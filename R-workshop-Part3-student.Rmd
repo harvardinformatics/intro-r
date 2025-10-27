@@ -15,9 +15,9 @@ output:
 
 # Introduction to R Part 3: ggplot
 
-Welcome to the Part 3 of the [FAS Informatics :material-arrow-top-right:](https://informatics.fas.harvard.edu/){:target="_blank"} Intro to R workshop! 
+Welcome to the Part 3 of the [FAS Informatics](https://informatics.fas.harvard.edu/) Intro to R workshop! 
 
-If you're viewing this file on the website, you are viewing the final, formatted version of the workshop. The workshop itself will take place in the RStudio program and you will *edit and execute the code in this file*. Please download the raw file [here :octicons-download-24:](R-workshop-Part3-student.Rmd).
+If you're viewing this file on the website, you are viewing the final, formatted version of the workshop. The workshop itself will take place in the RStudio program and you will *edit and execute the code in this file*. Please download the raw file [here](R-workshop-Part3-student.Rmd).
 
 ## Data visualization in R with ggplot2
 
@@ -28,7 +28,7 @@ In addition to statistical analysis, the R programming language and the RStudio 
 
 ## Introduction to ggplot
 
-[ggplot :octicons-link-external-24:](https://ggplot2.tidyverse.org/){:target="_blank"} is a **package** (library of code with various functions) that is part of the **tidyverse**. It uses a somewhat standardized 'grammar of graphics' ([book :octicons-link-external-24:](https://id.lib.harvard.edu/alma/990082021020203941/catalog){:target="_blank"}; [paper :octicons-link-external-24:](https://hollis.harvard.edu/permalink/f/1mdq5o5/TN_cdi_informaworld_taylorfrancis_310_1198_jcgs_2009_07098){:target="_blank"}) in its syntax to make almost every aspect of a plot customizable. The input to ggplot are **data frames** and **tibbles**, and the best way to organize your data so that it is easily plotted is by ggplot is following the **tidy** principles, which is why it's part of the tidyverse.
+[ggplot](https://ggplot2.tidyverse.org/) is a **package** (library of code with various functions) that is part of the **tidyverse**. It uses a somewhat standardized 'grammar of graphics' ([book](https://id.lib.harvard.edu/alma/990082021020203941/catalog); [paper](https://hollis.harvard.edu/permalink/f/1mdq5o5/TN_cdi_informaworld_taylorfrancis_310_1198_jcgs_2009_07098)) in its syntax to make almost every aspect of a plot customizable. The input to ggplot are **data frames** and **tibbles**, and the best way to organize your data so that it is easily plotted is by ggplot is following the **tidy** principles, which is why it's part of the tidyverse.
 
 If you haven't already, download and install the tidyverse bundle of packages and load it. ggplot2 is one of the packages bundled with it. We'll also install and load the `palmerpenguins` package, which contains the sample dataset we're working with.
 
@@ -56,7 +56,7 @@ glimpse(penguins)
 
 What goes into constructing a plot? Let's begin by going over two important concepts of ggplot: **aesthetics** and **layers**.
 
-As described in the [official ggplot2 handbook](https://ggplot2-book.org/){:target="_blank"}, every plot consists of:
+As described in the [official ggplot2 handbook](https://ggplot2-book.org/), every plot consists of:
 | 1. **data**
 | 2. A set of **aesthetic mappings** between variables in the data and visual properties of the plot
 | 3. At least one **layer** that describes how to render each observation
@@ -79,7 +79,7 @@ Now, it looks like we have added axes on our white box, but nothing else. At thi
 
 We need to tell ggplot how to interpret the aesthetics as a graphical representation, i.e. do we want points, lines, bars, etc. We do this by adding **layers** onto the plot with the `+` operator. Each `+` indicates a new layer in the specified ggplot object and many layers can be added to a single plot in order to display the data in different ways. In general, layers can either *display the data*, display a *statistical summary* of the data or *add additional metadata* (context, annotations, etc) to the plot. The layer we add when telling ggplot how to plot the aesthetics (data) is usually called a **geom** (short for geometry).
 
-There are many types of geoms depending on what relationship you are trying to plot. A list of geoms can be found [here :octicons-link-external-24:](https://ggplot2.tidyverse.org/reference/#geoms){:target="_blank"}. For example, let's say we want to visualize the distribution of the penguins' body mass. Single distributions are typically plotted as histograms or density plots. So to generate the histogram, we would follow these steps:
+There are many types of geoms depending on what relationship you are trying to plot. A list of geoms can be found [here](https://ggplot2.tidyverse.org/reference/#geoms). For example, let's say we want to visualize the distribution of the penguins' body mass. Single distributions are typically plotted as histograms or density plots. So to generate the histogram, we would follow these steps:
 
 1.  Specify the dataset (in our case, `penguins`)
 2.  Identify the variables in the dataset to plot and specify them as aesthetics. This will require you to look at your data! For our first example, it will be `body_mass_g`
@@ -137,7 +137,7 @@ Let's pick another variable from our penguins dataset, `bill_length_mm`.
 
 
 ### A quick word on variable types and geom selection
-If we take a look at the [quick reference guide :octicons-link-external-24:](https://rstudio.github.io/cheatsheets/data-visualization.pdf){:target="_blank"} for ggplot, we can see that the geoms are grouped based on whether they take a single variable or multiple, and whether the variables are **discrete** or **continuous**. As we remember from stats class, a "discrete" variable is any variable with values that are *distinct* and countable (i.e. not infinite), while a "continuous" variable can be any value within a range. When plotting, it is always important to consider the nature of your variable(s) and what you are trying to convey, and pick the appropriate `geom` for the job.
+If we take a look at the [quick reference guide](https://rstudio.github.io/cheatsheets/data-visualization.pdf) for ggplot, we can see that the geoms are grouped based on whether they take a single variable or multiple, and whether the variables are **discrete** or **continuous**. As we remember from stats class, a "discrete" variable is any variable with values that are *distinct* and countable (i.e. not infinite), while a "continuous" variable can be any value within a range. When plotting, it is always important to consider the nature of your variable(s) and what you are trying to convey, and pick the appropriate `geom` for the job.
 
 > For example: if we want to visualize the distribution of body mass of the birds, would plotting it this way make sense??
 
@@ -148,7 +148,7 @@ ggplot(penguins, aes(x=body_mass_g)) +
 
 We can see that the above code WILL produce a plot without throwing an error (except for the usual "missing data" warning), and the plot even looks vaguely plausible. However, this is probably not the way we want to visualize this particular data...we can see that `geom_bar` is intended for a *single, discrete variable*, whereas data like "body mass" is a continuous variable. If we look closer at the plot, we can see that what is happening is `geom_bar` is *counting* the number of times each discrete body mass value occurs in the data. A better way to visualize this would be with a histogram or density plot.
 
-> Exercise: check out the ggplot [quick reference guide :octicons-link-external-24:](https://rstudio.github.io/cheatsheets/data-visualization.pdf){:target="_blank"} and choose a geom of your liking, then try adapting it to our penguins data.
+> Exercise: check out the ggplot [quick reference guide](https://rstudio.github.io/cheatsheets/data-visualization.pdf) and choose a geom of your liking, then try adapting it to our penguins data.
 
 ```{r}
 
@@ -399,7 +399,7 @@ g +
 
 BONUS: pre-made color palettes
 
-We can use `scale_color_brewer` to take advantage of pre-made discrete color palettes. To see all the options type `RColorBrewer::display.brewer.all()` in your console. For more information on how to generate custom palettes, use rgb values to specify colors, and more, see chapter 12 "Using Colors in Plots" in the [R Graphics Cookbook :octicons-link-external-24:](https://r-graphics.org/CHAPTER-COLORS){:target="_blank"}.
+We can use `scale_color_brewer` to take advantage of pre-made discrete color palettes. To see all the options type `RColorBrewer::display.brewer.all()` in your console. For more information on how to generate custom palettes, use rgb values to specify colors, and more, see chapter 12 "Using Colors in Plots" in the [R Graphics Cookbook](https://r-graphics.org/CHAPTER-COLORS).
 
 ```{r}
 g + 

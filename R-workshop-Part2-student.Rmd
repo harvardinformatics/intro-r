@@ -73,7 +73,7 @@ browseVignettes(package = "dplyr")
 
 ## Our data
 
-Today's data set comes from... wait for it ... penguins! In particular, we are using the [Palmer penguins :octicons-link-external-24:](https://allisonhorst.github.io/palmerpenguins/){:target="\_blank"} data set contains measurement data for 3 species of penguins collected on three islands at the LTER site in the Palmer Archipelago, Antarctica.
+Today's data set comes from... wait for it ... penguins! In particular, we are using the [Palmer penguins](https://allisonhorst.github.io/palmerpenguins/){:target="\_blank"} data set contains measurement data for 3 species of penguins collected on three islands at the LTER site in the Palmer Archipelago, Antarctica.
 
 You can view the data by typing
 
@@ -85,7 +85,7 @@ This should open up a new window tab that will allow you to browse the penguins 
 
 ## What is tidy data?
 
-The notion of tidy data has been around in various incarnations for a while but has more recently been formalized in this [paper :octicons-download-24:](https://vita.had.co.nz/papers/tidy-data.pdf){:target="\_blank"} by Hadley Wickham, the developer of *tidyverse*. Tidy data are, in short, data that have been organized in a consistent way that makes data exploration and visualization easier. Two key principles are that:
+The notion of tidy data has been around in various incarnations for a while but has more recently been formalized in this [paper](https://vita.had.co.nz/papers/tidy-data.pdf){:target="\_blank"} by Hadley Wickham, the developer of *tidyverse*. Tidy data are, in short, data that have been organized in a consistent way that makes data exploration and visualization easier. Two key principles are that:
 
 -   Each variable forms a column
 -   Each observation forms a row
