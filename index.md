@@ -113,6 +113,8 @@ Tuesday October 14th, 9:30 am - 12:30 pm, Location: [Northwest Labs :octicons-li
 * Writing and running R scripts
 * R objects and data types
 
+[Part 1 - Intro to R - Student notebook :octicons-download-24:](R-workshop-Part1-student.Rmd){ .md-button } &nbsp; [Part 1 - Intro to R - Completed notebook :material-arrow-right:](R-workshop-Part1.md){ .md-button } 
+
 ### Day 2: Introduction to data manipulation with the tidyverse (Part 2)
 
 Thursday October 16th, 9:30 am - 12:30 pm, Location: [Northwest Labs :octicons-link-external-24:](https://chsi.harvard.edu/nw_labs){:target="_blank"} room NWB 453 
@@ -122,7 +124,9 @@ Thursday October 16th, 9:30 am - 12:30 pm, Location: [Northwest Labs :octicons-l
 * Filtering and manipulating data tables (tibbles)
 * Piping
 
-### Day 3: More tidyverse and introduction to data visualization with ggplot (Part 2 and Part 3)
+[Part 2 - tidyverse - Student notebook :octicons-download-24:](R-workshop-Part2-student.Rmd){ .md-button } &nbsp; [Part 2 - tidyverse - Completed notebook :material-arrow-right:](R-workshop-Part2.md){ .md-button } 
+
+### Day 3: More tidyverse and introduction to data visualization with ggplot (Part 2 continued and Part 3)
 
 Tuesday October 21st, 9:30 am - 12:30 pm, Location: [Northwest Labs :octicons-link-external-24:](https://chsi.harvard.edu/nw_labs){:target="_blank"} room NWB 453 
 
@@ -131,7 +135,9 @@ Tuesday October 21st, 9:30 am - 12:30 pm, Location: [Northwest Labs :octicons-li
 * Aesthetics and layers in ggplot
 * Various plot types
 
-### Day 4: More on ggplot (Part 3)
+[Part 3 - ggplot - Student notebook :octicons-download-24:](R-workshop-Part3-student.Rmd){ .md-button } &nbsp; [Part 3 - ggplot - Completed notebook :material-arrow-right:](R-workshop-Part3.md){ .md-button } 
+
+### Day 4: More on ggplot (Part 3 continued)
 
 Thursday October 23rd, 9:30 am - 12:30 pm, Location: [Northwest Labs :octicons-link-external-24:](https://chsi.harvard.edu/nw_labs){:target="_blank"}, room NWB 453 
 
@@ -139,21 +145,25 @@ Thursday October 23rd, 9:30 am - 12:30 pm, Location: [Northwest Labs :octicons-l
 * Colors and grouping data
 * Multi-panel figures
 
+<!--
+
 ### Student notebooks
 
 |     |     |     |
 | --- | --- | --- |
-| [Part 1 - Intro to R :octicons-download-24:](R-workshop-Part1-student.Rmd){ .md-button } 
-| [Part 2 - tidyverse :octicons-download-24:](R-workshop-Part2-student.Rmd){ .md-button } 
-| [Part 3 - ggplot :octicons-download-24:](R-workshop-Part3-student.Rmd){ .md-button } 
+| [Part 1 - Intro to R :octicons-download-24:](R-workshop-Part1-student.Rmd){ .md-button } |
+| [Part 2 - tidyverse :octicons-download-24:](R-workshop-Part2-student.Rmd){ .md-button } |
+| [Part 3 - ggplot :octicons-download-24:](R-workshop-Part3-student.Rmd){ .md-button } |
 
 ### Completed notebooks
 
 |     |     |     |
 | --- | --- | --- |
-| [Part 1 - Intro to R :material-arrow-right:](R-workshop-Part1.md){ .md-button }
-| [Part 2 - tidyverse :material-arrow-right:](R-workshop-Part2.md){ .md-button }
-<!--| [Part 3 - ggplot :material-arrow-right:](R-workshop-Part3.md){ .md-button }-->
+| [Part 1 - Intro to R :material-arrow-right:](R-workshop-Part1.md){ .md-button } |
+| [Part 2 - tidyverse :material-arrow-right:](R-workshop-Part2.md){ .md-button } |
+| [Part 3 - ggplot :material-arrow-right:](R-workshop-Part3.md){ .md-button } |
+-->
+
 
 ---
 
